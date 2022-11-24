@@ -1,11 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
+:root {
+  touch-action: pan-x pan-y;
+  height: 100%
+}
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  background-color: #481a34;
+  scroll-behavior: auto !important;
+  color: #818181;
 }
 
 body {

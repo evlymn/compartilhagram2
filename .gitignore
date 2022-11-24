@@ -43,3 +43,9 @@ Thumbs.db
 package-lock.json
 /*-export-*/*
 /emulators-data
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
+
