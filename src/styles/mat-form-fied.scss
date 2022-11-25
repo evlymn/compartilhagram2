@@ -1,0 +1,20 @@
+.custom-mat-form-field {
+  .mdc-text-field--filled {
+    background-color: #d797bb !important;
+  }
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 30px !important;
+  }
+  .mat-mdc-text-field-wrapper {
+    border-radius: 5px !important;
+  }
+}
+.mat-form-field-W100{
+  width: 100% !important;
+}
+.mat-mdc-form-field-subscript-wrapper {
+  //display: none;
+}

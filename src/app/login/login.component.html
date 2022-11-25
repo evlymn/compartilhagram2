@@ -1,2 +1,28 @@
-<p>login works!</p>
-<i class='bx bx-user'></i>
+<div class="login-component">
+  <div class="login-content">
+<!--    <div  class="compartilhagram-logo-content">-->
+<!--      <img class="compartilhagram-logo" src="./assets/images/compartilhagram-logo.png" alt="Compartilhagram">-->
+<!--    </div>-->
+    <mat-tab-group class="mat-tab-header"
+                   [selectedIndex]="selectedIndex"
+                   [preserveContent]="false"  animationDuration="200" >
+      <mat-tab label="First">
+        <app-login-sign-in></app-login-sign-in>
+      </mat-tab>
+      <mat-tab label="Second">
+        <app-login-create-user></app-login-create-user>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="login-actions">
+
+
+      <a *ngIf="selectedIndex==0" class="login-a signInUp" (click)="selectedIndex=1">
+        Registre-se <i class='bx bx-right-arrow-circle'></i>
+      </a>
+
+      <a *ngIf="selectedIndex==1"  class="login-a signInUp" (click)="selectedIndex=0">
+        <i class='bx bx-left-arrow-circle' ></i>Logar
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -12,6 +11,7 @@ import {connectDatabaseEmulator, getDatabase, provideDatabase} from '@angular/fi
 import {connectFunctionsEmulator, getFunctions, provideFunctions} from '@angular/fire/functions';
 import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {connectStorageEmulator, getStorage, provideStorage} from '@angular/fire/storage';
+import {LoginModule} from "./login/login.module";
 
 @NgModule({
   declarations: [
@@ -19,8 +19,9 @@ import {connectStorageEmulator, getStorage, provideStorage} from '@angular/fire/
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    LoginModule,
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
@@ -56,8 +57,10 @@ import {connectStorageEmulator, getStorage, provideStorage} from '@angular/fire/
     provideMessaging(() => getMessaging()),
   ],
   providers: [
-    ScreenTrackingService, UserTrackingService
+    ScreenTrackingService,
+    UserTrackingService
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {

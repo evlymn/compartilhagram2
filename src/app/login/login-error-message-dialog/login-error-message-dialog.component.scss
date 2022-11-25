@@ -1,0 +1,20 @@
+.component {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  // height: 30px;
+}
+
+a {
+  cursor: pointer;
+  color: darkblue;
+}
+
+

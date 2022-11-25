@@ -1,0 +1,101 @@
+<form #formDirective="ngForm"
+      class="login-form"
+      [formGroup]="form"
+      (ngSubmit)="submit(formDirective)">
+
+  <div class="avatar-content">
+    <div class="avatar"
+         [ngClass]="submitted && img64.trim().length == 0? 'border-error' : 'border-normal'"
+         (click)="file.click()" matRipple
+         [matRippleCentered]="true" [style]="avatarStyle">
+    </div>
+    <a (click)="file.click()">
+      foto de perfil
+    </a>
+    <small class="  error" *ngIf="submitted && img64.trim().length == 0">
+      <i class='bx bx-face'></i> Quem sabe uma fotinha sua?
+    </small>
+  </div>
+
+  <mat-form-field
+    class="custom-mat-form-field mat-form-field-W100"
+    floatLabel="auto">
+    <input matInput
+           class="login-input"
+           placeholder="nome"
+           type="text"
+           formControlName="name"
+           required>
+    <mat-error class="error">
+      <i class='bx bxs-cat'></i> Qual seu nome?
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    class="custom-mat-form-field mat-form-field-W100"
+    floatLabel="auto">
+    <input matInput
+           class="login-input"
+           placeholder="email"
+           formControlName="email"
+           type="text" required>
+    <mat-error class="error" *ngIf="submitted && email?.value?.trim().length ==0">
+      <i class='bx bx-envelope'></i> Qual seu email?
+    </mat-error>
+    <mat-error class="error" *ngIf="submitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
+      <i class='bx bx-envelope'></i> Acho que vc digitou algo errado!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    class="custom-mat-form-field mat-form-field-W100"
+    floatLabel="auto">
+    <input matInput
+           name="new-password"
+           class="login-input"
+           placeholder="senha"
+           #password1
+           formControlName="password"
+           type="password" required>
+    <mat-error class="error" *ngIf="password?.getError('minlength')">
+      <i class='bx bxs-key'></i> Senha deve ter mais de 5 caracteres
+    </mat-error>
+    <mat-error class="error" *ngIf="submitted && !password?.getError('minlength')">
+      <i class='bx bxs-key'></i> Todo cadastro precisa de uma senha né não?
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    class="custom-mat-form-field mat-form-field-W100"
+    floatLabel="auto">
+    <input matInput
+           [appCompareTo]="password1"
+           name="retype-password"
+           class="login-input"
+           placeholder="repetir a senha"
+           formControlName="retypePassword"
+           type="password" required>
+
+    <mat-error class="error" *ngIf=" !retypePassword?.getError('compareTo')">
+      <i class='bx bxs-key'></i> Pode repetir, por favor?
+    </mat-error>
+    <mat-error class="error" *ngIf="retypePassword?.value?.length > 0 && retypePassword?.getError('compareTo')">
+      <i class='bx bxs-key'></i> Oops, algo não confere aqui! 🙃
+    </mat-error>
+  </mat-form-field>
+
+  <button class="login-button" type="submit" matRipple>
+    Registrar
+  </button>
+  <mat-progress-bar class="login-mat-progress-bar"
+                    [mode]="progressMode"
+                    color="accent"
+                    [style]=" submitted && form.valid && img64  ? 'opacity:1' :  'opacity:0'"
+                    [value]="progress">
+
+  </mat-progress-bar>
+  <small *ngIf="hintMessage.trim().length>0">  {{hintMessage}} </small>
+</form>
+
+
+<input type="file" style="display: none;" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg"
+       #file/>

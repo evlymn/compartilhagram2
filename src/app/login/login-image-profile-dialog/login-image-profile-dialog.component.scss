@@ -1,0 +1,37 @@
+@import "../styles/buttons";
+
+.component {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #481a34!important;
+
+}
+
+::ng-deep, image-cropper {
+  background-color: #481a34 !important;
+  height: 100%;
+  min-height: 200px;
+  width: auto;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 30px;
+  margin-top: 10px;
+  //flex-direction: column;
+  background-color: #481a34!important;
+}
+
+
+a {
+  cursor: pointer;
+  color: darkblue;
+}
+.login-button {
+  padding: 5px!important;
+  width: 40%;
+}

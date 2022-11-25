@@ -1,0 +1,44 @@
+
+.login-component {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-content {
+  padding: 20px;
+  width: 280px;
+  max-width: 280px;
+  background-color: #88456b;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.login-actions {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-actions > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: whitesmoke;
+}
+
+.login-actions > a > i {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.compartilhagram-logo-content {
+  display: flex;
+  justify-content: center;
+}
+.compartilhagram-logo{
+  height: 40px;
+}

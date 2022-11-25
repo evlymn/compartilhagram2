@@ -1,0 +1,43 @@
+<form name="login"
+      #formDirective="ngForm"
+      class="login-form"
+      [formGroup]="form"
+      (ngSubmit)="submit(formDirective)">
+
+  <mat-form-field
+    class="custom-mat-form-field mat-form-field-W100"
+    appearance="fill"
+    floatLabel="auto">
+    <input matInput
+           class="login-input"
+           placeholder="email"
+           formControlName="email"
+           type="text" required>
+    <mat-error *ngIf="formSubmitted && email?.value?.trim().length ==0">
+      Qual seu email?
+    </mat-error>
+    <mat-error *ngIf="formSubmitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
+      Acho que vc digitou algo errado!
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field class="custom-mat-form-field mat-form-field-W100"
+                  appearance="fill"
+                  floatLabel="auto">
+    <input matInput
+           name="current-password"
+           class="login-input"
+           placeholder="senha"
+           formControlName="password"
+           type="password" required>
+    <mat-error *ngIf="formSubmitted && password?.value?.trim().length ==0">
+    Não esqueça da senha!
+    </mat-error>
+  </mat-form-field>
+
+  <button class="login-button" type="submit" matRipple>
+    Logar
+  </button>
+</form>
+
