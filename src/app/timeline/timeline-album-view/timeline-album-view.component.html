@@ -1,0 +1,14 @@
+<div class="album-view-component">
+<h2 *ngIf="this.info?.albumName">{{this.info?.albumName}}</h2>
+
+<div class="post-avatar">
+  <img class="post-avatar-image" alt="image profile" [src]="info?.photoURL">
+</div>
+
+<h4>{{this.info?.displayName}}</h4>
+
+<div class="gallery">
+  <img (click)="openAlert(img?.imageURL)" *ngFor="let img of  images let i=index" [src]="img?.imageURL" alt="...">
+</div>
+</div>
+<app-timeline-floating-menu></app-timeline-floating-menu>

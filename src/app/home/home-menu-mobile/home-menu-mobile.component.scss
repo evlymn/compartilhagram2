@@ -1,0 +1,44 @@
+div{
+  height: 100%;
+}
+ul{
+  padding: 0;
+  //margin: 7px 0 0 5px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  color: whitesmoke;
+  margin-bottom: 25px;
+}
+
+.icon-font-mobile {
+  transform: scale(1.2);
+}
+.ul-add {
+  margin-top: 50px;
+}
+
+.logo-smaller {
+  margin-top: 5px;
+  height: 17px;
+}
+
+.menu-mobile-avatar-image {
+  width: 35px;
+  border-radius: 17.5px;
+  margin-top: 15px;
+  border: solid 2px #88456b;
+  //margin-left: -9;
+}
+
+i {
+  font-size: 30px;
+  margin-left: -4px;
+}
+
+
+mat-icon{
+  color: whitesmoke;
+}

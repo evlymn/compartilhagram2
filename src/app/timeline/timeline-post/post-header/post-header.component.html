@@ -1,0 +1,60 @@
+<div class="post-header">
+
+  <div class="user-info">
+    <div class="post-avatar" [routerLink]="['profile', post?.uid]">
+      <img class="post-avatar-image" alt="image profile" [src]="post?.photoURL">
+    </div>
+    <div class="post-user-name" [routerLink]="['profile', post?.uid]">
+      <span> {{post?.displayName}}  </span>
+    </div>
+    <div class="post-user-badges">
+      <mat-icon (click)="openBottomSheet('Usuária(o) Premium', 'workspace_premium')" title="Premium user"
+                class="post-badge  premium" *ngIf="index%3 == 0">workspace_premium
+      </mat-icon>
+      <mat-icon (click)="openBottomSheet('Usuária(o) Verificado', 'verified_user')" title="Verified user"
+                class="post-badge  verified" *ngIf="index%5 == 0">verified_user
+      </mat-icon>
+    </div>
+  </div>
+  <div class="header-actions">
+    <mat-icon [matMenuTriggerFor]="beforeMenu"
+              [ngClass]="loggedUId == post?.uid ? 'color-mine': ''">
+      more_horiz
+    </mat-icon>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <div *ngIf="loggedUId === post?.uid" mat-menu-item class="mat-item-div">
+        <button mat-button color="whitespace" (click)="togglePostPanel()">
+          <mat-icon color="whitespace" class="post-action-icon">edit_note</mat-icon>
+          <span>Editar</span>
+        </button>
+
+      </div>
+      <div *ngIf="loggedUId === post?.uid" mat-menu-item class="mat-item-div">
+
+        <button mat-button color="whitespace" (click)="openDeletePanel()">
+          <mat-icon class="post-action-icon">do_not_disturb_on</mat-icon>
+          <span>Deletar</span>
+        </button>
+      </div>
+      <div *ngIf="loggedUId != post?.uid" mat-menu-item class="mat-item-div">
+        <mat-icon color="accent" class="post-action-icon icon-warning">warning</mat-icon>
+        <span>Denunciar</span>
+      </div>
+    </mat-menu>
+    <br>
+    <!--    [routerLink]="['details/', post?.id, index]"-->
+    <!--    fragment="post"-->
+    <mat-icon *ngIf="!isDetail"
+              class="post-action-icon icon-detail"
+              [routerLink]="['details/', post?.id, index]">
+      arrow_forward
+    </mat-icon>
+    <!--    [routerLink]="['/home']" fragment="p{{index}}"-->
+    <mat-icon [routerLink]="['/home']" class="post-action-icon back-icon" *ngIf="isDetail"
+              color="accent">
+      arrow_back
+    </mat-icon>
+  </div>
+
+
+</div>

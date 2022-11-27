@@ -70,7 +70,7 @@ export class AuthenticationService {
       if (usr) {
         this.onDeleteLogout(usr?.uid!);
         this.ngZone.run(() => {
-           this.router.navigate(['']).catch(reason => console.log(reason));
+           this.router.navigate(['home']).catch(reason => console.log(reason));
         });
       } else {
         // this.ngZone.run(() => {

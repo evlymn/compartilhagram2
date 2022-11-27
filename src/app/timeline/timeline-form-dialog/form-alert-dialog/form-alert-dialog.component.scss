@@ -1,0 +1,17 @@
+
+.alert-component {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f6b268;
+  font-size: 15px;
+  flex-direction: column;
+}
+
+button {
+  margin-top: 10px;
+  width: 100%;
+  color: white!important;
+}

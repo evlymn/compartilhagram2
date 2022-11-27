@@ -1,0 +1,78 @@
+
+.form-fixed {
+  position: fixed;
+  width: 600px;
+  top: -10;
+}
+
+
+.mat-dialog-container {
+  background-color: red !important;
+}
+
+mat-icon {
+  transform: scale(1.2);
+}
+
+.posts {
+  padding-bottom: 170px;
+  display: flex;
+}
+
+.post-reverse {
+  flex-direction: column-reverse;
+}
+
+.post-colum {
+  flex-direction: column;
+}
+
+.post-colum-reverse {
+  flex-direction: column-reverse;
+}
+
+.waiting-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-panel {
+  margin-top: 40px;
+ padding-right: 10px;
+  padding-left: 10px;
+}
+mat-expansion-panel {
+  background-color: #88456b;
+}
+.expansion-panel-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  flex-wrap: nowrap;
+  background-color: #88456b;
+}
+
+
+.expansion-panel-content > input {
+  width: 100%;
+  border-radius: 5px;
+  color: whitesmoke;
+  box-sizing: border-box;
+  border-width: 0;
+  outline: none;
+  padding: 10px;
+  background-color: #5e3248;
+}
+.expansion-panel-content > button {
+  margin-top: 5px;
+  color: whitesmoke;
+  background-color: #481a34;
+}
+.message-saved {
+  text-align: center;
+  color: #f6b268;
+}

@@ -1,0 +1,41 @@
+.user-avatar {
+  width: 35px;
+}
+
+h3 {
+  margin-top: 40px;
+  text-align: center;
+  color: whitesmoke;
+}
+
+.post-avatar-image {
+  height: 45px;
+  border-radius: 23px;
+}
+
+.room {
+  //width: 100%;
+  background-color: #622947;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.user-info {
+  color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+}
+
+.user-info > div:last-child {
+  margin-left: 5px;
+}
+
+mat-icon {
+  color: #f5972d;
+}

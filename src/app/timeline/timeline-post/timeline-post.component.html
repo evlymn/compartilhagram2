@@ -1,0 +1,46 @@
+<mat-divider></mat-divider>
+<div class="timeline-post "
+     *ngIf="post"
+     [ngClass]="isRepost ? 'timeline-post-background-repost' : 'timeline-post-background'">
+  <app-post-header [isDetail]="isDetail" [loggedUId]="loggedUId"
+                   [isRepost]="isRepost" [post]="post" [index]="index"></app-post-header>
+  <app-post-body [isDetail]="isDetail" [post]="post"
+                 [isRepost]="isRepost"
+                 [index]="index"
+                 [loggedUId]="loggedUId"></app-post-body>
+
+
+  <div *ngIf="post?.repost" clas="repost">
+    <app-timeline-post *ngIf="post?.repost "
+                       [isRepost]="true"
+                       [index]="index"
+                       [post]="post?.repost">
+    </app-timeline-post>
+  </div>
+  <app-post-footer *ngIf="!isRepost"
+                   [totalComments]="totalComments"
+                   [userCommented]="userCommented"
+                   [loggedUId]="loggedUId"
+
+                   [isDetail]="isDetail" [post]="post"></app-post-footer>
+
+
+  <app-post-comments
+    (commentChanged)="commentChanged($event)"
+    [loggedUId]="loggedUId"
+    [isDetail]="isDetail"
+    [postId]="post?.id"
+    [comments]="comments"></app-post-comments>
+  <!--    </div>-->
+  <!--    &lt;!&ndash;    <div *ngIf="unfold">&ndash;&gt;-->
+  <!--    &lt;!&ndash;      <div *ngFor="let i of [0,1,2,3,5,67,77,8,9,0.14]">&ndash;&gt;-->
+  <!--    &lt;!&ndash;        <app-post-comments></app-post-comments>&ndash;&gt;-->
+  <!--    &lt;!&ndash;      </div>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    </div>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    <div class="unfold-more" (click)="unfoldComments()">&ndash;&gt;-->
+  <!--    &lt;!&ndash;      <small> {{unfold ? 'fechar' : 'mais 4 comentários'}}  </small>&ndash;&gt;-->
+  <!--    &lt;!&ndash;      <mat-icon mat-list-icon>  {{unfold ? 'expand_less' : 'expand_more'}}&ndash;&gt;-->
+  <!--    &lt;!&ndash;      </mat-icon>&ndash;&gt;-->
+  <!--    &lt;!&ndash;    </div>&ndash;&gt;-->
+  <!--  </div>-->
+  <!--</div>-->

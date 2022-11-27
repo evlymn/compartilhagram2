@@ -1,0 +1,12 @@
+
+.button-items-align-center{
+  .mdc-button__label {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center !important;
+  }
+}
+
+:host-context(.mod-touchevents) [md-button]:hover::after, [md-icon-button]:hover::after {
+  content: none;
+}

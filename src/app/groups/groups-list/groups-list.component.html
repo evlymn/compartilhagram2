@@ -1,0 +1,14 @@
+<div class="group" *ngIf="item" [routerLink]="['../groups', item.id]">
+  <div class="group-info">
+    <div>{{item?.name}}</div>
+    <div>{{item.description}}</div>
+    <small>
+      <mat-icon class="icon-font-mobile icon-list" mat-list-icon>
+        {{ item.public ? 'public' : 'key'}}
+      </mat-icon>
+    </small>
+  </div>
+  <mat-icon>
+    arrow_forward
+  </mat-icon>
+</div>

@@ -17,6 +17,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {LoginErrorMessageDialogComponent} from "./login-error-message-dialog/login-error-message-dialog.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -27,20 +28,21 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     LoginImageProfileDialogComponent,
     LoginErrorMessageDialogComponent
   ],
-  imports: [
-    CommonModule,
-    LoginRoutingModule,
-    MatTabsModule,
-    FormsModule,
-    MatRippleModule,
-    MatDialogModule,
-    ImageCropperModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressBarModule,
-  ]
+    imports: [
+        CommonModule,
+        LoginRoutingModule,
+        MatTabsModule,
+        FormsModule,
+        MatRippleModule,
+        MatDialogModule,
+        ImageCropperModule,
+        MatSnackBarModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressBarModule,
+        MatButtonModule,
+    ]
 })
 export class LoginModule {
 }

@@ -1,8 +1,5 @@
 <div class="login-component">
   <div class="login-content">
-<!--    <div  class="compartilhagram-logo-content">-->
-<!--      <img class="compartilhagram-logo" src="./assets/images/compartilhagram-logo.png" alt="Compartilhagram">-->
-<!--    </div>-->
     <mat-tab-group class="mat-tab-header"
                    [selectedIndex]="selectedIndex"
                    [preserveContent]="false"  animationDuration="200" >
@@ -14,15 +11,12 @@
       </mat-tab>
     </mat-tab-group>
     <div class="login-actions">
-
-
-      <a *ngIf="selectedIndex==0" class="login-a signInUp" (click)="selectedIndex=1">
-        Registre-se <i class='bx bx-right-arrow-circle'></i>
-      </a>
-
-      <a *ngIf="selectedIndex==1"  class="login-a signInUp" (click)="selectedIndex=0">
-        <i class='bx bx-left-arrow-circle' ></i>Logar
-      </a>
+      <button mat-button *ngIf="selectedIndex==0" class=" button-items-align-center login-a signInUp" (click)="selectedIndex=1">
+        Registre-se <i class='bx bxs-right-arrow'></i>
+      </button>
+      <button   mat-button *ngIf="selectedIndex==1"  class=" button-items-align-center login-a signInUp" (click)="selectedIndex=0">
+        <i class='bx bxs-left-arrow' ></i> Logar
+      </button>
     </div>
   </div>
 </div>

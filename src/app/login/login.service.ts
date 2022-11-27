@@ -22,7 +22,6 @@ export class LoginService {
 
   async signUp(email: string, password: string, displayName: string, image: string) {
     const credentials = await this.auth.createUserWithEmailAndPassword(email, password);
-    console.log(credentials);
     const file = await this.storage.base64ToFile(image, credentials.user.uid, {
       type: 'image/jpeg',
     });

@@ -1,0 +1,29 @@
+.icon-font-mobile-add, .icon-font-mobile-top, .icon-font-mobile-home {
+  position: fixed;
+  right: 30px;
+  background-color: #f5972d;
+  -webkit-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+  color: #523d23;
+}
+
+.icon-font-mobile-add {
+  bottom: 30px;
+  transform: scale(1.2);
+  background-color: #f5972d;
+}
+
+
+.icon-font-mobile-top {
+  bottom: 135px;
+  transform: scale(1.0);
+  background-color: #837eb4;
+}
+
+.icon-font-mobile-home {
+  bottom: 85px;
+  transform: scale(1.0);
+  background-color: #b9b9b9;
+}

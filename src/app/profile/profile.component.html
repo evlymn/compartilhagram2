@@ -1,0 +1,27 @@
+<div class="profile-component">
+  <div class="post-avatar">
+    <img class="post-avatar-image" alt="image profile" [src]="profile?.photoURL">
+    <h3>{{profile?.displayName}}</h3>
+  </div>
+  <h3>{{profile?.email}}</h3>
+
+
+  <div class="activities">
+    <div>
+      Postagens: {{totalPosts}}
+    </div>
+    <div> Imagens: {{ totalImages}}</div>
+    <div> Reposts: {{ totalReposts}}</div>
+  </div>
+
+  <button *ngIf="profile?.uid != auth.user?.uid" mat-stroked-button (click)="followUser(profile?.uid)">
+    <mat-icon>
+      person_add
+    </mat-icon>
+    Seguir
+  </button>
+
+</div>
+
+
+

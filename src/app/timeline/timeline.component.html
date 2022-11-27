@@ -1,0 +1,33 @@
+<div class="search-panel">
+
+<mat-expansion-panel [expanded]="searchUserPanelOpened" (afterCollapse)="onPanelSearchUserCollapse()">
+  <div class="expansion-panel-content">
+    <input matInput type="text" [(ngModel)]="searchText" placeholder="Pesquisar usuário">
+    <button class="W-100" (click)="searchUser()" mat-raised-button  >
+      pesquisar
+    </button>
+  </div>
+</mat-expansion-panel>
+
+</div>
+<div #posts class="posts" [ngClass]="isSearchUser? 'post-colum' : 'post-colum-reverse'" *ngIf="postItems">
+
+<!--  <div class="message-saved" *ngIf="isSavedPost">-->
+<!--    <h3>Nenhuma postagem salva</h3>-->
+<!--  </div>-->
+
+
+  <div *ngFor="let item of postItems|async;let i = index;">
+    <a id="p{{i}}"></a>
+    <app-timeline-post [index]="i" [post]="item">
+    </app-timeline-post>
+  </div>
+
+</div>
+
+
+<app-timeline-floating-menu></app-timeline-floating-menu>
+
+<div class="waiting-div" *ngIf="!postItems">
+  <mat-spinner color="accent"></mat-spinner>
+</div>

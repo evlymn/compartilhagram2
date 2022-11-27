@@ -1,0 +1,50 @@
+<div class="groups-component">
+
+  <div class="groups-action-panel">
+    <button mat-icon-button (click)=" this.createGroupPanelOpened = !this.createGroupPanelOpened"
+            class="create-button">
+      <mat-icon class="icon-font-mobile" mat-list-icon>add_circle</mat-icon>
+
+    </button>
+  </div>
+
+  <mat-expansion-panel [expanded]="createGroupPanelOpened" (afterCollapse)="onPanelCreateGroupCollapse()">
+    <div class="expansion-panel-content">
+      <h3>Crie um novo grupo</h3>
+      <input matInput type="text" [(ngModel)]="groupName" placeholder="Nome do grupo">
+      <input matInput type="text" [(ngModel)]="groupDescription" placeholder="Descreva o grupo">
+
+      <div class="create-group-actions">
+        <button  mat-raised-button  (click)="createGroup()"  >
+          Criar grupo
+        </button>
+        <mat-slide-toggle [(ngModel)]="publicGroup" color="primary">
+          Público
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-divider></mat-divider>
+
+  <div class="actions-tab-group">
+    <button mat-raised-button (click)="toggleIndex(0)">
+      <mat-icon class="icon-font-mobile tab-icon">key</mat-icon>
+     Meus grupos
+    </button>
+    <button mat-raised-button (click)="toggleIndex(1)">
+      <mat-icon class="icon-font-mobile tab-icon" >public</mat-icon>
+      Públicos
+    </button>
+  </div>
+  <mat-tab-group [selectedIndex]="tabSelectedIndex">
+    <mat-tab label="First">
+
+      <app-groups-list *ngFor="let item of groups| async" [item]="item"></app-groups-list>
+    </mat-tab>
+    <mat-tab label="Second">
+      <app-groups-list *ngFor="let item of publicGroups| async" [item]="item"></app-groups-list>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>

@@ -13,14 +13,16 @@
            placeholder="email"
            formControlName="email"
            type="text" required>
-    <mat-error *ngIf="formSubmitted && email?.value?.trim().length ==0">
-      Qual seu email?
-    </mat-error>
-    <mat-error *ngIf="formSubmitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
-      Acho que vc digitou algo errado!
-    </mat-error>
+
   </mat-form-field>
 
+
+      <mat-error *ngIf="formSubmitted && email?.value?.trim().length ==0">
+        Qual seu email?
+      </mat-error>
+      <mat-error *ngIf="formSubmitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
+        Acho que vc digitou algo errado!
+      </mat-error>
 
   <mat-form-field class="custom-mat-form-field mat-form-field-W100"
                   appearance="fill"

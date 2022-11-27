@@ -1,0 +1,81 @@
+{
+  "rules": {
+    "system": {
+      "user": {
+        "onDeleted": {
+          ".read": true,
+          ".write": false
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "timeline": {
+      "messages": {
+        ".indexOn": ["uid","bad_word"],
+        ".read": "auth != null",
+        "$key": {
+          ".read": "auth != null",
+          ".write": "auth != null "
+        }
+      },
+      "messages_by_user": {
+        ".indexOn": "uid",
+        ".read": "auth != null",
+        ".write": "auth != null"
+      },
+      "comments": {
+        "$key": {
+          ".indexOn": ["uid","bad_word"],
+          ".read": "auth != null",
+          ".write": "auth != null"
+        }
+      },
+      "favorites": {
+        "comments": {
+          "$key": {
+            ".indexOn": "uid",
+            ".read": "auth != null",
+            ".write": "auth != null"
+          }
+        },
+        "messages": {
+          "$key": {
+            ".indexOn": "uid",
+            ".read": true,
+            ".write":true
+          }
+        }
+      },
+      "look-ahead": {
+        "comments": {
+          "$key": {
+            ".indexOn": "commentId",
+            ".read": false,
+            ".write": false
+          }
+        },
+        "favorites": {
+          "timeline": {
+            "$key": {
+              ".indexOn": "postId",
+              ".read": false,
+              ".write":false
+            }
+          },
+          "comments": {
+            "$key": {
+              ".indexOn": "commentId",
+              ".read": false,
+              ".write": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<mat-nav-list>
+  <!--    (click)="navigate('/principal')"-->
+  <!--  <a mat-list-item> <img class="logo-smaller"-->
+  <!--                         alt="..." src="./assets/images/compartilhagram-menor.png">-->
+  <!--  </a>-->
+
+
+  <!--    (click)="navigate('/principal')"-->
+  <!--  <a mat-list-item [routerLink]="['/home/timeline']">-->
+  <!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
+  <!--  </a>-->
+
+
+  <a mat-list-item [routerLink]="['alerts']">
+    <i class='bx bx-bell' [ngClass]="alertsService.totalAlerts>0 ?'bx-tada': ''"> </i>
+  </a>
+  <a mat-list-item [routerLink]="['messages']">
+    <mat-icon class="icon-font-mobile ">mail_outlined</mat-icon>
+  </a>
+  <a mat-list-item [routerLink]="['groups']">
+    <mat-icon class="icon-font-mobile">forum_outlined</mat-icon>
+  </a>
+  <a mat-list-item [routerLink]="['saved']">
+    <mat-icon class="icon-font-mobile">bookmarks_outlined</mat-icon>
+  </a>
+  <a mat-list-item [routerLink]="['photos']">
+    <mat-icon class="icon-font-mobile">photo_library</mat-icon>
+  </a>
+
+  <a mat-list-item  [routerLink]="['profile', user?.uid]">
+
+    <img class="menu-mobile-avatar-image" *ngIf="user?.photoURL"
+         [src]="user?.photoURL"
+         alt="image profile">
+  </a>
+
+</mat-nav-list>
+
+<!--  <img [routerLink]="['profile', auth.user?.uid]" *ngIf="auth.user?.photoURL" class="menu-mobile-avatar-image"-->
+<!--         alt="image profile" [src]="auth.user?.photoURL">-->
+
+

@@ -1,0 +1,24 @@
+<mat-toolbar class="home-toolbar">
+  <mat-icon color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
+  <button [routerLink]="['/home']" mat-button color="#ccc" class="button-items-align-center">
+    <i class='bx bx-world'></i>feed
+  </button>
+  <button [routerLink]="['/home/following']" mat-button color="#ccc" class="button-items-align-center">
+    <i class='bx bx-run'></i>seguindo
+  </button>
+  <button (click)="toggleSearchUser()" mat-button color="#ccc" class="button-items-align-center">
+    <i class='bx bx-search-alt'></i>pesquisar
+  </button>
+  <mat-icon [matMenuTriggerFor]="menu" color="#ccc">more_vert</mat-icon>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon class="icon-font-mobile"> logout</mat-icon>
+      logout
+    </button>
+    <button mat-menu-item [routerLink]="['profile', homeService.auth.user?.uid]">
+      <mat-icon class="icon-font-mobile"> account_circle</mat-icon>
+      perfil
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

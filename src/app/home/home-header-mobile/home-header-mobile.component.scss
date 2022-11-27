@@ -1,0 +1,40 @@
+.header-mobile {
+  width: 100% !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  background-color: transparent;;
+  color: whitesmoke;
+  border: 0 solid transparent;
+  padding: 5px;
+  border-radius: 5px;
+}
+.home-toolbar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  background-color: #481a34;
+  color: whitesmoke;
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 40px;
+  max-height: 40px!important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-toolbar-row {
+  height: 40px;
+  max-height: 40px!important;
+}
+
+i{
+  font-size: 16px;
+}
+.icon-font-mobile {
+  color: whitesmoke;
+}

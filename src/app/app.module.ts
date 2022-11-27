@@ -12,16 +12,30 @@ import {connectFunctionsEmulator, getFunctions, provideFunctions} from '@angular
 import {getMessaging, provideMessaging} from '@angular/fire/messaging';
 import {connectStorageEmulator, getStorage, provideStorage} from '@angular/fire/storage';
 import {LoginModule} from "./login/login.module";
+import {HomeModule} from "./home/home.module";
+import { TimelineModule } from './timeline/timeline.module';
+import { ImageViewModule } from './image-view/image-view.module';
+import {AlertsModule} from "./alerts/alerts.module";
+import {MessagesModule} from "./messages/messages.module";
+import {GroupsModule} from "./groups/groups.module";
+import {ProfileModule} from "./profile/profile.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     LoginModule,
+    HomeModule,
+    TimelineModule,
+    AlertsModule,
+    ImageViewModule,
+    MessagesModule,
+    GroupsModule,
+    ProfileModule,
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
@@ -55,6 +69,8 @@ import {LoginModule} from "./login/login.module";
 
     provideAnalytics(() => getAnalytics()),
     provideMessaging(() => getMessaging()),
+
+
   ],
   providers: [
     ScreenTrackingService,

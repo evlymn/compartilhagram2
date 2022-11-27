@@ -1,0 +1,41 @@
+<div class="post-comments">
+  <div class="comment-items">
+    <div class="comment-header">
+      <div class="comment-user-info">
+
+        <div class="user-avatar">
+          <div class="comment-avatar">
+            <img class="post-avatar-image" alt="image profile" [src]="item?.photoURL">
+          </div>
+        </div>
+        <div class="user-name">
+          {{item?.displayName}}
+        </div>
+      </div>
+    </div>
+    <div class="comment-body">
+      {{ item?.commentText}}
+    </div>
+  </div>
+  <div class="comment-favorite">
+    <div class="favorite-item">
+      <mat-icon class="comment-action-icon">favorite_outlined</mat-icon>
+      <small class="icon-count"></small>
+    </div>
+    <mat-icon class="comment-action-icon " (click)="commentPanelOpened2 = !commentPanelOpened2">
+      disabled_by_default_outlined
+    </mat-icon>
+  </div>
+
+
+</div>
+
+
+<mat-expansion-panel [expanded]="commentPanelOpened2" (afterCollapse)="onPanelCollapse()">
+  <button (click)="openClosePanel()" mat-button>
+    cancelar
+  </button>
+  <button (click)="deleteComment(item.postId, item.id)" mat-button>
+    deletar
+  </button>
+</mat-expansion-panel>

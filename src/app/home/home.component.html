@@ -1,1 +1,14 @@
-<p>home works!</p>
+<div class="">
+  <app-home-header-mobile></app-home-header-mobile>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #snav [mode]="'side'"
+                 [opened]="sideNavOpened"
+                 [fixedInViewport]="true" [fixedTopGap]="37">
+        <app-home-menu-mobile></app-home-menu-mobile>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

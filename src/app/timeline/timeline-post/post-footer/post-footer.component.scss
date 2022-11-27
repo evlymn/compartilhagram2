@@ -1,0 +1,113 @@
+.post-footer {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-width: 0;
+  outline: none;
+  border-radius: 4px;
+  background-color: #723753;
+  font-size: 16px;
+  resize: none;
+  color: #f6e1cd;
+}
+
+//.material-symbols-outlined {
+//  font-variation-settings: 'FILL' 0,
+//  'wght' 400,
+//  'GRAD' 0,
+//  'opsz' 48
+//}
+
+.post-actions {
+
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.post-actions > button {
+  height: 20px !important;
+}
+
+.panel-post-actions {
+  display: flex;
+  justify-content: space-around;
+  background-color: #622947;
+}
+
+.panel-post-actions > button {
+  width: 48%;
+}
+
+.panel-post-actions > div {
+  width: 2px;
+  background-color: #723753;
+}
+
+.user-interaction {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-interaction > button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.icon-count {
+  color: #915c77;
+  margin-left: 2px;
+  align-items: center;
+}
+
+mat-icon {
+  color: #8f5d78;
+  transform: scale(.75);
+}
+
+.mat-icon-disabled {
+  color: #643e54;
+}
+
+.expansion-comment {
+  margin-bottom: 3px;
+  padding-top: 3.5px;
+}
+
+mat-expansion-panel {
+  background-color: #723753;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.button-expansion {
+  color: #cccccc;
+}
+
+.expansion-comment {
+  margin-bottom: 3px;
+  padding-top: 3.5px;
+}
+
+.form-button {
+  background-color: #622947;
+  color: whitesmoke;
+  margin-right: 5px;
+  width: 100%;
+}
+
+small {
+  font-size: 12px;
+}

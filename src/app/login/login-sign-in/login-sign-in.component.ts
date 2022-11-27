@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from "@angular/forms";
 import {LoginService} from "../login.service";
+import {LoginErrorMessageDialogComponent} from "../login-error-message-dialog/login-error-message-dialog.component";
+import {LoginErrorMessages} from "../login-error-messages/login-error-messages";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-login-sign-in',
@@ -20,6 +23,7 @@ export class LoginSignInComponent {
   }
 
   constructor(private _formBuilder: FormBuilder,
+              private _dialog: MatDialog,
               private _loginService: LoginService) {
     this.createForm();
   }
@@ -36,7 +40,16 @@ export class LoginSignInComponent {
     if (this.form.valid) {
       this._loginService.login(this.email?.value, this.password?.value).then(user => {
         formDirective.resetForm();
-      }).catch(err => console.log(err))
+      }).catch(error => {
+        this._dialog.open(LoginErrorMessageDialogComponent, {
+          panelClass: 'ErrorMessageDialogComponent',
+          width: '350px',
+          height: 'auto',
+          data: LoginErrorMessages[error.code],
+        });
+        formDirective.resetForm();
+      })
     }
   }
 }
+

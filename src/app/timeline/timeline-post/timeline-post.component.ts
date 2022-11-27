@@ -1,0 +1,76 @@
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+
+import {MatDialog} from "@angular/material/dialog";
+import {TimelineService} from "../timeline.service";
+
+
+@Component({
+  selector: 'app-timeline-post',
+  templateUrl: './timeline-post.component.html',
+  styleUrls: ['./timeline-post.component.scss']
+})
+export class TimelinePostComponent implements OnInit, AfterViewInit {
+  @Input() post: any;
+  @Input() index!: any;
+  @Input() isDetail = false;
+  @Input() isRepost = false;
+  img = false
+  postId = '';
+  images: any[] = [];
+  comments: any
+  totalComments = 0;
+  loggedUId = '';
+  postText = '';
+
+  userCommented = false;
+
+  constructor(
+    private _route: ActivatedRoute,
+    private _timelineService: TimelineService,
+    private _dialog: MatDialog,
+    private _router: Router
+  ) {
+    this.postId = this._route.snapshot.paramMap.get('id') as string;
+    this.index = this._route.snapshot.paramMap.get('index');
+    this.loggedUId = this._timelineService.auth.user?.uid as string;
+
+    this._timelineService.auth.authState.subscribe(() => {
+      this.getPost().catch();
+    })
+  }
+
+
+  async getPost() {
+    if (!this.isRepost) {
+      if (this.postId) {
+        this.post = await this._timelineService.getPost(this.postId);
+        this.postText = this.post.postText;
+      }
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.post) {
+      this.images = this.post.images;
+      this.postText = this.post.postText;
+    }
+    setTimeout(s => {
+      this.img = true;
+    }, 1500)
+  }
+
+
+  ngAfterViewInit(): void {
+    // const urlFragment = this._route.snapshot.fragment;
+    // if (urlFragment?.includes(this.index.toString())) {
+    //   this._router.navigate(['/principal'], {fragment: urlFragment}).then(() => {
+    //   })
+    // }
+  }
+
+  commentChanged(event: any) {
+    this.totalComments = event.totalComments;
+    this.userCommented = event.userCommented;
+  }
+}

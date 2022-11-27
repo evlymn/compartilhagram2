@@ -1,0 +1,74 @@
+<div class="post-body" *ngIf="post" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
+  <div class="post-text-edit">
+    <div class="post-text" [routerLink]="['details/', post?.id, index]">
+      {{post?.postText}}
+    </div>
+    <!--    <mat-icon [matMenuTriggerFor]="beforeMenu"-->
+    <!--              [ngClass]="loggedUId == post?.uid ? 'color-mine': ''">-->
+    <!--      more_horiz-->
+    <!--    </mat-icon>-->
+    <!--    <mat-menu #beforeMenu="matMenu" xPosition="before">-->
+    <!--      <div *ngIf="loggedUId === post?.uid" mat-menu-item class="mat-item-div" (click)="togglePostPanel()">-->
+    <!--        <mat-icon class="post-action-icon">edit_note</mat-icon>-->
+    <!--        <span>Editar</span>-->
+    <!--      </div>-->
+    <!--      <div *ngIf="loggedUId === post?.uid" mat-menu-item class="mat-item-div" (click)="toggleDeletePanel()">-->
+    <!--        <mat-icon class="post-action-icon">do_not_disturb_on</mat-icon>-->
+    <!--        <span>Deletar</span>-->
+    <!--      </div>-->
+    <!--      <div *ngIf="loggedUId != post?.uid" mat-menu-item class="mat-item-div">-->
+    <!--        <mat-icon class="post-action-icon icon-warning">warning</mat-icon>-->
+    <!--        <span>Denunciar</span>-->
+    <!--      </div>-->
+    <!--    </mat-menu>-->
+
+
+  </div>
+
+
+
+
+  <mat-expansion-panel
+    hideToggle [expanded]="postPanelOpened"
+    (afterExpand)="onExpansionPostOpen()"
+    (afterCollapse)="onExpansionPostClose()">
+       <textarea cdkTextareaAutosize [(ngModel)]="postText"
+                 maxlength="300"></textarea>
+    <div class="panel-post-actions">
+      <button (click)="togglePostPanel()" mat-button class="form-button form-button-post">
+        cancelar
+      </button>
+      <div></div>
+      <button (click)="editPost()" mat-button class="form-button form-button-post">
+        editar
+      </button>
+    </div>
+  </mat-expansion-panel>
+</div>
+
+<mat-expansion-panel class="panel-delete" hideToggle [expanded]="deletePanelOpened"
+                     (afterExpand)="onExpansionDeleteOpen()">
+
+    <button (click)="toggleDeletePanel()" class="button-expansion button-warning" mat-button>
+      cancelar
+    </button>
+    <button class="button-expansion button-warning" (click)="deletePost()" mat-button>
+      deletar?
+    </button>
+
+</mat-expansion-panel>
+
+<app-post-images-grid *ngIf="!isDetail" [postId]="post?.id" [postIndex]="index"
+                      [images]="post?.images"></app-post-images-grid>
+
+<div class="image-details" *ngIf="isDetail">
+  <img (click)="showImageDialog(img?.imageURL)" *ngFor="let img of post?.images; let i=index"
+       [src]="img?.imageURL"
+       class="d-block w-100" alt="...">
+</div>
+
+<div *ngIf="post?.albumName" class="post-album">
+
+  <mat-chip [routerLink]="['album', post?.albumId, post?.uid ]" color="primary"> {{ post?.albumName }}</mat-chip>
+
+</div>

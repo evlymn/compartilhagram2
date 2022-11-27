@@ -1,0 +1,16 @@
+<button (click)="scrollTo()" *ngIf="isMobile && showScrollTo" mat-mini-fab color="accent" class="icon-font-mobile-top">
+  <mat-icon>keyboard_arrow_up
+  </mat-icon>
+</button>
+
+
+<button [routerLink]="['/home']" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-home">
+  <mat-icon >home
+  </mat-icon>
+</button>
+
+
+<button (click)="openForm()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-add">
+  <mat-icon  >add
+  </mat-icon>
+</button>

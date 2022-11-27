@@ -2,8 +2,8 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "styles/mat-dialog";
 @import "styles/mat-form-fied";
-
-
+@import "styles/mat-sidenav";
+@import "styles/mat-button";
 
 
 :root {
@@ -23,10 +23,70 @@ html, body {
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
 }
 
 .mat-tab-header {
   mat-tab-header {
     display: none !important;
   }
+  .mat-mdc-tab-label-container {
+    display: none!important;
+  }
+  .mat-mdc-tab-labels {
+    display: none!important;
+  }
+}
+
+mat-tab-group {
+  //background-color: #481a34!important;
+}
+
+
+.mat-mdc-tab-body {
+  //background-color: #481a34!important;
+}
+
+
+
+.bottom-sheet-class .mat-bottom-sheet-container {
+  background-color: transparent!important;
+  color: #cccccc!important;
+}
+
+
+
+.bg-color .mat-dialog-container .mat-mdc-dialog-container {
+  background-color: #481a34!important;
+}
+//.mat-mdc-dialog-container {
+//  background-color: #481a34!important;
+//}
+.mdc-dialog__surface {
+  background-color: #481a34!important;
+}
+.bg-color  .mat-mdc-dialog-container {
+  background-color: #481a34!important;
+}
+
+
+
+.no-padding .mat-dialog-container {
+  padding: 0 !important;
+}
+.mat-mdc-tab-label-container {
+  display: none!important;
+}
+
+
+.mat-mdc-menu-panel {
+  background-color: #481a34;
+  color: whitesmoke;
+}
+.mat-mdc-menu-item > span{
+  color: whitesmoke!important;
+  font-size: 12px!important;
+}
+.mat-mdc-menu-item > span:last-child{
+  color: #f6b268;
 }

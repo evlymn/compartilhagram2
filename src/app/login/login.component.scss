@@ -24,14 +24,14 @@
   align-items: center;
 }
 
-.login-actions > a {
+.login-actions > button {
   display: flex;
   flex-direction: row;
   align-items: center;
   color: whitesmoke;
 }
 
-.login-actions > a > i {
+.login-actions > button > i {
   padding-left: 10px;
   padding-right: 10px;
 }

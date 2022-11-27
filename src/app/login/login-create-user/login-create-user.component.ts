@@ -46,7 +46,7 @@ export class LoginCreateUserComponent {
   constructor(private _dialog: MatDialog,
               private _formBuilder: FormBuilder,
               private _loginService: LoginService) {
-    this.  createForm();
+    this.createForm();
   }
 
   createForm() {
@@ -61,7 +61,6 @@ export class LoginCreateUserComponent {
   async submit(formDirective: FormGroupDirective) {
     this.submitted = true;
     try {
-      console.log(this.form.valid, this.img64);
       if (this.img64 && this.form.valid) {
        this.hintMessage = 'Cadastrando usuária(o)...';
         const uploadTaskSnapshot = await this._loginService.signUp(this.email?.value, this.password?.value, this.name?.value, this.img64);
