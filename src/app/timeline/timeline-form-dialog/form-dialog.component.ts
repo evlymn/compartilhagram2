@@ -38,7 +38,7 @@ export class FormDialogComponent implements OnInit {
 
   ) {
     this.isDialog = data;
-    this.windowService.resizeSubject.subscribe(size => {
+    this.windowService.getSizes.subscribe(size => {
       this.isMobile = size.isMobile;
     });
 

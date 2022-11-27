@@ -9,12 +9,19 @@ import {HomeService} from "./home.service";
 })
 export class HomeComponent implements OnInit {
   sideNavOpened = false;
-  user:any;
+  user: any;
+  isMobile = false;
+
   constructor(
     private _notificationService: NotificationService,
-    private _homeService: HomeService
+    public homeService: HomeService
   ) {
-    this.user = this._homeService.authService.user;
+
+    this.isMobile = this.homeService.windowService.sizes.isMobile;
+    this.homeService.windowService.getSizes.subscribe(s => {
+      this.isMobile = s.isMobile
+    })
+    this.user = this.homeService.authService.user;
     this._notificationService.observable().subscribe(not => {
       if (not.key == 'toggleSideNav') {
         this.sideNavOpened = !this.sideNavOpened;

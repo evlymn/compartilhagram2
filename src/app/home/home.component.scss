@@ -39,4 +39,14 @@ app-home-header-mobile {
   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
      `<body>` to be our scrolling element for mobile layouts. */
 }
-
+.no-mobile {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.no-mobile>div{
+  color: #cccccc;
+  font-size: 20px;
+}

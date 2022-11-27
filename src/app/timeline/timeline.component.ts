@@ -55,7 +55,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
       if (!this.isSearchUser)
         this.getPosts().catch();
     })
-    this.windowService.resizeSubject.subscribe(size => {
+    this.windowService.getSizes.subscribe(size => {
       this.isMobile = size.isMobile;
     })
   }

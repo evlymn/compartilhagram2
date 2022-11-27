@@ -31,6 +31,7 @@ export class AuthenticationService {
 
   constructor(private auth: Auth, private router: Router,
               private ngZone: NgZone, private _realtime: RealtimeService) {
+    this.setActiveRoute(this.router.url);
     this.onAuthStateChanged();
   }
 
@@ -70,12 +71,10 @@ export class AuthenticationService {
       if (usr) {
         this.onDeleteLogout(usr?.uid!);
         this.ngZone.run(() => {
-           this.router.navigate(['home']).catch(reason => console.log(reason));
+          this.router.navigate([this._route]).catch(reason => console.log(reason));
         });
       } else {
-        // this.ngZone.run(() => {
-        this.router.navigateByUrl('/').catch(reason => console.log(reason));
-        // });
+         this.router.navigateByUrl('/').catch(reason => console.log(reason));
       }
     });
   }

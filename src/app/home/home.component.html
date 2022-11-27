@@ -1,4 +1,4 @@
-<div class="">
+<div class="" *ngIf="isMobile">
   <app-home-header-mobile></app-home-header-mobile>
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #snav [mode]="'side'"
@@ -11,4 +11,10 @@
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
+</div>
+
+<div *ngIf="!isMobile" class="no-mobile">
+  <div>
+      Por favor, use em seu smartphone.
+  </div>
 </div>
