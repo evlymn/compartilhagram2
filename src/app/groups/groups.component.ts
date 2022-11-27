@@ -18,9 +18,9 @@ export class GroupsComponent implements OnInit {
   getPublic = false;
   publicGroups: any;
 
-  constructor(private _groupService: GroupsService,
+  constructor(public groupService: GroupsService,
               private _snackBar: MatSnackBar) {
-    this._groupService.auth.authState.subscribe(user => {
+    this.groupService.auth.authState.subscribe(user => {
 
       this.getPublicGroups()
 
@@ -45,7 +45,7 @@ export class GroupsComponent implements OnInit {
       public: this.publicGroup,
       description: this.groupDescription,
     }
-    this._groupService.createGroup(grouData).then(() => {
+    this.groupService.createGroup(grouData).then(() => {
       this._snackBar.open('Grupo criado', 'fechar', {
         verticalPosition: 'top',
         duration: 1000
@@ -55,7 +55,7 @@ export class GroupsComponent implements OnInit {
   }
 
   getGroupsByUser(userId: string) {
-    this.groups = this._groupService.getGroupsByUser(userId);
+    this.groups = this.groupService.getGroupsByUser(userId);
     // this._groupService.getGroupsByUser(userId).subscribe(d => {
     //   console.log(d)
     // })
@@ -63,7 +63,7 @@ export class GroupsComponent implements OnInit {
   }
 
   getPublicGroups() {
-    this.publicGroups = this._groupService.getPublicGroups();
+    this.publicGroups = this.groupService.getPublicGroups();
   }
 
   onPanelCreateGroupCollapse() {

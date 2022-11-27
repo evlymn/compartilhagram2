@@ -16,9 +16,9 @@
         <mat-icon>image</mat-icon>
       </button>
       <small> {{ 6 - images.length}}</small>
-<!--      <button  [disabled]="true" mat-icon-button class="icon-button-mobile">-->
-<!--        <mat-icon>location_on</mat-icon>-->
-<!--      </button>-->
+      <!--      <button  [disabled]="true" mat-icon-button class="icon-button-mobile">-->
+      <!--        <mat-icon>location_on</mat-icon>-->
+      <!--      </button>-->
 
       <span *ngIf="sendingPost" class="send-post">enviando...</span>
     </div>
@@ -44,29 +44,43 @@
     </div>
   </div>
 
-  <div *ngIf="images.length>0" class="autocomplete-title"> Criar ou adicionar a um álbum</div>
+  <div *ngIf="images.length>0">
+  <div   class="autocomplete-title"> Criar ou adicionar a um álbum</div>
   <div class="form-actions-dialog">
     <div *ngIf="images.length>0" class="input-flex-autocomplete">
-      <div>
-        <input [disabled]="sendingPost" type="text" class="autocomplete-albums"
-               placeholder="Albuns"
-               matInput
-               [formControl]="albumControl"
-               [matAutocomplete]="auto">
-      </div>
-      <div>
-        <mat-icon (click)="deleteAutocompleteText()" class="">disabled_by_default
-        </mat-icon>
-      </div>
+
+        <mat-form-field
+          class="custom-mat-form-field mat-form-field-W100"
+          appearance="fill"
+          floatLabel="auto">
+          <input matInput [disabled]="sendingPost" type="text"
+                 placeholder="Albuns"
+                 [formControl]="albumControl"
+                 [matAutocomplete]="auto">
+
+          <!--      <input -->
+          <!--             [matAutocomplete]="auto"-->
+          <!--             [formControl]="albumControl">-->
+          <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
+            <mat-option *ngFor="let option of albumsFiltered | async" [value]="option">
+              {{ option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
     </div>
-    <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
-      <mat-option *ngFor="let option of albumsFiltered | async" [value]="option">
-        {{ option}}
-      </mat-option>
-    </mat-autocomplete>
+
+
+
+    <!--        <mat-icon (click)="deleteAutocompleteText()" class="">disabled_by_default-->
+    <!--        </mat-icon>-->
+
   </div>
 
-  <button (click)="savePost()"   [disabled]="sendingPost" mat-raised-button class="form-button form-button-post-dialog">
+
+  </div>
+  <button (click)="savePost()" [disabled]="sendingPost" mat-raised-button class="form-button form-button-post-dialog">
     Publicar
   </button>
 </div>

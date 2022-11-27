@@ -57,41 +57,43 @@ export class FormDialogComponent implements OnInit {
   }
 
   async savePost() {
-   const postId = this.timelineService.createId() as string;
-    this.sendingPost = true;
-    let albumData: any;
-    if (this.images.length > 0) {
-      this.album = this.albumControl.value as string;
-      if (this.album && this.album.length > 0) {
-        albumData = this.albums?.find((d: { album: string; }) => d.album == this.album);
-        if (!albumData) {
-          albumData = await this.timelineService.createAlbum(this.album) as { id: string, album: string };
+    if(this.postText.trim().length>0 || this.images.length>0) {
+      const postId = this.timelineService.createId() as string;
+      this.sendingPost = true;
+      let albumData: any;
+      if (this.images.length > 0) {
+        this.album = this.albumControl.value as string;
+        if (this.album && this.album.length > 0) {
+          albumData = this.albums?.find((d: { album: string; }) => d.album == this.album);
+          if (!albumData) {
+            albumData = await this.timelineService.createAlbum(this.album) as { id: string, album: string };
+          }
         }
       }
-    }
 
 
-    let total = 0;
-    this.images = await this.timelineService.savePost(postId, this.images, this.postText, albumData);
-    if (this.images.length > 0) {
-      for (let i = 0; i < this.images.length; i++) {
-        const sub = this.images[i].uploadTask?.subscribe(s => {
-            this.images[i].progress = s.progress;
-            if (s.progress == 100) {
-              console.log('fim do upload ' + i.toString());
-              sub?.unsubscribe();
-              total += s.progress;
-              if (total == this.images.length * 100) {
-                this.timelineService.repostToFollowers(postId);
-                this.openAlert({text: "Post enviado!", action: 'closeForm'});
+      let total = 0;
+      this.images = await this.timelineService.savePost(postId, this.images, this.postText, albumData);
+      if (this.images.length > 0) {
+        for (let i = 0; i < this.images.length; i++) {
+          const sub = this.images[i].uploadTask?.subscribe(s => {
+              this.images[i].progress = s.progress;
+              if (s.progress == 100) {
+                console.log('fim do upload ' + i.toString());
+                sub?.unsubscribe();
+                total += s.progress;
+                if (total == this.images.length * 100) {
+                  this.timelineService.repostToFollowers(postId);
+                  this.openAlert({text: "Post enviado!", action: 'closeForm'});
+                }
               }
             }
-          }
-        )
+          )
+        }
+      } else {
+        this.timelineService.repostToFollowers(postId);
+        this.openAlert({text: "Post enviado!", action: 'closeForm'});
       }
-    } else {
-      this.timelineService.repostToFollowers(postId);
-      this.openAlert({text: "Post enviado!", action: 'closeForm'});
     }
   }
 

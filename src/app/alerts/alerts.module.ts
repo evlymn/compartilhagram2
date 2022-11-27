@@ -13,24 +13,27 @@ import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
-  declarations: [
-    TimeAgoPipe,
-    AlertsComponent,
-    AlertsListComponent,
-    ListItemComponent
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    AlertsRoutingModule
-  ],
-  providers: [
-    MatSnackBarModule,
-    MatBottomSheetModule,
-    MatDialogModule,
-  ]
+    declarations: [
+        TimeAgoPipe,
+        AlertsComponent,
+        AlertsListComponent,
+        ListItemComponent
+    ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        AlertsRoutingModule
+    ],
+    exports: [
+        TimeAgoPipe
+    ],
+    providers: [
+        MatSnackBarModule,
+        MatBottomSheetModule,
+        MatDialogModule,
+    ]
 })
 export class AlertsModule {
 }

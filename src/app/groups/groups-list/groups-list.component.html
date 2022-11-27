@@ -3,9 +3,16 @@
     <div>{{item?.name}}</div>
     <div>{{item.description}}</div>
     <small>
-      <mat-icon class="icon-font-mobile icon-list" mat-list-icon>
+      <mat-icon class="icon-font-mobile icon-list">
         {{ item.public ? 'public' : 'key'}}
       </mat-icon>
+      <mat-icon *ngIf="item.uid == uid" class="icon-font-mobile icon-list">
+        account_circle
+      </mat-icon>
+      <mat-icon *ngIf="!item.public && item.uid != uid" class="icon-font-mobile icon-list">
+        group
+      </mat-icon>
+
     </small>
   </div>
   <mat-icon>

@@ -32,6 +32,7 @@ import {FormAlertDialogComponent} from "./timeline-form-dialog/form-alert-dialog
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {TimelineAlbumViewComponent} from "./timeline-album-view/timeline-album-view.component";
+import {AlertsModule} from "../alerts/alerts.module";
 
 
 @NgModule({
@@ -51,24 +52,25 @@ import {TimelineAlbumViewComponent} from "./timeline-album-view/timeline-album-v
     FormDialogComponent,
     TimelineAlbumViewComponent,
   ],
-  imports: [
-    CommonModule,
-    TimelineRoutingModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatTabsModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatButtonModule,
-    TextFieldModule,
-    FormsModule,
-    MatChipsModule,
-    MatMenuModule,
-    MatBottomSheetModule,
-    MatInputModule,
-    MatDialogModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        TimelineRoutingModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatTabsModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatButtonModule,
+        TextFieldModule,
+        FormsModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatBottomSheetModule,
+        MatInputModule,
+        MatDialogModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        AlertsModule
+    ]
 })
 export class TimelineModule { }

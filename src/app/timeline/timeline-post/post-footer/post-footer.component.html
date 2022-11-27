@@ -3,14 +3,14 @@
 
   <div class="post-actions" *ngIf="post">
     <div class="user-interaction"  *ngIf="isDetail">
-      <button mat-icon-button>
+      <button  class="button-action" mat-icon-button>
         <mat-icon class="post-action-icon" [routerLink]="['/principal']" fragment="p{{index}}">
           arrow_back
         </mat-icon>
       </button>
     </div>
     <div class="user-interaction">
-      <button mat-icon-button (click)="toggleCommentPanel()">
+      <button class="button-action" mat-icon-button (click)="toggleCommentPanel()">
         <mat-icon class="post-action-icon material-symbols-outlined">
           {{ commentPanelOpened || userCommented ? 'chat_bubble' : 'chat_bubble_outlined' }}
         </mat-icon>
@@ -19,30 +19,34 @@
     </div>
 
     <div class="user-interaction">
-      <button mat-icon-button (click)="setFavorite(post?.id, post?.uid)">
+      <button  class="button-action" mat-icon-button (click)="setFavorite(post?.id, post?.uid)">
         <mat-icon class="post-action-icon">{{userFavorited ? 'favorite' : 'favorite_outlined' }}</mat-icon>
         <small *ngIf="totalFavorites>0" class="icon-count">{{totalFavorites}}</small>
       </button>
     </div>
 
     <div class="user-interaction">
-      <button mat-icon-button (click)=" repostPanelOpened = !repostPanelOpened" [disabled]="post?.repost">
+      <button  class="button-action" mat-icon-button (click)=" repostPanelOpened = !repostPanelOpened" [disabled]="post?.repost">
         <mat-icon [ngClass]="post?.repost? 'mat-icon-disabled':'post-action-icon'">repeat_outlined</mat-icon>
         <small *ngIf="totalRepost>0" class="icon-count">{{totalRepost}}</small></button>
     </div>
-    <div class="user-interaction">
-      <button mat-icon-button (click)="createSaved(post)">
+    <div  class="user-interaction">
+      <button  class="button-action" mat-icon-button (click)="createSaved(post)">
         <mat-icon class="post-action-icon"> {{this.existsSaved ? 'bookmark' : 'bookmark_outlined'  }} </mat-icon>
       </button>
     </div>
 
     <div class="user-interaction" *ngIf="post?.uid != loggedUId">
-      <button mat-icon-button [routerLink]="[this.messageRoute, post.uid]">
+      <button  class="button-action" mat-icon-button [routerLink]="[this.messageRoute, post.uid]">
         <mat-icon class="post-action-icon material-symbols-outlined"> send_outlined</mat-icon>
       </button>
     </div>
   </div>
-
+  <div class="timeago">
+<small >
+  {{post.dateTime | timeAgo }}
+</small>
+  </div>
   <div class="expansion-comment">
     <mat-expansion-panel hideToggle [expanded]="commentPanelOpened" (afterExpand)="onExpansionCommentOpen()"
                          (afterCollapse)="onExpansionClose()">

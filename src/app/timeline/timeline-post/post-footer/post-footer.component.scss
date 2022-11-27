@@ -62,7 +62,14 @@ textarea {
   align-items: center;
   justify-content: center;
   padding: 5px;
+
 }
+.mat-mdc-icon-button  {
+  height: 30px!important;
+}
+
+
+
 
 .icon-count {
   color: #915c77;
@@ -110,4 +117,9 @@ mat-expansion-panel {
 
 small {
   font-size: 12px;
+}
+.timeago {
+  color: #9a6a84;
+  text-align: right;
+  width: 100%;
 }
