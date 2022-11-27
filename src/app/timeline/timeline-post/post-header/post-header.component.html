@@ -1,10 +1,10 @@
 <div class="post-header">
 
   <div class="user-info">
-    <div class="post-avatar" [routerLink]="['profile', post?.uid]">
+    <div class="post-avatar" [routerLink]="['/home/profile', post?.uid]">
       <img class="post-avatar-image" alt="image profile" [src]="post?.photoURL">
     </div>
-    <div class="post-user-name" [routerLink]="['profile', post?.uid]">
+    <div class="post-user-name" [routerLink]="['/home/profile', post?.uid]">
       <span> {{post?.displayName}}  </span>
     </div>
     <div class="post-user-badges">
@@ -42,15 +42,14 @@
       </div>
     </mat-menu>
     <br>
-    <!--    [routerLink]="['details/', post?.id, index]"-->
-    <!--    fragment="post"-->
+
     <mat-icon *ngIf="!isDetail"
               class="post-action-icon icon-detail"
-              [routerLink]="['details/', post?.id, index]">
+              [routerLink]="['/home/post', post?.id, index]">
       arrow_forward
     </mat-icon>
-    <!--    [routerLink]="['/home']" fragment="p{{index}}"-->
-    <mat-icon [routerLink]="['/home']" class="post-action-icon back-icon" *ngIf="isDetail"
+<!--    fragment="p{{index}}"-->
+     <mat-icon [routerLink]="['/home']"  class="post-action-icon back-icon" *ngIf="isDetail"
               color="accent">
       arrow_back
     </mat-icon>

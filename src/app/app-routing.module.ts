@@ -31,7 +31,7 @@ const routes: Routes = [
         loadChildren: () => import('./timeline/timeline-routing.module').then(m => m.TimelineRoutingModule)
       },
       {
-        path: "details/:id/:index",
+        path: "post/:id/:index",
         loadChildren: () => import('./timeline/timeline-routing.module').then(m => m.TimelineRoutingModule)
       },
       {

@@ -14,11 +14,13 @@
     <div> Reposts: {{ totalReposts}}</div>
   </div>
 
-  <button *ngIf="profile?.uid != auth.user?.uid" mat-stroked-button (click)="followUser(profile?.uid)">
+  <button [disabled]="buttonDisabled" *ngIf="profile?.uid != auth.user?.uid" mat-stroked-button (click)="followUser(profile?.uid)">
     <mat-icon>
-      person_add
+      {{isFollowed? 'person_remove': 'person_add' }}
+
     </mat-icon>
-    Seguir
+    {{isFollowed? 'Deixar de seguir': 'seguir' }}
+
   </button>
 
 </div>

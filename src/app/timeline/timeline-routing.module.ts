@@ -12,7 +12,7 @@ const routes: Routes = [
     path: "search", component: TimelineComponent
   },
   {
-    path: "details/:id/:index",
+    path: "post/:id/:index",
     component: TimelinePostDetailComponent
   } ,
   {

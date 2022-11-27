@@ -1,6 +1,6 @@
 <div class="post-body" *ngIf="post" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
   <div class="post-text-edit">
-    <div class="post-text" [routerLink]="['details/', post?.id, index]">
+    <div class="post-text" [routerLink]="['/home/post', post?.id, index]">
       {{post?.postText}}
     </div>
     <!--    <mat-icon [matMenuTriggerFor]="beforeMenu"-->

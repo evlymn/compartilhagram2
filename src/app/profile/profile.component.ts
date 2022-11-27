@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
- import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProfileService} from "./profile.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 
@@ -14,6 +14,8 @@ export class ProfileComponent implements OnInit {
   userId = '';
   profile: any;
   totalReposts = 0;
+  isFollowed = false;
+  buttonDisabled = false;
 
   constructor(public auth: AuthenticationService,
               private _profileService: ProfileService,
@@ -24,12 +26,17 @@ export class ProfileComponent implements OnInit {
       this.getPostByUser().catch();
       this.getPhotosByUser().catch();
       this.getRepostsByUser().catch();
+      this.getIsFollowed().catch();
     })
   }
 
   async getProfile() {
     const snapshot = await this._profileService.getProfile(this.userId);
     this.profile = snapshot.val();
+  }
+
+  async getIsFollowed() {
+    this.isFollowed = await this._profileService.getIsFollowed(this.userId);
   }
 
   async getPostByUser() {
@@ -39,7 +46,6 @@ export class ProfileComponent implements OnInit {
 
   async getPhotosByUser() {
     const snapshot = await this._profileService.getPhotosByUser(this.userId);
-
     this.totalImages = snapshot.size;
   }
 
@@ -49,7 +55,14 @@ export class ProfileComponent implements OnInit {
   }
 
   async followUser(followId: string) {
-    this._profileService.followUser(followId);
+    this.buttonDisabled = true;
+    if (this.isFollowed) {
+      await this._profileService.unfollowUser(followId);
+    } else {
+      await this._profileService.followUser(followId);
+    }
+    await this.getIsFollowed();
+    this.buttonDisabled = false;
   }
 
 
