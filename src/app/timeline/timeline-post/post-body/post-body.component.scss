@@ -111,10 +111,33 @@ mat-expansion-panel {
 
 }
 
-.post-album {
+.post-album-time {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
   margin-top: 5px;
+  //margin-left: 5px;
+  padding-right: 10px;
+  color: #b9b9b9;
+}
+.post-album-time>div:first-child {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
+.timeago {
+  color: #9a6a84;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.mat-mdc-chip-action-label {
+  color: #b9b9b9!important;
+}
 mat-chip {
   transform: scale(.8);
   background-color: #885b70 !important;

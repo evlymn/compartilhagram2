@@ -81,6 +81,7 @@ export class PostFormComponent implements OnInit {
                 total += s.progress;
                 if (total == this.images.length * 100) {
                   this.postFormService.repostToFollowers(postId);
+                  this.cleanForm();
                   this.openAlert({text: "Post enviado!", action: 'closeForm'});
                 }
               }
@@ -89,6 +90,7 @@ export class PostFormComponent implements OnInit {
         }
       } else {
         this.postFormService.repostToFollowers(postId);
+        this.cleanForm();
         this.openAlert({text: "Post enviado!", action: 'closeForm'});
       }
     }
@@ -121,8 +123,15 @@ export class PostFormComponent implements OnInit {
     }
   }
 
+  cleanForm() {
+    this.sendingPost = false;
+    this.postText = '';
+  }
 
   openAlert(data: any) {
+
+    if(!this.isMobile)
+      return
     const dialogRef = this._dialog.open(FormAlertDialogComponent, {
       width: '100%',
       height: '100px',

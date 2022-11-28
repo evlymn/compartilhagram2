@@ -1,5 +1,11 @@
-.alerts-list-component {
+h3 {
   margin-top: 40px;
+  color: #f6b268;
+  text-align: center;
+}
+
+.alerts-list-component {
+
   display: flex;
   flex-direction: column-reverse;
 }

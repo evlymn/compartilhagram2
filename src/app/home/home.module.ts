@@ -13,6 +13,7 @@ import {MatRippleModule} from "@angular/material/core";
 import { HomeMenuMobileComponent } from './home-menu-mobile/home-menu-mobile.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { HomeMenuDesktopComponent } from './home-menu-desktop/home-menu-desktop.component';
+import {PostFormModule} from "../post-form/post-form.module";
 
 
 @NgModule({
@@ -22,19 +23,20 @@ import { HomeMenuDesktopComponent } from './home-menu-desktop/home-menu-desktop.
     HomeMenuMobileComponent,
     HomeMenuDesktopComponent
   ],
-    imports: [
-        CommonModule,
-        HomeRoutingModule,
-        MatSidenavModule,
-        MatListModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatRippleModule,
-        MatMenuModule,
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatRippleModule,
+    MatMenuModule,
+    PostFormModule,
 
 
-    ]
+  ]
 })
 export class HomeModule {
 }

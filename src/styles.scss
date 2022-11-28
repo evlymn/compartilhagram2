@@ -93,10 +93,14 @@ mat-tab-group {
 
 
 .button-action {
-
   .mat-mdc-button-touch-target {
     height: 30px !important;
   }
 
-
 }
+
+.mat-mdc-chip-action-label {
+  color: #b9b9b9!important;
+}
+
+

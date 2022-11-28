@@ -9,6 +9,8 @@ import {AlertsService} from "../../alerts/alerts.service";
 })
 export class HomeMenuDesktopComponent {
 
+  user:any
+
   isDesktop = this.homeService.windowService.sizes.isDesktop;
   isMiddleSize = this.homeService.windowService.sizes.isMiddleSize;
 
@@ -16,6 +18,9 @@ export class HomeMenuDesktopComponent {
     this.homeService.windowService.getSizes.subscribe(s => {
       this.isDesktop = s.isDesktop;
       this.isMiddleSize = s.isMiddleSize;
+    })
+    this.homeService.auth.authState.subscribe(user=> {
+      this.user = user;
     })
   }
 }

@@ -26,8 +26,6 @@
   </div>
 
 
-
-
   <mat-expansion-panel
     hideToggle [expanded]="postPanelOpened"
     (afterExpand)="onExpansionPostOpen()"
@@ -49,16 +47,17 @@
 <mat-expansion-panel class="panel-delete" hideToggle [expanded]="deletePanelOpened"
                      (afterExpand)="onExpansionDeleteOpen()">
 
-    <button (click)="toggleDeletePanel()" class="button-expansion button-warning" mat-button>
-      cancelar
-    </button>
-    <button class="button-expansion button-warning" (click)="deletePost()" mat-button>
-      deletar?
-    </button>
+  <button (click)="toggleDeletePanel()" class="button-expansion button-warning" mat-button>
+    cancelar
+  </button>
+  <button class="button-expansion button-warning" (click)="deletePost()" mat-button>
+    deletar?
+  </button>
 
 </mat-expansion-panel>
 
 <app-post-images-grid *ngIf="!isDetail" [postId]="post?.id" [postIndex]="index"
+
                       [images]="post?.images"></app-post-images-grid>
 
 <div class="image-details" *ngIf="isDetail">
@@ -67,8 +66,15 @@
        class="d-block w-100" alt="...">
 </div>
 
-<div *ngIf="post?.albumName" class="post-album">
+<div class="post-album-time">
+  <div >
+<!--    <span *ngIf="post?.albumName">álbum:</span>-->
+    <mat-chip *ngIf="post?.albumName" [routerLink]="['album', post?.albumId, post?.uid ]"> {{ post?.albumName }}</mat-chip>
+  </div>
 
-  <mat-chip [routerLink]="['album', post?.albumId, post?.uid ]" color="primary"> {{ post?.albumName }}</mat-chip>
-
+  <div class="timeago">
+    <small>
+      há {{post.dateTime | timeAgo }}
+    </small>
+  </div>
 </div>

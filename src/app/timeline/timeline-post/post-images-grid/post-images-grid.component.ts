@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {WindowService} from "../../../shared/services/window/window.service";
 
 @Component({
   selector: 'app-post-images-grid',
@@ -9,9 +10,13 @@ export class PostImagesGridComponent implements OnInit {
   @Input() postId!: number;
   @Input() postIndex!: number;
   @Input() images: any
+  isMobile = this._windowService.sizes.isMobile;
   index = 0;
 
-  constructor() {
+  constructor(private _windowService: WindowService) {
+    this._windowService.getSizes.subscribe(s => {
+      this.isMobile = s.isMobile;
+    })
   }
 
   selectImage(i: number) {

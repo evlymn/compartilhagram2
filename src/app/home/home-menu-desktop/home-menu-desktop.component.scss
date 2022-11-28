@@ -15,6 +15,7 @@ li{
   text-align: right;
   color: whitesmoke;
   margin-top: 15px;
+  cursor: pointer;
 }
 li>span{
   margin-right: 5px;
@@ -22,6 +23,20 @@ li>span{
 i {
   font-size: 25px;
   //margin-left: -4px;
+}
+li:hover{
+  background-color:#5e3248;
+  border-radius: 10px;
+}
+
+li:active{
+  transform: scale(0.97);
+  background-color: #6c1e4e;
+  //border-radius: 10px;
+}
+
+li:hover:last-child{
+  background-color: transparent;
 }
 
 .second-logo {
@@ -33,4 +48,20 @@ i {
 }
 .i-middle {
   font-size: 30px;
+}
+.button-li {
+  display: flex;
+  align-items: center;
+  color: whitesmoke;
+  background-color: transparent;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.menu-avatar-image {
+  width: 50px;
+  border-radius: 25px;
+  margin-top: 15px;
+  border: solid 2px #88456b;
+  //margin-left: -9;
 }

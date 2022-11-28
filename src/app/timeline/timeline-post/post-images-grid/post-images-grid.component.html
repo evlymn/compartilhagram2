@@ -1,13 +1,17 @@
 <mat-tab-group class="mat-tab-header" *ngIf="images?.length>1"
                headerPosition="below" [selectedIndex]="index"
-               [routerLink]="['details', postId, postIndex]" fragment="post">
+               [routerLink]="['/home/post', postId, postIndex]" fragment="post">
   <mat-tab *ngFor="let img of images; let i=index">
-    <div class="mat-tab-div" [style]="'background-image:url(' + img?.imageURL + ')'">
+    <div class="mat-tab-div"
+         [ngClass]="isMobile? 'mat-tab-div-mobile': 'mat-tab-div-desktop'"
+         [style]="'background-image:url(' + img?.imageURL + ')'">
     </div>
   </mat-tab>
 </mat-tab-group>
 
-<img class="one-image" [routerLink]="['details', postId, postIndex]" fragment="post" *ngIf="images?.length == 1 "
+<img class="one-image"
+     [routerLink]="['/home/post', postId, postIndex]"
+     fragment="post" *ngIf="images?.length == 1"
      [src]="images[0]?.imageURL" alt="...">
 
 <div class="gallery" *ngIf="images?.length>1">

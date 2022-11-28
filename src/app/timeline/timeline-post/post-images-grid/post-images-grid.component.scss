@@ -36,7 +36,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 100%;
-  height: 200px;
+
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -44,6 +44,12 @@
   //margin: 4px;
   overflow: hidden;
 
+}
+.mat-tab-div-mobile {
+  height: 200px;
+}
+.mat-tab-div-desktop{
+  height: 350px;
 }
 
 ::ng-deep .mat-ripple {

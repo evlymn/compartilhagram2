@@ -16,6 +16,7 @@ export class PostBodyComponent implements OnInit {
   @Input() index = 0;
   @Input() loggedUId = '';
   @Input() isRepost = false;
+
   postText = '';
   postPanelOpened = false;
   deletePanelOpened = false
