@@ -9,6 +9,7 @@ import {NotificationService} from "../shared/services/notification/notification.
 import {FormAlertDialogComponent} from "./form-alert-dialog/form-alert-dialog.component";
 import {ImageSet} from "./image-set";
 import {PostFormService} from "./post-form.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-post-form',
@@ -33,6 +34,7 @@ export class PostFormComponent implements OnInit {
     private _dialog: MatDialog,
     private postFormService: PostFormService,
     private _notificationService: NotificationService,
+    private _snackBar: MatSnackBar
   ) {
 
     this.windowService.getSizes.subscribe(size => {
@@ -123,9 +125,18 @@ export class PostFormComponent implements OnInit {
     }
   }
 
+  openSnack() {
+    if(!this.isMobile)
+    this._snackBar.open('Post enviado', 'fechar', {
+      verticalPosition: 'top',
+      duration: 2000
+    });
+  }
   cleanForm() {
     this.sendingPost = false;
     this.postText = '';
+    this.images = [];
+    this.openSnack();
   }
 
   openAlert(data: any) {
