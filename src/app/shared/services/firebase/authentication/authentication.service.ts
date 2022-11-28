@@ -40,6 +40,7 @@ export class AuthenticationService {
   }
 
   setActiveRoute(url: string) {
+    console.log(url);
     this._route = url;
   }
 
@@ -71,6 +72,7 @@ export class AuthenticationService {
       if (usr) {
         this.onDeleteLogout(usr?.uid!);
         this.ngZone.run(() => {
+          console.log(this._route);
           this.router.navigate([this._route]).catch(reason => console.log(reason));
         });
       } else {

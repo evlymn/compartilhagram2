@@ -16,11 +16,13 @@ export class LoginService {
   }
 
   async login(email: string, password: string) {
+    this.auth.setActiveRoute('/home');
     return await this.auth.signInWithEmailAndPassword(email, password);
   }
 
 
   async signUp(email: string, password: string, displayName: string, image: string) {
+    this.auth.setActiveRoute('/home');
     const credentials = await this.auth.createUserWithEmailAndPassword(email, password);
     const file = await this.storage.base64ToFile(image, credentials.user.uid, {
       type: 'image/jpeg',

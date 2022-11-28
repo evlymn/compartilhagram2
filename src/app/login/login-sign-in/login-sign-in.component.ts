@@ -4,6 +4,7 @@ import {LoginService} from "../login.service";
 import {LoginErrorMessageDialogComponent} from "../login-error-message-dialog/login-error-message-dialog.component";
 import {LoginErrorMessages} from "../login-error-messages/login-error-messages";
 import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-sign-in',
@@ -24,7 +25,8 @@ export class LoginSignInComponent {
 
   constructor(private _formBuilder: FormBuilder,
               private _dialog: MatDialog,
-              private _loginService: LoginService) {
+              private _loginService: LoginService,
+              private router: Router) {
     this.createForm();
   }
 
@@ -36,9 +38,10 @@ export class LoginSignInComponent {
   }
 
   submit(formDirective: FormGroupDirective) {
+console.log('ddd')
     this.formSubmitted = true;
     if (this.form.valid) {
-      this._loginService.login(this.email?.value, this.password?.value).then(user => {
+      this._loginService.login(this.email?.value, this.password?.value).then(() => {
         formDirective.resetForm();
       }).catch(error => {
         this._dialog.open(LoginErrorMessageDialogComponent, {
