@@ -40,7 +40,6 @@ export class AuthenticationService {
   }
 
   setActiveRoute(url: string) {
-    console.log(url);
     this._route = url;
   }
 

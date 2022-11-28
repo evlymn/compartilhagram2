@@ -52,7 +52,12 @@ mat-tab-group {
 .bottom-sheet-class .mat-bottom-sheet-container {
   background-color: transparent!important;
   color: #cccccc!important;
+  max-width: 600px!important;
+  width: 600px!important;
+  min-width: unset;
 }
+
+
 
 
 

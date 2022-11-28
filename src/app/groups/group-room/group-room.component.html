@@ -8,9 +8,14 @@
   <div class="messages-body" *ngFor="let item of groups|async">
     <app-group-room-item [loggedUid]="hostId" [item]="item"></app-group-room-item>
   </div>
+
+  <div class="add-icon">
+    <button (click)="openBottomSheet()" mat-mini-fab class="icon-font-mobile-add">
+      <mat-icon>add
+      </mat-icon>
+    </button>
+  </div>
 </div>
 <div #footer></div>
-<button (click)="openBottomSheet()" mat-mini-fab color="primary" class="icon-font-mobile-add">
-  <mat-icon mat-list-icon>add
-  </mat-icon>
-</button>
+
+

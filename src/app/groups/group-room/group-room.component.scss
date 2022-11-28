@@ -3,10 +3,11 @@
   display: flex;
   flex-direction: column;
   padding: 15px 15px 100px;
+  position: relative;
+  //height: 100%;
 }
 
 .messages-header {
-
   background-color: #837eb4;
 }
 
@@ -14,20 +15,16 @@
 .icon-font-mobile-add, .icon-font-mobile-top, .icon-font-mobile-home {
   position: fixed;
   bottom: 30px;
-  right: 30px;
-  background-color: #f5972d;
+  right: calc(50% - 50px / 2);
   -webkit-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
   z-index: 1000;
   color: #523d23;
-}
-
-.icon-font-mobile-add {
-
   transform: scale(1.2);
   background-color: #d5d5d5;
 }
+
 
 .component-bottom-sheet {
   display: flex;
@@ -39,6 +36,7 @@
   margin-bottom: -10px;
   background-color: #481a34;
   border-radius: 5px;
+  max-width: 600px!important;
 }
 
 .post-avatar {
