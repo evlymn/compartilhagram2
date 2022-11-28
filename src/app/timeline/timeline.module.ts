@@ -28,11 +28,11 @@ import {TimelinePostDetailComponent} from "./timeline-post-detail/timeline-post-
 import {TimelineFloatingMenuComponent} from "./timeline-floating-menu/timeline-floating-menu.component";
 import {MatInputModule} from "@angular/material/input";
 import {FormDialogComponent} from "./timeline-form-dialog/form-dialog.component";
-import {FormAlertDialogComponent} from "./timeline-form-dialog/form-alert-dialog/form-alert-dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {TimelineAlbumViewComponent} from "./timeline-album-view/timeline-album-view.component";
 import {AlertsModule} from "../alerts/alerts.module";
+import {PostFormModule} from "../post-form/post-form.module";
 
 
 @NgModule({
@@ -48,29 +48,31 @@ import {AlertsModule} from "../alerts/alerts.module";
     TimelineBadgeInfoBottomSheetComponent,
     TimelinePostDetailComponent,
     TimelineFloatingMenuComponent,
-    FormAlertDialogComponent,
+
     FormDialogComponent,
     TimelineAlbumViewComponent,
   ],
-    imports: [
-        CommonModule,
-        TimelineRoutingModule,
-        MatProgressSpinnerModule,
-        MatIconModule,
-        MatTabsModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatButtonModule,
-        TextFieldModule,
-        FormsModule,
-        MatChipsModule,
-        MatMenuModule,
-        MatBottomSheetModule,
-        MatInputModule,
-        MatDialogModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        AlertsModule
-    ]
+  imports: [
+    CommonModule,
+    TimelineRoutingModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatButtonModule,
+    TextFieldModule,
+    FormsModule,
+    MatChipsModule,
+    MatMenuModule,
+    MatBottomSheetModule,
+    MatInputModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    AlertsModule,
+    PostFormModule
+  ],
+
 })
 export class TimelineModule { }

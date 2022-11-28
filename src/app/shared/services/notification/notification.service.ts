@@ -21,7 +21,6 @@ export class NotificationService {
 
 
   observable() {
-
     return this.notificationSubject.asObservable();
   }
 

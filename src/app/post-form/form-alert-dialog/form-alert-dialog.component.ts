@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
@@ -6,7 +6,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   templateUrl: './form-alert-dialog.component.html',
   styleUrls: ['./form-alert-dialog.component.scss']
 })
-export class FormAlertDialogComponent implements OnInit {
+export class FormAlertDialogComponent {
+
   alertText = '';
 
   constructor(private _dialogRef: MatDialogRef<FormAlertDialogComponent>,

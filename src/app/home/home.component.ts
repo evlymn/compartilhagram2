@@ -10,16 +10,18 @@ import {HomeService} from "./home.service";
 export class HomeComponent implements OnInit {
   sideNavOpened = false;
   user: any;
-  isMobile = false;
-
+  isMobile =  this.homeService.windowService.sizes.isMobile;
+  isMiddleSize = this.homeService.windowService.sizes.isMiddleSize;
+  windowHeight =  this.homeService.windowService.sizes.height;
   constructor(
     private _notificationService: NotificationService,
     public homeService: HomeService
   ) {
-
-    this.isMobile = this.homeService.windowService.sizes.isMobile;
+    this.windowHeight =  this.homeService.windowService.sizes.height;
     this.homeService.windowService.getSizes.subscribe(s => {
       this.isMobile = s.isMobile
+      this.isMiddleSize =s.isMiddleSize;
+      this.windowHeight = s.height;
     })
     this.user = this.homeService.authService.user;
     this._notificationService.observable().subscribe(not => {

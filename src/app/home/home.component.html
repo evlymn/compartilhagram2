@@ -1,5 +1,6 @@
-<div class="" *ngIf="isMobile">
-  <app-home-header-mobile></app-home-header-mobile>
+<div class=""   *ngIf="isMobile">
+<!-- -->
+  <app-home-header-mobile *ngIf="isMobile"></app-home-header-mobile >
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #snav [mode]="'side'"
                  [opened]="sideNavOpened"
@@ -8,13 +9,27 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
+      <div class="home-content">
       <router-outlet></router-outlet>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
 
-<div *ngIf="!isMobile" class="no-mobile">
-  <div>
-      Por favor, use em seu smartphone.
+<!--<div *ngIf="isMobile" class="no-mobile">-->
+<!--  <div>-->
+<!--      Por favor, use em seu smartphone.-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="desktop-content" *ngIf="!isMobile">
+
+  <div class='menu-desktop' [style.height]="windowHeight + 'px'" >
+    <app-home-menu-desktop></app-home-menu-desktop>
   </div>
+  <div class='content-desktop'>
+
+    <router-outlet></router-outlet>
+  </div >
+  <div *ngIf="!isMiddleSize"  class='content-right'></div>
 </div>

@@ -50,3 +50,50 @@ app-home-header-mobile {
   color: #cccccc;
   font-size: 20px;
 }
+
+.home-content {
+  max-width: 600px;
+
+}
+
+
+.desktop-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  //flex: 1 1 auto;
+  justify-content: center;
+}
+.menu-desktop {
+  position: relative;
+  height: 100%;
+  width: 33%;
+  display: flex;
+  justify-content: right;
+
+  //background-color: #5e3248;
+}
+.content-desktop {
+
+  height: 100%;
+  width: 33%;
+  min-width: 500px;
+  max-width: 600px;
+  //overflow: scroll;
+  background-color: #481a34;
+}
+.content-right {
+  //height: 100%;
+
+  height: 100%;
+  //min-height: 100%;
+  width: 33%;
+  //background-color: #5e3248;
+ }
+
+app-home-menu-desktop {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

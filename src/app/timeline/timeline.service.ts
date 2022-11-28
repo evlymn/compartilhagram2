@@ -5,8 +5,6 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 import {DataSnapshot, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
 import {Observable} from "rxjs";
 import {AlertsService} from "../alerts/alerts.service";
-import {environment} from "../../environments/environment";
-import {ImageSet} from "./timeline-form-dialog/image-set";
 
 
 @Injectable({
@@ -32,27 +30,6 @@ export class TimelineService {
 
   public get authState() {
     return this.auth.authState;
-  }
-
-  async getAlbum(albumId: string, postUId: string) {
-    return this._realtime.get(`timeline/albums/photos/by-post/${postUId}/${albumId}`);
-  }
-
-  async getAlbums() {
-    return this._realtime.get('timeline/albums/list/' + this.auth.user?.uid);
-  }
-
-  async createAlbum(album: string) {
-    const id = this._realtime.createId();
-    await this._realtime.set(`timeline/albums/list/${this.auth.user?.uid}/${id}`, {
-      album,
-      id
-    });
-    return {id, album}
-  }
-
-  async getPhotos() {
-    return this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`);
   }
 
   async getPost(id: string): Promise<any> {
@@ -125,7 +102,6 @@ export class TimelineService {
 
   repostToFollowers(postId: string) {
     setTimeout(() => {
-
       this._realtime.get('timeline/messages/' + postId).then(snapshot => {
         const postData = snapshot.val();
         this._realtime.get('timeline/follow/followers/' + this.auth.user?.uid).then(followers => {
@@ -206,7 +182,6 @@ export class TimelineService {
     return this._realtime.set(`timeline/favorites/messages/${postId}/${this.auth.user?.uid}`, {
       uid: this.auth.user?.uid, displayName: this.auth.user?.displayName, time: new Date().valueOf()
     })
-
   }
 
   async removeFavorite(postId: string) {
@@ -258,90 +233,90 @@ export class TimelineService {
     });
   }
 
-  async savePost(postId: string, images: ImageSet[], postText: string, album?: { id: string, album?: string }) {
-    const uid = this.auth.user?.uid;
-    const displayName = this.auth.user?.displayName;
-    const postData = {
-      id: postId,
-      uid,
-      displayName: displayName!,
-      displayNameSearch: displayName!.toLowerCase(),
-      photoURL: this.auth.user?.photoURL,
-      postText: postText,
-      dateTime: new Date().getTime(),
-      albumName: album?.album ?? null,
-      albumId: album?.id ?? null,
-    }
-    await this._realtime.set('timeline/messages/' + postId, postData);
-    this._realtime.set(`timeline/messages-by-user/${uid}/${postId}`, postData).catch();
-
-    for (let i = 0; i < images.length; i++) {
-      images[i].postId = postId as string;
-      const local = `timeline/messages/${postId}/images/${i}`;
-      const objectName = `${local}/${images[i].file.name}`;
-      const objectId = `${environment.firebase.storageBucket}/${objectName}`
-      const maxsize = 2500;
-      const blob = await this._storage.resizeImage({maxSize: maxsize, file: images[i].file}) as Blob;
-      const file = this._storage.blobToFile(blob, images[i].file.name);
-      const uploadTask = this._storage.uploadBytesResumable(objectName, file,
-        {
-          cacheControl: 'public, max-age=31536000', customMetadata: {
-            uid: uid!,
-            displayName: displayName as string,
-            fileName: images[i].file.name,
-            id: postId as string,
-            albumName: album?.album ?? '',
-            albumId: album?.id ?? '',
-          }
-        }
-      )
-
-      uploadTask.then(async (snapshot: { ref: { fullPath: string; }; }) => {
-        const imageURL = await this._storage.getDownloadURL(snapshot.ref.fullPath);
-        const photoId = this._realtime.createId();
-        this._realtime.set(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${photoId}`, {
-          albumName: album?.album ?? 'timeline',
-          albumId: album?.id ?? null,
-          imageURL,
-          objectName,
-          photoId,
-          postId
-        }).catch();
-
-        if (album) {
-          this._realtime.update(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/info`, {
-            albumName: album?.album,
-            albumId: album?.id ?? null,
-            uid: uid!,
-            displayName: displayName as string,
-            photoURL: this.auth.user?.photoURL,
-            photoId
-          }).catch();
-
-          await this._realtime.set(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/list/${photoId}`, {
-            imageURL,
-            albumName: album?.album ?? null,
-            albumId: album?.id ?? null,
-            uid: uid!,
-            postId: postId as string,
-            displayName: displayName as string,
-            photoId,
-          });
-        }
-
-        const imageDataUpdate = {
-          imageURL,
-          objectName,
-          objectId,
-          albumName: album?.album ?? null,
-          albumId: album?.id ?? null,
-          photoId
-        };
-        this._realtime.set(`timeline/messages/${postId}/images/${i}`, imageDataUpdate).catch();
-        this._realtime.set(`timeline/messages-by-user/${uid}/${postId}/images/${i}`, imageDataUpdate).catch();
-      })
-      images[i].uploadTask = this._storage.percentage(uploadTask);
-    }
-    return images;
-  }
+  // async savePost(postId: string, images: ImageSet[], postText: string, album?: { id: string, album?: string }) {
+  //   const uid = this.auth.user?.uid;
+  //   const displayName = this.auth.user?.displayName;
+  //   const postData = {
+  //     id: postId,
+  //     uid,
+  //     displayName: displayName!,
+  //     displayNameSearch: displayName!.toLowerCase(),
+  //     photoURL: this.auth.user?.photoURL,
+  //     postText: postText,
+  //     dateTime: new Date().getTime(),
+  //     albumName: album?.album ?? null,
+  //     albumId: album?.id ?? null,
+  //   }
+  //   await this._realtime.set('timeline/messages/' + postId, postData);
+  //   this._realtime.set(`timeline/messages-by-user/${uid}/${postId}`, postData).catch();
+  //
+  //   for (let i = 0; i < images.length; i++) {
+  //     images[i].postId = postId as string;
+  //     const local = `timeline/messages/${postId}/images/${i}`;
+  //     const objectName = `${local}/${images[i].file.name}`;
+  //     const objectId = `${environment.firebase.storageBucket}/${objectName}`
+  //     const maxsize = 2500;
+  //     const blob = await this._storage.resizeImage({maxSize: maxsize, file: images[i].file}) as Blob;
+  //     const file = this._storage.blobToFile(blob, images[i].file.name);
+  //     const uploadTask = this._storage.uploadBytesResumable(objectName, file,
+  //       {
+  //         cacheControl: 'public, max-age=31536000', customMetadata: {
+  //           uid: uid!,
+  //           displayName: displayName as string,
+  //           fileName: images[i].file.name,
+  //           id: postId as string,
+  //           albumName: album?.album ?? '',
+  //           albumId: album?.id ?? '',
+  //         }
+  //       }
+  //     )
+  //
+  //     uploadTask.then(async (snapshot: { ref: { fullPath: string; }; }) => {
+  //       const imageURL = await this._storage.getDownloadURL(snapshot.ref.fullPath);
+  //       const photoId = this._realtime.createId();
+  //       this._realtime.set(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${photoId}`, {
+  //         albumName: album?.album ?? 'timeline',
+  //         albumId: album?.id ?? null,
+  //         imageURL,
+  //         objectName,
+  //         photoId,
+  //         postId
+  //       }).catch();
+  //
+  //       if (album) {
+  //         this._realtime.update(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/info`, {
+  //           albumName: album?.album,
+  //           albumId: album?.id ?? null,
+  //           uid: uid!,
+  //           displayName: displayName as string,
+  //           photoURL: this.auth.user?.photoURL,
+  //           photoId
+  //         }).catch();
+  //
+  //         await this._realtime.set(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/list/${photoId}`, {
+  //           imageURL,
+  //           albumName: album?.album ?? null,
+  //           albumId: album?.id ?? null,
+  //           uid: uid!,
+  //           postId: postId as string,
+  //           displayName: displayName as string,
+  //           photoId,
+  //         });
+  //       }
+  //
+  //       const imageDataUpdate = {
+  //         imageURL,
+  //         objectName,
+  //         objectId,
+  //         albumName: album?.album ?? null,
+  //         albumId: album?.id ?? null,
+  //         photoId
+  //       };
+  //       this._realtime.set(`timeline/messages/${postId}/images/${i}`, imageDataUpdate).catch();
+  //       this._realtime.set(`timeline/messages-by-user/${uid}/${postId}/images/${i}`, imageDataUpdate).catch();
+  //     })
+  //     images[i].uploadTask = this._storage.percentage(uploadTask);
+  //   }
+  //   return images;
+  // }
 }

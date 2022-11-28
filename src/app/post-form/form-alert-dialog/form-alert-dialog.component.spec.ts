@@ -1,6 +1,6 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {FormAlertDialogComponent} from './form-alert-dialog.component';
+import { FormAlertDialogComponent } from './form-alert-dialog.component';
 
 describe('FormAlertDialogComponent', () => {
   let component: FormAlertDialogComponent;
@@ -8,9 +8,9 @@ describe('FormAlertDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormAlertDialogComponent]
+      declarations: [ FormAlertDialogComponent ]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(FormAlertDialogComponent);
     component = fixture.componentInstance;

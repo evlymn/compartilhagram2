@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {TimelineService} from "../timeline.service";
 import {ImageViewComponent} from "../../image-view/image-view.component";
+import {AlbumService} from "../../shared/services/album/album.service";
 
 
 @Component({
@@ -20,6 +21,7 @@ export class TimelineAlbumViewComponent implements OnInit {
               private _dialog: MatDialog,
               private _route: ActivatedRoute,
               private _router: Router,
+              private _albumService: AlbumService
   ) {
     this.albumId = this._route.snapshot.paramMap.get('albumId') as string;
     this.postUId = this._route.snapshot.paramMap.get('uid') as string;
@@ -48,19 +50,19 @@ export class TimelineAlbumViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+     // console.log('The dialog was closed');
     });
   }
 
   getPhotos() {
-    this._timelineService.getPhotos().then(snapshot => {
+    this._albumService.getPhotos().then(snapshot => {
       if (snapshot.exists())
         this.images = Object.values(snapshot.val());
     });
   }
 
   getAlbum() {
-    this._timelineService.getAlbum(this.albumId, this.postUId).then(snapshot => {
+    this._albumService.getAlbum(this.albumId, this.postUId).then(snapshot => {
       if (snapshot.exists()) {
         this.images = Object.values(snapshot.val()?.list);
         this.info = snapshot.val().info;

@@ -2,8 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
  import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {WindowService} from "../../shared/services/window/window.service";
-import {FormAlertDialogComponent} from "../timeline-form-dialog/form-alert-dialog/form-alert-dialog.component";
-import {FormDialogComponent} from "../timeline-form-dialog/form-dialog.component";
+ import {FormDialogComponent} from "../timeline-form-dialog/form-dialog.component";
 
 @Component({
   selector: 'app-timeline-floating-menu',

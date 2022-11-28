@@ -8,16 +8,24 @@ import {Sizes} from "./sizes";
 export class WindowService {
   private resizeObservable!: Observable<Event>
   resizeSubscription!: Subscription;
-  sizes: Sizes = {height: 0, width: 0, isDesktop: true, isMobile: true};
+  sizes: Sizes = {height: 0, width: 0, isDesktop: true, isMobile: true, isMiddleSize: true};
   private resizeSubject = new Subject<Sizes>();
 
   constructor() {
     if (!this.resizeSubscription)
       this.observeResize();
+
+
   }
 
   get getSizes() {
     return this.resizeSubject.asObservable();
+  }
+
+  windowScroll(){
+    window.addEventListener('scroll', (d: any) => {
+
+    }, {capture: true})
   }
 
   private observeResize() {
@@ -32,12 +40,14 @@ export class WindowService {
     this.sizes.width = innerWidth;
     this.sizes.height = innerHeight;
     this.sizes.isDesktop = innerWidth >= 850;
-    this.sizes.isMobile = innerWidth <= 500;
+    this.sizes.isMobile = innerWidth <= 540;
+    this.sizes.isMiddleSize = innerWidth <= 850 && !this.sizes.isMobile;
     this.resizeSubject.next({
       width: this.sizes.width,
       height: this.sizes.height,
       isDesktop: this.sizes.isDesktop,
-      isMobile: this.sizes.isMobile
+      isMobile: this.sizes.isMobile,
+      isMiddleSize: this.sizes.isMiddleSize
     });
   }
 }

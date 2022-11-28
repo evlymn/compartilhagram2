@@ -1,0 +1,93 @@
+<div class="timeline-form-mobile">
+  <div class="close-div">
+    <span [mat-dialog-close]=""
+          class=" button-close-radius">fechar</span>
+  </div>
+  <textarea cdkTextareaAutosize
+            [(ngModel)]="postText"
+            placeholder="Doce ou travessura?"
+            maxlength="300"></textarea>
+
+  <div class="form-actions">
+    <div>
+      <button [disabled]="images.length>5 || sendingPost" mat-icon-button
+              class="icon-button-mobile"
+              (click)="file.click()">
+        <mat-icon>image</mat-icon>
+      </button>
+      <small> {{ 6 - images.length}}</small>
+      <!--      <button  [disabled]="true" mat-icon-button class="icon-button-mobile">-->
+      <!--        <mat-icon>location_on</mat-icon>-->
+      <!--      </button>-->
+
+      <span *ngIf="sendingPost" class="send-post">enviando...</span>
+    </div>
+
+    <div class="div-spinner">
+
+      <span> {{ 300 - postText.length}}</span>
+    </div>
+
+  </div>
+
+
+  <div class="images-upload-grid" *ngIf="images.length> 0">
+    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>
+    <div *ngFor="let img  of images; let i = index"
+         class="image-grid-item-size-mobile image-grid-item"
+         [style]="'background-image:url(' + img.image64 + ')'">
+      <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="100" alt="">
+      <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)" class="image-grid-item-delete">disabled_by_default
+      </mat-icon>
+      <mat-spinner class="image-grid-spinner" *ngIf="img.progress" color="accent" mode="determinate"
+                   [value]="img.progress"></mat-spinner>
+    </div>
+  </div>
+
+  <div *ngIf="images.length>0">
+    <div   class="autocomplete-title"> Criar ou adicionar a um álbum</div>
+    <div class="form-actions-dialog">
+      <div *ngIf="images.length>0" class="input-flex-autocomplete">
+
+        <mat-form-field
+          class="custom-mat-form-field mat-form-field-W100"
+          appearance="fill"
+          floatLabel="auto">
+          <input matInput [disabled]="sendingPost" type="text"
+                 placeholder="Albuns"
+                 [formControl]="albumControl"
+                 [matAutocomplete]="auto">
+
+          <!--      <input -->
+          <!--             [matAutocomplete]="auto"-->
+          <!--             [formControl]="albumControl">-->
+          <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
+            <mat-option *ngFor="let option of albumsFiltered | async" [value]="option">
+              {{ option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
+      </div>
+
+
+
+      <!--        <mat-icon (click)="deleteAutocompleteText()" class="">disabled_by_default-->
+      <!--        </mat-icon>-->
+
+    </div>
+
+
+  </div>
+  <button (click)="savePost()" [disabled]="sendingPost" mat-raised-button class="form-button form-button-post-dialog">
+    Publicar
+  </button>
+</div>
+
+
+<input type="file" style="display: none;"
+       (change)="fileChangeEvent($event)" multiple
+       accept="image/x-png,image/gif,image/jpeg"
+       #file/>
+

@@ -12,13 +12,15 @@ import {HomeHeaderMobileComponent} from "./home-header-mobile/home-header-mobile
 import {MatRippleModule} from "@angular/material/core";
 import { HomeMenuMobileComponent } from './home-menu-mobile/home-menu-mobile.component';
 import {MatMenuModule} from "@angular/material/menu";
+import { HomeMenuDesktopComponent } from './home-menu-desktop/home-menu-desktop.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     HomeHeaderMobileComponent,
-    HomeMenuMobileComponent
+    HomeMenuMobileComponent,
+    HomeMenuDesktopComponent
   ],
     imports: [
         CommonModule,
@@ -30,6 +32,7 @@ import {MatMenuModule} from "@angular/material/menu";
         MatIconModule,
         MatRippleModule,
         MatMenuModule,
+
 
     ]
 })

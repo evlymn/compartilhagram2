@@ -20,6 +20,7 @@ import {MessagesModule} from "./messages/messages.module";
 import {GroupsModule} from "./groups/groups.module";
 import {ProfileModule} from "./profile/profile.module";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import {ProfileModule} from "./profile/profile.module";
     MessagesModule,
     GroupsModule,
     ProfileModule,
+
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {

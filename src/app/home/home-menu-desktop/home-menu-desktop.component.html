@@ -1,0 +1,50 @@
+<div class="menu-component">
+  <div class="menu-desktop">
+    <div>
+      <ul>
+        <li>
+          <div class="menu-logo">
+          <img alt="logo" *ngIf="isDesktop"
+               src="./assets/images/compartilhagram-logo.png">
+          <img class="second-logo" *ngIf="isMiddleSize"
+               alt=".." src="./assets/images/compartilhagram-menor.png">
+          </div>
+        </li>
+        <li [routerLink]="'home'">
+          <span *ngIf="!isMiddleSize"> Home</span>
+          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''" >home
+          </mat-icon>
+        </li>
+        <li>
+          <span *ngIf="!isMiddleSize">Notificações</span>
+          <i class='bx bxs-bell' [ngClass]="alertsService.totalAlerts>0  && isMiddleSize ? 'bx-tada i-middle': alertsService.totalAlerts>0  && !isMiddleSize ? 'bx-tada': isMiddleSize? 'i-middle' : ''"> </i>
+        </li>
+        <li>
+          <span *ngIf="!isMiddleSize">Contatos</span>
+          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">group
+          </mat-icon>
+        </li>
+        <li>
+          <span *ngIf="!isMiddleSize">Mensagens</span>
+          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">forum
+          </mat-icon>
+
+        </li>
+        <li>
+          <span *ngIf="!isMiddleSize">Salvos</span>
+          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">bookmarks
+          </mat-icon>
+
+        </li>
+        <li>
+          <span *ngIf="!isMiddleSize">Minhas fotos</span>
+          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">images
+          </mat-icon>
+
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+</div>
