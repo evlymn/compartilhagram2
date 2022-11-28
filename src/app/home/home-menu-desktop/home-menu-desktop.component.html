@@ -4,9 +4,9 @@
       <ul>
         <li>
           <div class="menu-logo">
-            <img alt="logo" *ngIf="isDesktop"
+            <img alt="logo" *ngIf="isDesktop && !isSmaller900"
                  src="./assets/images/compartilhagram-logo.png">
-            <img class="second-logo" *ngIf="isMiddleSize"
+            <img class="second-logo" *ngIf="isSmaller900"
                  alt=".." src="./assets/images/compartilhagram-menor.png">
           </div>
         </li>
