@@ -23,4 +23,8 @@ export class HomeMenuDesktopComponent {
       this.user = user;
     })
   }
+
+  logOut() {
+    this.homeService.auth.signOut();
+  }
 }

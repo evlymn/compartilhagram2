@@ -52,6 +52,13 @@
 
         </li>
 
+        <li (click)="logOut()">
+          <span *ngIf="!isMiddleSize">Sair</span>
+          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">logout
+          </mat-icon>
+
+        </li>
+
         <li [routerLink]="['profile', user?.uid]">
 
           <img class="menu-avatar-image" *ngIf="user?.photoURL"

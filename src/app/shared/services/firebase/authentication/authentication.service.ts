@@ -67,16 +67,17 @@ export class AuthenticationService {
   }
 
   private onAuthStateChanged() {
+
     onAuthStateChanged(this.auth, usr => {
       this.user = usr;
       if (usr) {
         this.onDeleteLogout(usr?.uid!);
         this.ngZone.run(() => {
-          console.log(this._route);
+          this._route = this._route == '/' ? '/home' : this._route;
           this.router.navigate([this._route]).catch(reason => console.log(reason));
         });
       } else {
-         this.router.navigateByUrl('/').catch(reason => console.log(reason));
+        this.router.navigateByUrl('/').catch(reason => console.log(reason));
       }
     });
   }
