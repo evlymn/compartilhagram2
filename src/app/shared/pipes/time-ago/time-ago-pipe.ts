@@ -5,9 +5,13 @@ import {ChangeDetectorRef, NgZone, OnDestroy, Pipe, PipeTransform} from "@angula
   pure: false
 })
 export class TimeAgoPipe implements PipeTransform, OnDestroy {
+
   private timer: number | null | undefined;
 
+  host = 'en';
+
   constructor(private changeDetectorRef: ChangeDetectorRef, private ngZone: NgZone) {
+    this.host = window.location.host == 'exchangeagram.app' ? 'en' : 'pt';
   }
 
   transform(value: string) {
@@ -32,27 +36,27 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
     if (Number.isNaN(seconds)) {
       return '';
     } else if (seconds <= 45) {
-      return 'alguns segundos';
+      return this.host == 'pt' ? 'alguns segundos' : 'a few seconds';
     } else if (seconds <= 90) {
-      return '1m';
+      return '1min';
     } else if (minutes <= 45) {
       return minutes + 'min';
     } else if (minutes <= 90) {
-      return '1h';
+      return this.host == 'pt' ? '1 hora' : '1 hour';
     } else if (hours <= 22) {
-      return hours + ' hs';
+      return  this.host == 'pt' ? hours + ' horas' : hours + ' hours';
     } else if (hours <= 36) {
-      return 'd';
+      return this.host == 'pt' ? '1 dia' : '1 day';
     } else if (days <= 25) {
-      return days + ' dias';
+      return this.host == 'pt' ? days + ' dias' : days + ' days';
     } else if (days <= 45) {
-      return 'mês';
+      return this.host == 'pt' ? '1 mês' : '1 month';
     } else if (days <= 345) {
-      return months + ' meses';
+      return this.host == 'pt' ? months + ' meses' : months + ' months';
     } else if (days <= 545) {
-      return 'ano';
+      return this.host == 'pt' ? '1 ano' : '1 year';
     } else { // (days > 545)
-      return years + ' anos';
+      return this.host == 'pt' ? years + ' anos' : years + ' years';
     }
   }
 

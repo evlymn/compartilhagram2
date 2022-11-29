@@ -3,6 +3,7 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 import {NotificationService} from "../shared/services/notification/notification.service";
 import {Router} from "@angular/router";
 import {WindowService} from "../shared/services/window/window.service";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ import {WindowService} from "../shared/services/window/window.service";
 export class HomeService {
 
   constructor(public authService: AuthenticationService,
-              private _notificationService: NotificationService,
-              private _router: Router,
               public auth: AuthenticationService,
-              public windowService: WindowService
+              public windowService: WindowService,
+              public languageService: LanguageService
   ) {
+
   }
 
 

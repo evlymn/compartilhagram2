@@ -10,8 +10,8 @@ export class MessagesRoomsComponent implements OnInit {
 
   rooms: any;
 
-  constructor(private _messagesService: MessagesService) {
-    this._messagesService.auth.authState.subscribe(async user => {
+  constructor(public messagesService: MessagesService) {
+    this.messagesService.auth.authState.subscribe(async user => {
       this.getRooms(user?.uid as string).catch();
     })
   }
@@ -23,7 +23,7 @@ export class MessagesRoomsComponent implements OnInit {
 
 
   async getRooms(userId: string) {
-    const snapshot = await this._messagesService.getRooms(userId);
+    const snapshot = await this.messagesService.getRooms(userId);
     if (snapshot.exists())
       this.rooms = Object.values(snapshot.val());
   }

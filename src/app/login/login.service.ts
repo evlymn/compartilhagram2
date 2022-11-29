@@ -3,6 +3,7 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {Router} from "@angular/router";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class LoginService {
   constructor(public auth: AuthenticationService,
               private storage: StorageService,
               private database: RealtimeService,
-              private router: Router) {
+              private router: Router,
+              public languageService: LanguageService) {
   }
 
   async login(email: string, password: string) {

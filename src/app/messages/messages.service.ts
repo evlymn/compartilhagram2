@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class MessagesService {
 
   constructor(private _realtime: RealtimeService,
               private _router: Router,
-              public auth: AuthenticationService) {
+              public auth: AuthenticationService,
+              public languageService: LanguageService) {
   }
 
   async getRooms(hostId: string) {

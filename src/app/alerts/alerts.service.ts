@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {equalTo, limitToLast, orderByChild} from "@angular/fire/database";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AlertsService {
   totalAlerts = 0;
 
   constructor(private _realtimeService: RealtimeService,
-              public auth: AuthenticationService) {
+              public auth: AuthenticationService,
+              public languageService: LanguageService) {
     this.auth.authState.subscribe(user => {
       this.observeUncountedAlerts();
       this.getTotalAlert();

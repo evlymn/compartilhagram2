@@ -7,6 +7,7 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 import {AlertsService} from "../alerts/alerts.service";
 import {TimelineService} from "../timeline/timeline.service";
 import {AlbumService} from "../shared/services/album/album.service";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class PostFormService {
               public auth: AuthenticationService,
               private _alertsService: AlertsService,
               private _timelineService: TimelineService,
-              private _albumService: AlbumService) {
+              private _albumService: AlbumService,
+              public languageService: LanguageService) {
   }
 
   createId() {

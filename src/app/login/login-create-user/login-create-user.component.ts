@@ -45,7 +45,7 @@ export class LoginCreateUserComponent {
 
   constructor(private _dialog: MatDialog,
               private _formBuilder: FormBuilder,
-              private _loginService: LoginService) {
+              public loginService: LoginService) {
     this.createForm();
   }
 
@@ -63,7 +63,7 @@ export class LoginCreateUserComponent {
     try {
       if (this.img64 && this.form.valid) {
        this.hintMessage = 'Cadastrando usuária(o)...';
-        const uploadTaskSnapshot = await this._loginService.signUp(this.email?.value, this.password?.value, this.name?.value, this.img64);
+        const uploadTaskSnapshot = await this.loginService.signUp(this.email?.value, this.password?.value, this.name?.value, this.img64);
         const subs = uploadTaskSnapshot.subscribe(snapshot => {
           if (snapshot.progress == 0) {
             this.progressMode = 'determinate';

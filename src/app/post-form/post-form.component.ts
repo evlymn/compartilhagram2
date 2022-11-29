@@ -32,9 +32,10 @@ export class PostFormComponent implements OnInit {
     public windowService: WindowService,
     private _storageService: StorageService,
     private _dialog: MatDialog,
-    private postFormService: PostFormService,
+    public postFormService: PostFormService,
     private _notificationService: NotificationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+
   ) {
 
     this.windowService.getSizes.subscribe(size => {
@@ -84,7 +85,8 @@ export class PostFormComponent implements OnInit {
                 if (total == this.images.length * 100) {
                   this.postFormService.repostToFollowers(postId);
                   this.cleanForm();
-                  this.openAlert({text: "Post enviado!", action: 'closeForm'});
+
+                  this.openAlert({text: this.postFormService.languageService.getWord('postenviado'), action: 'closeForm'});
                 }
               }
             }
@@ -93,7 +95,7 @@ export class PostFormComponent implements OnInit {
       } else {
         this.postFormService.repostToFollowers(postId);
         this.cleanForm();
-        this.openAlert({text: "Post enviado!", action: 'closeForm'});
+        this.openAlert({text: this.postFormService.languageService.getWord('postenviado'), action: 'closeForm'});
       }
     }
   }

@@ -9,19 +9,19 @@ import {AlertsService} from "../alerts.service";
 export class AlertsListComponent implements OnInit {
   alerts: any;
 
-  constructor(private _alertsService: AlertsService) {
-    this._alertsService.auth.authState.subscribe(() => {
+  constructor(public alertsService: AlertsService) {
+    this.alertsService.auth.authState.subscribe(() => {
       this.getAlerts();
     })
   }
 
 
   getAlerts() {
-    this.alerts = this._alertsService.getAlerts();
+    this.alerts = this.alertsService.getAlerts();
   }
 
   ngOnInit(): void {
-    this._alertsService.setTotalToZero();
+    this.alertsService.setTotalToZero();
   }
 
 }

@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom-sheet";
+import {MessagesService} from "../messages.service";
 
 @Component({
   selector: 'app-messages-form-bottom-sheet',
@@ -10,7 +11,7 @@ export class MessagesFormBottomSheetComponent implements OnInit {
   postText = '';
 
   constructor(private _bottomSheetRef: MatBottomSheetRef<MessagesFormBottomSheetComponent>,
-              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
+              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, public messageService: MessagesService) {
   }
 
   ngOnInit(): void {

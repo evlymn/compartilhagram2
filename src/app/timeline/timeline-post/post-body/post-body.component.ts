@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
- import {Router} from "@angular/router";
- import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
 import {TimelineService} from "../../timeline.service";
 import {NotificationService} from "../../../shared/services/notification/notification.service";
 import {ImageViewComponent} from "../../../image-view/image-view.component";
@@ -16,7 +16,7 @@ export class PostBodyComponent implements OnInit {
   @Input() index = 0;
   @Input() loggedUId = '';
   @Input() isRepost = false;
-
+  isExchangeagram = false
   postText = '';
   postPanelOpened = false;
   deletePanelOpened = false
@@ -25,6 +25,7 @@ export class PostBodyComponent implements OnInit {
               private _router: Router,
               private _dialog: MatDialog,
               private _notificationService: NotificationService) {
+    this.isExchangeagram = window.location.host == 'exchangeagram.app';
     this._notificationService.observable().subscribe(s => {
       if (s.key == 'togglePostPanel' && s.value == this.post.id) {
         this.togglePostPanel();

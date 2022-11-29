@@ -73,8 +73,11 @@
   </div>
 
   <div class="timeago">
-    <small>
+    <small *ngIf="!isExchangeagram">
       há {{post.dateTime | timeAgo }}
+    </small>
+    <small *ngIf="isExchangeagram">
+      {{post.dateTime | timeAgo }} ago
     </small>
   </div>
 </div>

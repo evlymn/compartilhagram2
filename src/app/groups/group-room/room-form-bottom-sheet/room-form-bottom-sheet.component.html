@@ -1,7 +1,7 @@
 <div class="component-bottom-sheet">
-<textarea cdkTextareaAutosize placeholder="Doce ou travessura?"
+<textarea cdkTextareaAutosize [placeholder]=" groupService.languageService.getWord('doceoutravessura')"
           maxlength="300" [(ngModel)]="postText"></textarea>
   <button (click)="createMessage()" mat-flat-button class="form-button form-button-post">
-    Publicar
+    {{ groupService.languageService.getWord('postar')}}
   </button>
 </div>

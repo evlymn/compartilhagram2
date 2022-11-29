@@ -1,4 +1,4 @@
-<h3>Mensagens</h3>
+<h3>{{messagesService.languageService.getWord('mensagens')}}</h3>
 <div class="rooms" *ngFor="let item of rooms ">
   <div class="room" [routerLink]="['../messages', item[getKey(item)].uid]">
     <div class="user-info">

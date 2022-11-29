@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,7 @@ import { Component } from '@angular/core';
 export class LoginComponent {
   variavel = '';
   selectedIndex = 0;
-
+constructor(public loginService:LoginService) {
+}
 
 }

@@ -5,7 +5,7 @@
   </div>
   <textarea cdkTextareaAutosize
             [(ngModel)]="postText"
-            placeholder="Doce ou travessura?"
+            [placeholder]="postFormService.languageService.getWord('doceoutravessura')"
             maxlength="300"></textarea>
 
   <div class="form-actions">
@@ -20,7 +20,7 @@
       <!--        <mat-icon>location_on</mat-icon>-->
       <!--      </button>-->
 
-      <span *ngIf="sendingPost" class="send-post">enviando...</span>
+      <span *ngIf="sendingPost" class="send-post">{{postFormService.languageService.getWord('enviando')}}...</span>
     </div>
 
     <div class="div-spinner">
@@ -32,7 +32,7 @@
 
 
   <div class="images-upload-grid" *ngIf="images.length> 0">
-    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>
+<!--    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>-->
     <div *ngFor="let img  of images; let i = index"
          [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
          class="image-grid-item"
@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf="images.length>0">
-    <div   class="autocomplete-title"> Criar ou adicionar a um álbum</div>
+    <div   class="autocomplete-title">{{postFormService.languageService.getWord('criarouadicionaralbum')}} </div>
     <div class="form-actions-dialog">
       <div *ngIf="images.length>0" class="input-flex-autocomplete">
 
@@ -69,7 +69,7 @@
 
   </div>
   <button (click)="savePost()" [disabled]="sendingPost"   mat-button class="form-button form-button-post-dialog">
-    Publicar
+    {{postFormService.languageService.getWord('postar')}}
   </button>
 </div>
 

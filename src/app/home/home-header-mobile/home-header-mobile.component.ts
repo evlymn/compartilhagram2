@@ -8,8 +8,10 @@ import {HomeService} from "../home.service";
   styleUrls: ['./home-header-mobile.component.scss']
 })
 export class HomeHeaderMobileComponent {
+
   constructor(private _notificationService: NotificationService,
               public homeService: HomeService) {
+
   }
 
   toggleSideNav() {

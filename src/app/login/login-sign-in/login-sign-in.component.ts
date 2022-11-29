@@ -25,7 +25,7 @@ export class LoginSignInComponent {
 
   constructor(private _formBuilder: FormBuilder,
               private _dialog: MatDialog,
-              private _loginService: LoginService,
+              public _loginService: LoginService,
               private router: Router) {
     this.createForm();
   }
@@ -38,7 +38,6 @@ export class LoginSignInComponent {
   }
 
   submit(formDirective: FormGroupDirective) {
-console.log('ddd')
     this.formSubmitted = true;
     if (this.form.valid) {
       this._loginService.login(this.email?.value, this.password?.value).then(() => {

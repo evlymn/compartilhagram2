@@ -12,10 +12,11 @@
     </mat-tab-group>
     <div class="login-actions">
       <button mat-button *ngIf="selectedIndex==0" class=" button-items-align-center login-a signInUp" (click)="selectedIndex=1">
-        Registre-se <i class='bx bxs-right-arrow'></i>
+        {{loginService.languageService.getWord('registrese')}}
+    <i class='bx bxs-right-arrow'></i>
       </button>
       <button   mat-button *ngIf="selectedIndex==1"  class=" button-items-align-center login-a signInUp" (click)="selectedIndex=0">
-        <i class='bx bxs-left-arrow' ></i> Logar
+        <i class='bx bxs-left-arrow' ></i>   {{loginService.languageService.getWord('logar')}}
       </button>
     </div>
   </div>

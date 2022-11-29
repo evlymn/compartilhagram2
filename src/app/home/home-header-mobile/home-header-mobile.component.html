@@ -1,23 +1,26 @@
 <mat-toolbar class="home-toolbar">
   <mat-icon color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
   <button [routerLink]="['/home']" mat-button color="#ccc" class="button-items-align-center">
-    <i class='bx bx-world'></i>feed
+    <i class='bx bx-world'></i> {{homeService.languageService.getWord('feed')}}
   </button>
   <button [routerLink]="['/home/following']" mat-button color="#ccc" class="button-items-align-center">
-    <i class='bx bx-run'></i>seguindo
+    <i class='bx bx-run'></i> {{homeService.languageService.getWord('seguindo')}}
   </button>
   <button (click)="toggleSearchUser()" mat-button color="#ccc" class="button-items-align-center">
-    <i class='bx bx-search-alt'></i>pesquisar
+    <i class='bx bx-search-alt'></i>
+    {{homeService.languageService.getWord('pesquisar')}}
   </button>
   <mat-icon [matMenuTriggerFor]="menu" color="#ccc">more_vert</mat-icon>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">
-      <mat-icon class="icon-font-mobile"> logout</mat-icon>
-      logout
+      <mat-icon class="icon-font-mobile">logout</mat-icon>
+      {{homeService.languageService.getWord('logout')}}
+
     </button>
     <button mat-menu-item [routerLink]="['profile', homeService.auth.user?.uid]">
       <mat-icon class="icon-font-mobile"> account_circle</mat-icon>
-      perfil
+      {{homeService.languageService.getWord('perfil')}}
+
     </button>
   </mat-menu>
 

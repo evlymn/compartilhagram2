@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {equalTo, orderByChild} from "@angular/fire/database";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 export class GroupsService {
 
   constructor(private _realtime: RealtimeService,
+              public languageService: LanguageService,
               public auth: AuthenticationService) {
   }
 

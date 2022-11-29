@@ -4,10 +4,14 @@
       <ul>
         <li>
           <div class="menu-logo">
-            <img alt="logo" *ngIf="isDesktop && !isSmaller900"
+            <img alt="logo" *ngIf="isDesktop && !isSmaller900 && !isExchangeagram"
                  src="./assets/images/compartilhagram-logo.png">
-            <img class="second-logo" *ngIf="isSmaller900"
+            <img alt="logo" *ngIf="isDesktop && !isSmaller900 && isExchangeagram"
+                 src="./assets/images/exchangeagram-logo.png">
+            <img class="second-logo" *ngIf="isSmaller900 && !isExchangeagram"
                  alt=".." src="./assets/images/compartilhagram-menor.png">
+            <img class="second-logo" *ngIf="isSmaller900 && isExchangeagram"
+                 alt=".." src="./assets/images/exchangeagram-logo-menor.png">
           </div>
         </li>
         <li [routerLink]="'/home'">
@@ -20,40 +24,40 @@
           <!--          </mat-icon>-->
         </li>
         <li [routerLink]="'/home/following'">
-          <span *ngIf="!isMiddleSize"> Seguindo</span>
+          <span *ngIf="!isMiddleSize"> {{languageService.getWord('seguindo')}}</span>
           <i class='bx bx-run' [ngClass]=" isMiddleSize ? 'i-middle': ''"></i>
         </li>
         <li [routerLink]="'alerts'">
-          <span *ngIf="!isMiddleSize">Notificações</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getWord('notificacoes')}}</span>
           <i class='bx bxs-bell'
              [ngClass]="alertsService.totalAlerts>0  && isMiddleSize ? 'bx-tada i-middle': alertsService.totalAlerts>0  && !isMiddleSize ? 'bx-tada': isMiddleSize? 'i-middle' : ''"> </i>
         </li>
         <li [routerLink]="['messages']">
-          <span *ngIf="!isMiddleSize">Mensagens</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getWord('mensagens')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">mail_outlined
           </mat-icon>
         </li>
         <li [routerLink]="['groups']">
-          <span *ngIf="!isMiddleSize">Grupos</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getWord('grupos')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">group_outlined
           </mat-icon>
         </li>
 
         <li [routerLink]="['saved']">
-          <span *ngIf="!isMiddleSize">Salvos</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getWord('itenssalvos')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">bookmarks_outlined
           </mat-icon>
 
         </li>
         <li [routerLink]="['photos']">
-          <span *ngIf="!isMiddleSize">Minhas fotos</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getWord('minhasfotos')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">photo_library
           </mat-icon>
 
         </li>
 
         <li (click)="logOut()">
-          <span *ngIf="!isMiddleSize">Sair</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getWord('logout')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">logout
           </mat-icon>
 

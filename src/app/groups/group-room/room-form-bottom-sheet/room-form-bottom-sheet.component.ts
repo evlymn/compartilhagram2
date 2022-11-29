@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom-sheet";
+import {GroupsService} from "../../groups.service";
 
 @Component({
   selector: 'app-room-form-bottom-sheet',
@@ -10,7 +11,8 @@ export class RoomFormBottomSheetComponent implements OnInit {
   postText = '';
 
   constructor(private _bottomSheetRef: MatBottomSheetRef<RoomFormBottomSheetComponent>,
-              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
+              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+              public  groupService: GroupsService) {
   }
 
   createMessage() {
