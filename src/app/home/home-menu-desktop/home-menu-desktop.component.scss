@@ -8,21 +8,35 @@
 .menu-logo>img {
   height:50px ;
 }
+ul{
+  margin-right: 7px;
+}
 li{
   display: flex;
   align-items: center;
   justify-content: flex-end;
   text-align: right;
   color: whitesmoke;
-  margin-top: 15px;
+  margin-top: 20px;
   cursor: pointer;
+  font-size: 16px;
+}
+
+mat-icon{
+  transform: scale(1.1);
+  margin-left: 3px;
+
 }
 li>span{
-  margin-right: 5px;
+  margin-right: 7px;
 }
 i {
-  font-size: 25px;
-  //margin-left: -4px;
+  font-size: 30px;
+
+  margin-right: -4px;
+}
+i>span {
+  margin-right: 5px;
 }
 li:hover{
   background-color:#5e3248;
