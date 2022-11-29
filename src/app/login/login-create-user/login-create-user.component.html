@@ -10,10 +10,10 @@
          [matRippleCentered]="true" [style]="avatarStyle">
     </div>
     <a (click)="file.click()">
-      {{loginService.languageService.getWord('fotodeperfil')}}
+      {{loginService.languageService.getText('fotodeperfil')}}
     </a>
     <small class="  error" *ngIf="submitted && img64.trim().length == 0">
-      <i class='bx bx-face'></i>    {{loginService.languageService.getWord('quemsabeumafoto')}}
+      <i class='bx bx-face'></i>    {{loginService.languageService.getText('quemsabeumafoto')}}
     </small>
   </div>
 
@@ -22,7 +22,7 @@
     floatLabel="auto">
     <input matInput
            class="login-input"
-           [placeholder]="loginService.languageService.getWord('nome')"
+           [placeholder]="loginService.languageService.getText('nome')"
            type="text"
            formControlName="name"
            required>
@@ -40,10 +40,10 @@
            formControlName="email"
            type="text" required>
     <mat-error class="error" *ngIf="submitted && email?.value?.trim().length ==0">
-      <i class='bx bx-envelope'></i> {{loginService.languageService.getWord('qualseuemail')}}
+      <i class='bx bx-envelope'></i> {{loginService.languageService.getText('qualseuemail')}}
     </mat-error>
     <mat-error class="error" *ngIf="submitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
-      <i class='bx bx-envelope'></i> {{loginService.languageService.getWord('digitoualgoerrado')}}
+      <i class='bx bx-envelope'></i> {{loginService.languageService.getText('digitoualgoerrado')}}
 
 
     </mat-error>
@@ -55,15 +55,15 @@
     <input matInput
            name="new-password"
            class="login-input"
-           [placeholder]="loginService.languageService.getWord('senha')"
+           [placeholder]="loginService.languageService.getText('senha')"
            #password1
            formControlName="password"
            type="password" required>
     <mat-error class="error" *ngIf="password?.getError('minlength')">
-      <i class='bx bxs-key'></i> {{loginService.languageService.getWord('senha5caracteres')}}
+      <i class='bx bxs-key'></i> {{loginService.languageService.getText('senha5caracteres')}}
     </mat-error>
     <mat-error class="error" *ngIf="submitted && !password?.getError('minlength')">
-      <i class='bx bxs-key'></i> {{loginService.languageService.getWord('todocadastrosenha')}}
+      <i class='bx bxs-key'></i> {{loginService.languageService.getText('todocadastrosenha')}}
     </mat-error>
   </mat-form-field>
   <mat-form-field
@@ -73,20 +73,20 @@
            [appCompareTo]="password1"
            name="retype-password"
            class="login-input"
-           [placeholder]="loginService.languageService.getWord('repetirsenha')"
+           [placeholder]="loginService.languageService.getText('repetirsenha')"
            formControlName="retypePassword"
            type="password" required>
 
     <mat-error class="error" *ngIf=" !retypePassword?.getError('compareTo')">
-      <i class='bx bxs-key'></i>  {{loginService.languageService.getWord('poderepetirporfavor')}}
+      <i class='bx bxs-key'></i>  {{loginService.languageService.getText('poderepetirporfavor')}}
     </mat-error>
     <mat-error class="error" *ngIf="retypePassword?.value?.length > 0 && retypePassword?.getError('compareTo')">
-      <i class='bx bxs-key'></i>  {{loginService.languageService.getWord('algonaoconfere')}}
+      <i class='bx bxs-key'></i>  {{loginService.languageService.getText('algonaoconfere')}}
     </mat-error>
   </mat-form-field>
 
   <button class="login-button" type="submit" matRipple>
-    {{loginService.languageService.getWord('registrar')}}
+    {{loginService.languageService.getText('registrar')}}
 
   </button>
   <mat-progress-bar class="login-mat-progress-bar"

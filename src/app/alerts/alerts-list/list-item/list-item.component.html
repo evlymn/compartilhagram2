@@ -1,12 +1,12 @@
-<div *ngIf="alert" class="alert-component">
-
+<div *ngIf="alert" class="alert-component" [routerLink]="['/home/post/', alert.postId, '0']" >
   <div class="alert-avatar-div">
     <img class="alert-avatar" [src]="alert.photoURL" alt="...">
   </div>
 
   <div class="div-center">
     <div class="alert-body">
-      <div class="display-name">{{ alert.displayName }} <small>{{ alert.alertText }}</small></div>
+      <div class="display-name">{{ alert.displayName }}
+        <small>{{ isExchangeagram ? alert.enText : alert.ptText  }}</small></div>
       <div class="alert-text-body">
         <div class="alert-text">{{ alert.text }} </div>
         <small> - {{ alert.dateTime| timeAgo  }} </small></div>

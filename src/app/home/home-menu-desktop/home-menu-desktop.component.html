@@ -2,7 +2,7 @@
   <div class="menu-desktop">
     <div>
       <ul>
-        <li>
+        <li [routerLink]="'/home'">
           <div class="menu-logo">
             <img alt="logo" *ngIf="isDesktop && !isSmaller900 && !isExchangeagram"
                  src="./assets/images/compartilhagram-logo.png">
@@ -24,40 +24,40 @@
           <!--          </mat-icon>-->
         </li>
         <li [routerLink]="'/home/following'">
-          <span *ngIf="!isMiddleSize"> {{languageService.getWord('seguindo')}}</span>
+          <span *ngIf="!isMiddleSize"> {{languageService.getText('seguindo')}}</span>
           <i class='bx bx-run' [ngClass]=" isMiddleSize ? 'i-middle': ''"></i>
         </li>
         <li [routerLink]="'alerts'">
-          <span *ngIf="!isMiddleSize">{{languageService.getWord('notificacoes')}}</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getText('notificacoes')}}</span>
           <i class='bx bxs-bell'
              [ngClass]="alertsService.totalAlerts>0  && isMiddleSize ? 'bx-tada i-middle': alertsService.totalAlerts>0  && !isMiddleSize ? 'bx-tada': isMiddleSize? 'i-middle' : ''"> </i>
         </li>
         <li [routerLink]="['messages']">
-          <span *ngIf="!isMiddleSize">{{languageService.getWord('mensagens')}}</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getText('mensagens')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">mail_outlined
           </mat-icon>
         </li>
         <li [routerLink]="['groups']">
-          <span *ngIf="!isMiddleSize">{{languageService.getWord('grupos')}}</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getText('grupos')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">group_outlined
           </mat-icon>
         </li>
 
         <li [routerLink]="['saved']">
-          <span *ngIf="!isMiddleSize">{{languageService.getWord('itenssalvos')}}</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getText('itenssalvos')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">bookmarks_outlined
           </mat-icon>
 
         </li>
         <li [routerLink]="['photos']">
-          <span *ngIf="!isMiddleSize">{{languageService.getWord('minhasfotos')}}</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getText('minhasfotos')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">photo_library
           </mat-icon>
 
         </li>
 
         <li (click)="logOut()">
-          <span *ngIf="!isMiddleSize">{{languageService.getWord('logout')}}</span>
+          <span *ngIf="!isMiddleSize">{{languageService.getText('logout')}}</span>
           <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''">logout
           </mat-icon>
 

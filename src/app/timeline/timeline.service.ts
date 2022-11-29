@@ -5,6 +5,7 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 import {DataSnapshot, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
 import {Observable} from "rxjs";
 import {AlertsService} from "../alerts/alerts.service";
+import {LanguageService} from "../shared/services/language/language.service";
 
 
 @Injectable({
@@ -16,7 +17,8 @@ export class TimelineService {
   constructor(private _realtime: RealtimeService,
               private _storage: StorageService,
               public auth: AuthenticationService,
-              private _alertsService: AlertsService
+              private _alertsService: AlertsService,
+              public languageService: LanguageService
   ) {
   }
 
@@ -155,11 +157,14 @@ export class TimelineService {
     return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).catch();
   }
 
-  async setFavorite(postId: string, postUid: string) {
+  async setFavorite(post: any) {
+    const postId = post.id;
+    const postUid = post.uid;
     const path = `timeline/favorites/messages/${postId}/${this.auth.user?.uid}`;
     const snapshot = await this._realtime.get(path);
     if (!snapshot.exists()) {
       return this.createFavorite(postId).then(async () => {
+
         if (postUid != this.auth.user?.uid) {
           const existFavorite = await this._alertsService.checkFavoriteAlert(postUid, postId);
           if (!existFavorite) {
@@ -167,7 +172,9 @@ export class TimelineService {
               postId: postId,
               favoriteId: this.auth.user?.uid,
               type: 'favorite',
-              alertText: 'Favoritou',
+              image: post.images ? post.images[0].imageURL : null,
+              ptText: this.languageService.getTextByLang('favoritou','pt'),
+              enText: this.languageService.getTextByLang('favoritou','en'),
               icon: 'favorite'
             });
           }
@@ -214,7 +221,8 @@ export class TimelineService {
           postId: id,
           repostId: repost.id,
           type: 'repost',
-          alertText: 'Repostou',
+          ptText: this.languageService.getTextByLang('repostou','pt') ,
+          enText: this.languageService.getTextByLang('repostou','en') ,
           icon: 'repeat_outlined',
           text: repostText,
           image: repost.images ? repost.images[0] : null,

@@ -1,7 +1,7 @@
 <div class="component-bottom-sheet">
-<textarea cdkTextareaAutosize [placeholder]=" groupService.languageService.getWord('doceoutravessura')"
+<textarea cdkTextareaAutosize [placeholder]=" groupService.languageService.getText('doceoutravessura')"
           maxlength="300" [(ngModel)]="postText"></textarea>
   <button (click)="createMessage()" mat-flat-button class="form-button form-button-post">
-    {{ groupService.languageService.getWord('postar')}}
+    {{ groupService.languageService.getText('postar')}}
   </button>
 </div>

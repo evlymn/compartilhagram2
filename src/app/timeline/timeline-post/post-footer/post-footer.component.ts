@@ -57,8 +57,8 @@ export class PostFooterComponent implements OnInit {
     this.commentPanelOpened = !this.commentPanelOpened;
   }
 
-  setFavorite(postId: any, postUid: string) {
-    this._timelineService.setFavorite(postId, postUid).catch();
+  setFavorite(post: any) {
+    this._timelineService.setFavorite(post).catch();
   }
 
   repost(postId: string) {
@@ -81,7 +81,8 @@ export class PostFooterComponent implements OnInit {
           postId: this.post.id,
           commentId,
           type: 'comment',
-          alertText: 'Comentou',
+          ptText: this._timelineService.languageService.getTextByLang('comentou','pt'),
+          enText: this._timelineService.languageService.getTextByLang('comentou','en'),
           icon: 'chat_bubble',
           text: this.commentText,
           image: this.post.images ? this.post.images[0].imageURL : null

@@ -30,11 +30,11 @@
   <div class="actions-tab-group">
     <button mat-raised-button (click)="toggleIndex(0)">
       <mat-icon class="icon-font-mobile tab-icon">key</mat-icon>
-      {{ groupService.languageService.getWord('meusgrupos')}}
+      {{ groupService.languageService.getText('meusgrupos')}}
     </button>
     <button mat-raised-button (click)="toggleIndex(1)">
       <mat-icon class="icon-font-mobile tab-icon">public</mat-icon>
-      {{ groupService.languageService.getWord('publicos')}}
+      {{ groupService.languageService.getText('publicos')}}
     </button>
   </div>
   <mat-tab-group [selectedIndex]="tabSelectedIndex">

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {RealtimeService} from "../firebase/database/realtime.service";
 
 
 @Injectable({
@@ -8,7 +9,7 @@ export class LanguageService {
 
   language: any
 
-  constructor() {
+  constructor(private realtime: RealtimeService) {
     if (!this.language)
       this.createLanguageMap()
   }
@@ -66,9 +67,13 @@ export class LanguageService {
     }, {
       key: 'nome', en: "name", pt: "nome"
     }, {
-      key: 'senha5caracteres', en: "Password must be longer than 5 characters", pt: "Senha deve ter mais de 5 caracteres "
+      key: 'senha5caracteres',
+      en: "Password must be longer than 5 characters",
+      pt: "Senha deve ter mais de 5 caracteres "
     }, {
-      key: 'todocadastrosenha', en: "Every registration needs a password, right?", pt: " Todo cadastro precisa de uma senha né não? "
+      key: 'todocadastrosenha',
+      en: "Every registration needs a password, right?",
+      pt: " Todo cadastro precisa de uma senha né não? "
     }, {
       key: 'repetirsenha', en: "repeat password?", pt: "repetir a senha "
     }, {
@@ -83,28 +88,35 @@ export class LanguageService {
       key: 'perfil', en: "Profile", pt: "Perfil"
     }, {
       key: 'pesquisar', en: "search", pt: "pesquisar"
+    }, {
+      key: 'albuns', en: "Albums", pt: "Albuns"
     }]
 
 
-
-
-
-
-
-
-    words.forEach(w => {
-      this.addToLanguageMap(w.key, w.pt, w.en)
+    this.realtime.get('translate').then(snapshot => {
+      snapshot.forEach(w => {
+        const word = w.val()
+        this.addToLanguageMap(word.key, word.pt, word.en)
+      })
     })
+
+    // words.forEach(w => {
+    //   this.addToLanguageMap(w.key, w.pt, w.en)
+    // })
 
   }
 
-  addToLanguageMap(key: string, wordPt: string, wordEn: string) {
-    const mapLng = new Map<string, string>([["pt", wordPt], ["en", wordEn]])
+  addToLanguageMap(key: string, textPt: string, textEn: string) {
+    const mapLng = new Map<string, string>([["pt", textPt], ["en", textEn]])
     this.language.set(key, mapLng);
   }
 
-  getWord(word: string) {
+  getTextByLang(key: string, lng: string) {
+    return this.language.get(key)?.get(lng)
+  }
+
+  getText(key: string) {
     const lng = window.location.host == 'exchangeagram.app' ? 'en' : 'pt';
-    return this.language.get(word)?.get(lng)
+    return this.language.get(key)?.get(lng)
   }
 }

@@ -19,7 +19,7 @@
     </div>
 
     <div class="user-interaction">
-      <button  class="button-action" mat-icon-button (click)="setFavorite(post?.id, post?.uid)">
+      <button  class="button-action" mat-icon-button (click)="setFavorite(post)">
         <mat-icon class="post-action-icon">{{userFavorited ? 'favorite' : 'favorite_outlined' }}</mat-icon>
         <small *ngIf="totalFavorites>0" class="icon-count">{{totalFavorites}}</small>
       </button>

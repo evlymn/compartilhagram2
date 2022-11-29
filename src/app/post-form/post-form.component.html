@@ -5,7 +5,7 @@
   </div>
   <textarea cdkTextareaAutosize
             [(ngModel)]="postText"
-            [placeholder]="postFormService.languageService.getWord('doceoutravessura')"
+            [placeholder]="postFormService.languageService.getText('doceoutravessura')"
             maxlength="300"></textarea>
 
   <div class="form-actions">
@@ -20,7 +20,7 @@
       <!--        <mat-icon>location_on</mat-icon>-->
       <!--      </button>-->
 
-      <span *ngIf="sendingPost" class="send-post">{{postFormService.languageService.getWord('enviando')}}...</span>
+      <span *ngIf="sendingPost" class="send-post">{{postFormService.languageService.getText('enviando')}}...</span>
     </div>
 
     <div class="div-spinner">
@@ -32,13 +32,15 @@
 
 
   <div class="images-upload-grid" *ngIf="images.length> 0">
-<!--    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>-->
+    <!--    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>-->
     <div *ngFor="let img  of images; let i = index"
          [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
          class="image-grid-item"
          [style]="'background-image:url(' + img.image64 + ')'">
       <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="100" alt="">
-      <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)" [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'" class="image-grid-item-delete">disabled_by_default
+      <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)"
+                [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
+                class="image-grid-item-delete">disabled_by_default
       </mat-icon>
       <mat-spinner class="image-grid-spinner" *ngIf="img.progress" color="accent" mode="determinate"
                    [value]="img.progress"></mat-spinner>
@@ -46,16 +48,16 @@
   </div>
 
   <div *ngIf="images.length>0">
-    <div   class="autocomplete-title">{{postFormService.languageService.getWord('criarouadicionaralbum')}} </div>
+    <div class="autocomplete-title"
+         [ngClass]="isMobile?'autocomplete-title-mobile': ''">{{postFormService.languageService.getText('criarouadicionaralbum')}} </div>
     <div class="form-actions-dialog">
       <div *ngIf="images.length>0" class="input-flex-autocomplete">
-
         <mat-form-field
           class="custom-mat-form-field mat-form-field-W100"
           appearance="fill"
           floatLabel="auto">
           <input matInput [disabled]="sendingPost" type="text"
-                 placeholder="Albuns"
+                 [placeholder]="postFormService.languageService.getText('albuns')"
                  [formControl]="albumControl"
                  [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
@@ -68,8 +70,8 @@
     </div>
 
   </div>
-  <button (click)="savePost()" [disabled]="sendingPost"   mat-button class="form-button form-button-post-dialog">
-    {{postFormService.languageService.getWord('postar')}}
+  <button (click)="savePost()" [disabled]="sendingPost" mat-button class="form-button form-button-post-dialog">
+    {{postFormService.languageService.getText('postar')}}
   </button>
 </div>
 

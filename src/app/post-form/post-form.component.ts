@@ -86,7 +86,7 @@ export class PostFormComponent implements OnInit {
                   this.postFormService.repostToFollowers(postId);
                   this.cleanForm();
 
-                  this.openAlert({text: this.postFormService.languageService.getWord('postenviado'), action: 'closeForm'});
+                  this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
                 }
               }
             }
@@ -95,7 +95,7 @@ export class PostFormComponent implements OnInit {
       } else {
         this.postFormService.repostToFollowers(postId);
         this.cleanForm();
-        this.openAlert({text: this.postFormService.languageService.getWord('postenviado'), action: 'closeForm'});
+        this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
       }
     }
   }

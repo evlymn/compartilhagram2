@@ -48,7 +48,9 @@ export class ProfileService {
           followerId: this.auth.user?.uid,
           followingId: followId,
           type: 'follow',
-          alertText: 'Seguiu você',
+          // alertText: 'Seguiu você',
+          ptText: this._alertsService.languageService.getTextByLang('seguiuvoce','pt'),
+          enText: this._alertsService.languageService.getTextByLang('seguiuvoce','en'),
           icon: 'person'
         });
         this._realtime.get('timeline/messages-by-user/' + followId, limitToLast(10)).then(messages => {
