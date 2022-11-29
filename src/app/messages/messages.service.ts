@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {LanguageService} from "../shared/services/language/language.service";
+import {limitToLast, orderByChild} from "@angular/fire/database";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,10 @@ export class MessagesService {
               public languageService: LanguageService) {
   }
 
-  async getRooms(hostId: string) {
-    return await this._realtime.get(`chat/rooms/${hostId}/`);
+  getRooms(hostId: string) {
+    return this._realtime.onValueChanges(`chat/rooms/${hostId}/`, 'id',
+      orderByChild('dateTime'),
+      limitToLast(30));
   }
 
   async getUserInfo(userId: string) {
@@ -30,8 +33,18 @@ export class MessagesService {
     return this._realtime.onValueChanges(`chat/messages/${room}`)
   }
 
-  async createMessage(room: string, messageData: any) {
+  updateRooms(hostId: string, guestId: string) {
+    this._realtime.update(`chat/rooms/${hostId}/${guestId}`, {
+      active: true,
+      dateTime: new Date().getTime()
+    }).catch();
+    this._realtime.update(`chat/rooms/${guestId}/${hostId}`, {
+      active: true,
+      dateTime: new Date().getTime()
+    }).catch();
+  }
 
+  async createMessage(room: string, messageData: any) {
     return this._realtime.add(`chat/messages/${room}`, messageData);
   }
 
@@ -39,18 +52,18 @@ export class MessagesService {
     let room = '';
     const snapshot = await this._realtime.get(`chat/rooms/${host.uid}/${guest.uid}`);
     if (snapshot.exists()) {
-      room = Object.keys(snapshot.val())[0];
+      room = snapshot.val().room as string;
     } else {
       room = this._realtime.createId() as string;
 
-      await this._realtime.set(`chat/rooms/${host.uid}/${guest.uid}/${room}`, {
+      await this._realtime.set(`chat/rooms/${host.uid}/${guest.uid}/`, {
         room,
         displayName: guest.displayName,
         photoURL: guest.photoURL,
         uid: guest.uid
 
       }).then(() => {
-        this._realtime.set(`chat/rooms/${guest.uid}/${host.uid}/${room}`, {
+        this._realtime.set(`chat/rooms/${guest.uid}/${host.uid}/`, {
           room,
           displayName: host.displayName,
           photoURL: host.photoURL,

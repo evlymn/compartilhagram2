@@ -1,80 +1,40 @@
 {
   "rules": {
-    "system": {
-      "user": {
-        "onDeleted": {
-          ".read": true,
-          ".write": false
-        }
-      }
+    "translate": {
+      ".read": "true",
+      ".write": "auth!=null",
     },
-    "users": {
+    ".read": "auth!=null",
+    ".write": "auth!=null",
+    "alerts": {
       "$uid": {
-        ".read": "auth != null",
-        ".write": "auth != null"
+        "list": {
+          ".indexOn": [
+            "counted",
+            "postId"
+          ]
+        }
       }
     },
     "timeline": {
       "messages": {
-        ".indexOn": ["uid","bad_word"],
-        ".read": "auth != null",
-        "$key": {
-          ".read": "auth != null",
-          ".write": "auth != null "
-        }
+        ".indexOn": "displayNameSearch",
       },
-      "messages_by_user": {
-        ".indexOn": "uid",
-        ".read": "auth != null",
-        ".write": "auth != null"
-      },
-      "comments": {
-        "$key": {
-          ".indexOn": ["uid","bad_word"],
-          ".read": "auth != null",
-          ".write": "auth != null"
-        }
-      },
-      "favorites": {
-        "comments": {
-          "$key": {
-            ".indexOn": "uid",
-            ".read": "auth != null",
-            ".write": "auth != null"
-          }
-        },
+      "follow": {
         "messages": {
-          "$key": {
+          "$uid": {
             ".indexOn": "uid",
-            ".read": true,
-            ".write":true
           }
         }
-      },
-      "look-ahead": {
-        "comments": {
-          "$key": {
-            ".indexOn": "commentId",
-            ".read": false,
-            ".write": false
-          }
-        },
-        "favorites": {
-          "timeline": {
-            "$key": {
-              ".indexOn": "postId",
-              ".read": false,
-              ".write":false
-            }
-          },
-          "comments": {
-            "$key": {
-              ".indexOn": "commentId",
-              ".read": false,
-              ".write": false
-            }
-          }
-        }
+      }
+
+    },
+    "groups": {
+      "list": {
+        ".indexOn": [
+          "uid",
+          "public"
+        ]
       }
     }
   }

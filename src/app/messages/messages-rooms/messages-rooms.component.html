@@ -1,16 +1,36 @@
 <h3>{{messagesService.languageService.getText('mensagens')}}</h3>
-<div class="rooms" *ngFor="let item of rooms ">
-  <div class="room" [routerLink]="['../messages', item[getKey(item)].uid]">
-    <div class="user-info">
-      <div class="">
-        <img class="post-avatar-image" alt="image profile" [src]="item[getKey(item)].photoURL">
+
+<ng-container *ngFor="let item of rooms|async ">
+  <div class="rooms" *ngIf="item.active">
+    <div class="room" [routerLink]="['../messages', item.uid]">
+      <div class="user-info">
+        <div class="">
+          <img class="post-avatar-image" alt="image profile" [src]="item.photoURL">
+        </div>
+        <div class="">
+          {{item.displayName }}
+        </div>
       </div>
-      <div class="">
-        {{item[getKey(item)].displayName }}
-      </div>
+      <mat-icon>
+        arrow_forward
+      </mat-icon>
     </div>
-    <mat-icon>
-      arrow_forward
-    </mat-icon>
   </div>
-</div>
+</ng-container>
+
+<!--<h3>{{messagesService.languageService.getText('mensagens')}}</h3>-->
+<!--<div class="rooms" *ngFor="let item of rooms ">-->
+<!--  <div class="room" [routerLink]="['../messages', item[getKey(item)].uid]">-->
+<!--    <div class="user-info">-->
+<!--      <div class="">-->
+<!--        <img class="post-avatar-image" alt="image profile" [src]="item[getKey(item)].photoURL">-->
+<!--      </div>-->
+<!--      <div class="">-->
+<!--        {{item[getKey(item)].displayName }}-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <mat-icon>-->
+<!--      arrow_forward-->
+<!--    </mat-icon>-->
+<!--  </div>-->
+<!--</div>-->

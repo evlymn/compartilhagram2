@@ -28,6 +28,7 @@ export class MessagesComponent implements OnInit {
       this.guest = await this._messagesService.getUserInfo(this.guestId);
       this.hostId = user?.uid as string;
       this.room = await this._messagesService.checkRoom(user, this.guest);
+      console.log(this.room);
       this.getMessages(this.room);
     })
   }
@@ -41,15 +42,20 @@ export class MessagesComponent implements OnInit {
       message,
       uid: this.host.uid,
       photoURL: this.host.photoURL,
-      displayName: this.host.displayName
+      displayName: this.host.displayName,
+      dateTime: new Date().getTime()
     }
     this._messagesService.createMessage(this.room, messageData).then(() => {
+      this.updateRoom();
       this.footer.nativeElement.scrollIntoView(true);
     })
   }
 
-  openBottomSheet(): void {
+  updateRoom() {
+    this._messagesService.updateRooms(this.hostId, this.guestId);
+  }
 
+  openBottomSheet(): void {
     const d = this._bottomSheet.open(MessagesFormBottomSheetComponent, {
       panelClass: 'bottom-sheet-class'
     });

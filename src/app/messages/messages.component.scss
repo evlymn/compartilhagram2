@@ -12,7 +12,7 @@
 .icon-font-mobile-add, .icon-font-mobile-top, .icon-font-mobile-home {
   position: fixed;
   bottom:30px;
-  right: 30px;
+  right: calc(50% - 50px / 2);
   background-color: #f5972d;
   -webkit-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
