@@ -17,7 +17,8 @@ li{
   justify-content: flex-end;
   text-align: right;
   color: whitesmoke;
-  margin-top: 20px;
+  //margin-top: 20px;
+  padding: 10px;
   cursor: pointer;
   font-size: 16px;
 }
@@ -39,23 +40,21 @@ i>span {
   margin-right: 5px;
 }
 li:hover{
-  background-color:#5e3248;
-  border-radius: 10px;
+  background-color: rgba(91, 37, 68, 0.61);
+  border-radius: 20px;
 }
 
 li:active{
   transform: scale(0.97);
-  background-color: #6c1e4e;
-  //border-radius: 10px;
+  background-color: rgba(65, 22, 46, 0.51);
 }
 
-li:hover:last-child{
+li:hover:first-child , li:hover:last-child{
   background-color: transparent;
 }
 
 .second-logo {
   height: 20px!important;
-  //margin-top: 5px;
 }
 .icon-middle {
   transform: scale(1.3);
