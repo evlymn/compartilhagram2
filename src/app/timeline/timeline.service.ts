@@ -247,7 +247,6 @@ export class TimelineService {
     const path = `timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`;
     const snapshot = await this._realtime.get(path);
     if (!snapshot.exists()) {
-      console.log('xxx');
       return this.createFavoriteComment(postId, commentId).catch(r=> console.log(r));
     } else {
       return this.removeCommentFavorite(postId, commentId).catch();
@@ -265,7 +264,6 @@ export class TimelineService {
   }
 
   async getTotalCommentFavorites(postId: string, commentId: string) {
-    console.log(`timeline/favorites/comments/${postId}/${commentId}/`)
     const total = await this._realtime.get(`timeline/favorites/comments/${postId}/${commentId}/`);
 
     return total.size;

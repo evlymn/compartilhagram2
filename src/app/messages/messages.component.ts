@@ -28,8 +28,7 @@ export class MessagesComponent implements OnInit {
       this.guest = await this._messagesService.getUserInfo(this.guestId);
       this.hostId = user?.uid as string;
       this.room = await this._messagesService.checkRoom(user, this.guest);
-      console.log(this.room);
-      this.getMessages(this.room);
+       this.getMessages(this.room);
     })
   }
 

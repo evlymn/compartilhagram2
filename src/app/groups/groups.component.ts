@@ -39,7 +39,7 @@ export class GroupsComponent implements OnInit {
   }
 
   createGroup() {
-    console.log(this.publicGroup);
+
     const grouData = {
       name: this.groupName,
       public: this.publicGroup,

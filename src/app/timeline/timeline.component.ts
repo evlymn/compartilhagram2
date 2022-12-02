@@ -62,7 +62,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
   openSearchPanel() {
     this.searchUserPanelOpened = !this.searchUserPanelOpened
-    console.log(this.searchUserPanelOpened)
     if (this.searchUserPanelOpened) {
       window.scrollTo(0, 0);
     }
