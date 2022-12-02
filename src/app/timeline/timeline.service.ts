@@ -47,6 +47,8 @@ export class TimelineService {
       })
     })
     return this._realtime.delete('timeline/messages/' + postId).then(() => {
+      this._realtime.delete(`timeline/favorites/comments/${postId}/`).catch();
+      this._realtime.delete(`timeline/favorites/messages/${postId}/`).catch();
       this._realtime.delete(`timeline/repost-by-post/${repostId}/${postId}`).catch();
       this._realtime.delete(`timeline/repost-by-user/${this.auth.user?.uid}/${repostId}`).catch();
       if (images) {
