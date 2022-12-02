@@ -19,8 +19,9 @@
   </div>
   <div class="comment-favorite">
     <div class="favorite-item">
-      <mat-icon class="comment-action-icon">favorite_outlined</mat-icon>
-      <small class="icon-count"></small>
+      <mat-icon (click)="favoriteComment()" class="comment-action-icon">
+        {{totalFavoritesByUser > 0 ? 'favorite' : 'favorite_outlined' }}  </mat-icon>
+      <small class="icon-count">{{totalFavorites > 0 ? totalFavorites : ''}}</small>
     </div>
     <mat-icon class="comment-action-icon " (click)="commentPanelOpened2 = !commentPanelOpened2">
       disabled_by_default_outlined
@@ -31,11 +32,11 @@
 </div>
 
 
-<mat-expansion-panel [expanded]="commentPanelOpened2" (afterCollapse)="onPanelCollapse()">
-  <button (click)="openClosePanel()" mat-button>
+<mat-expansion-panel class="panel-delete" [expanded]="commentPanelOpened2" (afterCollapse)="onPanelCollapse()">
+  <button  class="button-expansion button-warning"  (click)="openClosePanel()" mat-button>
     cancelar
   </button>
-  <button (click)="deleteComment(item.postId, item.id)" mat-button>
+  <button  class="button-expansion button-warning" (click)="deleteComment()" mat-button>
     deletar
   </button>
 </mat-expansion-panel>

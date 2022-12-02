@@ -9,18 +9,23 @@ import {TimelineService} from "../../../timeline.service";
 })
 export class CommentsItemComponent implements OnInit {
   @Input() item: any;
+  totalFavorites = 0;
   commentPanelOpened2 = false;
+  totalFavoritesByUser =0;
 
   constructor(private _timelineService: TimelineService) {
-    console.log(this.item)
+    this._timelineService.auth.authState.subscribe(async () => {
+      this.totalFavorites = await this._timelineService.getTotalCommentFavorites(this.item.postId, this.item.id);
+      this.totalFavoritesByUser = await this._timelineService.getTotalCommentFavoritesByUser(this.item.postId, this.item.id);
+    })
   }
 
   openClosePanel() {
     this.commentPanelOpened2 = !this.commentPanelOpened2;
   }
 
-  deleteComment(postId: string, commentId: string) {
-    this._timelineService.deleteComment(postId, commentId).catch();
+  deleteComment() {
+    this._timelineService.deleteComment(this.item.postId, this.item.id).catch();
   }
 
   onPanelCollapse() {
@@ -30,4 +35,9 @@ export class CommentsItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  async favoriteComment() {
+    await this._timelineService.setCommentFavorite(this.item.postId, this.item.id);
+    this.totalFavorites = await this._timelineService.getTotalCommentFavorites(this.item.postId, this.item.id);
+    this.totalFavoritesByUser = await this._timelineService.getTotalCommentFavoritesByUser(this.item.postId, this.item.id);
+  }
 }

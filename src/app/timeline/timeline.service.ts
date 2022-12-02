@@ -241,90 +241,36 @@ export class TimelineService {
     });
   }
 
-  // async savePost(postId: string, images: ImageSet[], postText: string, album?: { id: string, album?: string }) {
-  //   const uid = this.auth.user?.uid;
-  //   const displayName = this.auth.user?.displayName;
-  //   const postData = {
-  //     id: postId,
-  //     uid,
-  //     displayName: displayName!,
-  //     displayNameSearch: displayName!.toLowerCase(),
-  //     photoURL: this.auth.user?.photoURL,
-  //     postText: postText,
-  //     dateTime: new Date().getTime(),
-  //     albumName: album?.album ?? null,
-  //     albumId: album?.id ?? null,
-  //   }
-  //   await this._realtime.set('timeline/messages/' + postId, postData);
-  //   this._realtime.set(`timeline/messages-by-user/${uid}/${postId}`, postData).catch();
-  //
-  //   for (let i = 0; i < images.length; i++) {
-  //     images[i].postId = postId as string;
-  //     const local = `timeline/messages/${postId}/images/${i}`;
-  //     const objectName = `${local}/${images[i].file.name}`;
-  //     const objectId = `${environment.firebase.storageBucket}/${objectName}`
-  //     const maxsize = 2500;
-  //     const blob = await this._storage.resizeImage({maxSize: maxsize, file: images[i].file}) as Blob;
-  //     const file = this._storage.blobToFile(blob, images[i].file.name);
-  //     const uploadTask = this._storage.uploadBytesResumable(objectName, file,
-  //       {
-  //         cacheControl: 'public, max-age=31536000', customMetadata: {
-  //           uid: uid!,
-  //           displayName: displayName as string,
-  //           fileName: images[i].file.name,
-  //           id: postId as string,
-  //           albumName: album?.album ?? '',
-  //           albumId: album?.id ?? '',
-  //         }
-  //       }
-  //     )
-  //
-  //     uploadTask.then(async (snapshot: { ref: { fullPath: string; }; }) => {
-  //       const imageURL = await this._storage.getDownloadURL(snapshot.ref.fullPath);
-  //       const photoId = this._realtime.createId();
-  //       this._realtime.set(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${photoId}`, {
-  //         albumName: album?.album ?? 'timeline',
-  //         albumId: album?.id ?? null,
-  //         imageURL,
-  //         objectName,
-  //         photoId,
-  //         postId
-  //       }).catch();
-  //
-  //       if (album) {
-  //         this._realtime.update(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/info`, {
-  //           albumName: album?.album,
-  //           albumId: album?.id ?? null,
-  //           uid: uid!,
-  //           displayName: displayName as string,
-  //           photoURL: this.auth.user?.photoURL,
-  //           photoId
-  //         }).catch();
-  //
-  //         await this._realtime.set(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/list/${photoId}`, {
-  //           imageURL,
-  //           albumName: album?.album ?? null,
-  //           albumId: album?.id ?? null,
-  //           uid: uid!,
-  //           postId: postId as string,
-  //           displayName: displayName as string,
-  //           photoId,
-  //         });
-  //       }
-  //
-  //       const imageDataUpdate = {
-  //         imageURL,
-  //         objectName,
-  //         objectId,
-  //         albumName: album?.album ?? null,
-  //         albumId: album?.id ?? null,
-  //         photoId
-  //       };
-  //       this._realtime.set(`timeline/messages/${postId}/images/${i}`, imageDataUpdate).catch();
-  //       this._realtime.set(`timeline/messages-by-user/${uid}/${postId}/images/${i}`, imageDataUpdate).catch();
-  //     })
-  //     images[i].uploadTask = this._storage.percentage(uploadTask);
-  //   }
-  //   return images;
-  // }
+  async setCommentFavorite(postId: string, commentId: string) {
+    const path = `timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`;
+    const snapshot = await this._realtime.get(path);
+    if (!snapshot.exists()) {
+      console.log('xxx');
+      return this.createFavoriteComment(postId, commentId).catch(r=> console.log(r));
+    } else {
+      return this.removeCommentFavorite(postId, commentId).catch();
+    }
+  }
+
+  async createFavoriteComment(postId: string, commentId: string) {
+    return this._realtime.set(`timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`, {
+      uid: this.auth.user?.uid, displayName: this.auth.user?.displayName, time: new Date().valueOf()
+    });
+  }
+
+  async removeCommentFavorite(postId: string, commentId: string) {
+    return this._realtime.delete(`timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`);
+  }
+
+  async getTotalCommentFavorites(postId: string, commentId: string) {
+    console.log(`timeline/favorites/comments/${postId}/${commentId}/`)
+    const total = await this._realtime.get(`timeline/favorites/comments/${postId}/${commentId}/`);
+
+    return total.size;
+  }
+
+  async getTotalCommentFavoritesByUser(postId: string, commentId: string) {
+    const total = await this._realtime.get(`timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`);
+    return total.size;
+  }
 }
