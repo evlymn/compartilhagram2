@@ -14,11 +14,18 @@
 
 
   <div *ngIf="post?.repost" class="repost">
-    <app-timeline-post *ngIf="post?.repost "
-                       [isRepost]="true"
-                       [index]="index"
-                       [post]="post?.repost">
-    </app-timeline-post>
+    <ng-container *ngIf="!post.repostDeleted">
+      <app-timeline-post
+        [isRepost]="true"
+        [index]="index"
+        [post]="post.repost">
+      </app-timeline-post>
+    </ng-container>
+    <ng-container *ngIf="post.repostDeleted">
+      <div>
+        <h2> essa repostagem foi deletada... </h2>
+      </div>
+    </ng-container>
   </div>
 
   <app-post-footer *ngIf="!isRepost"

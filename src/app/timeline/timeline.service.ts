@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
-import {DataSnapshot, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
+import {DataSnapshot, equalTo, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
 import {Observable} from "rxjs";
 import {AlertsService} from "../alerts/alerts.service";
 import {LanguageService} from "../shared/services/language/language.service";
@@ -40,43 +40,91 @@ export class TimelineService {
       return post.val();
   }
 
-  deletePost(postId: string, repostId: string, albumId: string, images: any[]) {
+  deleteFollowMessages(postId: string) {
     this._realtime.get('timeline/follow/followers/' + this.auth.user?.uid).then(followers => {
       followers.forEach(f => {
         this._realtime.delete(`timeline/follow/messages/${f.val().uid}/${postId}`).catch();
       })
     })
-    return this._realtime.delete('timeline/messages/' + postId).then(() => {
-      this._realtime.delete(`timeline/favorites/comments/${postId}/`).catch();
-      this._realtime.delete(`timeline/favorites/messages/${postId}/`).catch();
-      this._realtime.delete(`timeline/repost-by-post/${repostId}/${postId}`).catch();
-      this._realtime.delete(`timeline/repost-by-user/${this.auth.user?.uid}/${repostId}`).catch();
-      if (images) {
-        images.forEach(image => {
-          this._storage.delete(image.objectName).catch();
-        })
-      }
+  }
+
+  deleteFavorites(postId: string) {
+    this._realtime.delete(`timeline/favorites/comments/${postId}/`).catch();
+    this._realtime.delete(`timeline/favorites/messages/${postId}/`).catch();
+  }
+
+  deleteReposts(repostId: string, postId: string) {
+    this._realtime.get('timeline/messages/', orderByChild('repostId'), equalTo(postId)).then(snapshot=> {
+      snapshot.forEach(p=> {
+        this._realtime.update('timeline/messages/' + p.key, {
+          repostDeleted: true
+        }).catch();
+      })
+    })
+    this._realtime.delete(`timeline/repost-by-post/${repostId}/${postId}`).catch();
+    this._realtime.delete(`timeline/repost-by-user/${this.auth.user?.uid}/${repostId}`).catch();
+  }
+
+  deleteStorageImages(images: any[]) {
+    if (images) {
+      images.forEach(image => {
+        this._storage.delete(image.objectName).catch();
+      })
+    }
+  }
+
+  deleteAlbumPhotosByPost(albumId: string, postId: string) {
+    this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
+      snapshot.forEach(p => {
+        if (p.val().postId == postId) {
+          this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list/${p.val().photoId}`).catch();
+        }
+      })
       this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
-        snapshot.forEach(p => {
-          if (p.val().postId == postId) {
-            this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list/${p.val().photoId}`).catch();
-          }
-        })
-        this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
-          if (snapshot.size == 0) {
-            this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}`).catch();
+        if (snapshot.size == 0) {
+          this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}`).catch();
+        }
+      })
+    })
+  }
+
+  deleteAlbumPhotosByUser(postId: string) {
+    this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`).then(snapshot => {
+      snapshot.forEach(p => {
+        if (p.val().postId == postId) {
+          this._realtime.delete(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${p.val().photoId}`).catch();
+        }
+      })
+    });
+  }
+
+  deleteMessagesByUser(postId: string) {
+    this._realtime.delete(`timeline/messages-by-user/${this.auth.user?.uid}/${postId}`).catch();
+  }
+
+  deleteSavedPosts(postId: string) {
+    this._realtime.get('timeline/saved').then(snapshot => {
+      snapshot.forEach(user => {
+        user.forEach(post => {
+          if (post.key == postId) {
+            this._realtime.delete(`timeline/saved/${user.key}/${post.key}`).catch();
           }
         })
       })
+    }).catch()
+  }
 
-      this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`).then(snapshot => {
-        snapshot.forEach(p => {
-          if (p.val().postId == postId) {
-            this._realtime.delete(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${p.val().photoId}`).catch();
-          }
-        })
-      });
-      this._realtime.delete(`timeline/messages-by-user/${this.auth.user?.uid}/${postId}`).catch();
+  deletePost(postId: string, repostId: string, albumId: string, images: any[]) {
+
+    return this._realtime.delete('timeline/messages/' + postId).then(() => {
+      this.deleteFollowMessages(postId);
+      this.deleteFavorites(postId);
+      this.deleteReposts(repostId, postId);
+      this.deleteStorageImages(images);
+      this.deleteAlbumPhotosByPost(albumId, postId);
+      this.deleteAlbumPhotosByUser(postId);
+      this.deleteMessagesByUser(postId);
+      this.deleteSavedPosts(postId);
     });
   }
 
@@ -175,8 +223,8 @@ export class TimelineService {
               favoriteId: this.auth.user?.uid,
               type: 'favorite',
               image: post.images ? post.images[0].imageURL : null,
-              ptText: this.languageService.getTextByLang('favoritou','pt'),
-              enText: this.languageService.getTextByLang('favoritou','en'),
+              ptText: this.languageService.getTextByLang('favoritou', 'pt'),
+              enText: this.languageService.getTextByLang('favoritou', 'en'),
               icon: 'favorite'
             });
           }
@@ -223,8 +271,8 @@ export class TimelineService {
           postId: id,
           repostId: repost.id,
           type: 'repost',
-          ptText: this.languageService.getTextByLang('repostou','pt') ,
-          enText: this.languageService.getTextByLang('repostou','en') ,
+          ptText: this.languageService.getTextByLang('repostou', 'pt'),
+          enText: this.languageService.getTextByLang('repostou', 'en'),
           icon: 'repeat_outlined',
           text: repostText,
           image: repost.images ? repost.images[0] : null,
@@ -247,7 +295,7 @@ export class TimelineService {
     const path = `timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`;
     const snapshot = await this._realtime.get(path);
     if (!snapshot.exists()) {
-      return this.createFavoriteComment(postId, commentId).catch(r=> console.log(r));
+      return this.createFavoriteComment(postId, commentId).catch(r => console.log(r));
     } else {
       return this.removeCommentFavorite(postId, commentId).catch();
     }
