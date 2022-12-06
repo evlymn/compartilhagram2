@@ -1,40 +1,55 @@
 import {Injectable} from '@angular/core';
 import {RealtimeService} from "../firebase/database/realtime.service";
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
-
-  language: any
+  languageArr: any;
 
   constructor(private realtime: RealtimeService) {
-    if (!this.language)
-      this.createLanguageMap()
+    this.checkLanguageCache();
+    this.updateLocalCache();
   }
 
-  createLanguageMap() {
-    this.language = new Map<string, Map<string, string>>();
-    this.realtime.get('translate').then(snapshot => {
-      snapshot.forEach(w => {
-        const word = w.val()
-        this.addToLanguageMap(word.key, word.pt, word.en)
-      })
+  checkLanguageCache() {
+    this.languageArr = [];
+    if (localStorage.getItem('languages')) {
+      this.languageArr = JSON.parse(localStorage.getItem('languages')!)
+    }
+    if (this.languageArr.length == 0) {
+      this.getTranslateFromBd().catch();
+    }
+  }
+
+  updateLocalCache() {
+    this.realtime.onValue('translate/config/updateClients', snapshot => {
+      if (snapshot.val() == true) {
+        this.getTranslateFromBd().then(() => {
+          this.realtime.set('translate/config/', {
+            updateClients: false
+          }).catch();
+        })
+      }
     })
   }
 
-  addToLanguageMap(key: string, textPt: string, textEn: string) {
-    const mapLng = new Map<string, string>([["pt", textPt], ["en", textEn]])
-    this.language.set(key, mapLng);
+  async getTranslateFromBd() {
+    const newArr: any[] = [];
+    const snapshot = await this.realtime.get('translate/list');
+    snapshot.forEach(w => {
+      newArr.push(w.val());
+    })
+    this.languageArr = newArr;
+    localStorage.setItem('languages', JSON.stringify(this.languageArr));
   }
 
   getTextByLang(key: string, lng: string) {
-    return this.language.get(key)?.get(lng)
+    return this.languageArr.filter((d: { key: string; }) => d.key == key)[0][lng]
   }
 
   getText(key: string) {
-    const lng = window.location.host == 'exchangeagram.app' ? 'en' : 'pt';
-    return this.language.get(key)?.get(lng)
+    const lng = window.location.host.includes('exchangeagram.app') ? 'en' : 'pt';
+    return this.languageArr.filter((d: { key: string; }) => d.key == key)[0][lng]
   }
 }
