@@ -1,28 +1,44 @@
-<div class="search-panel" [ngClass]="isMobile? 'search-panel-mobile': ''">
-  <mat-expansion-panel [expanded]="searchUserPanelOpened" (afterCollapse)="onPanelSearchUserCollapse()">
-    <div class="expansion-panel-content">
-      <input matInput type="text" [(ngModel)]="searchText" placeholder="Pesquisar usuário">
-      <button class="W-100" (click)="searchUser()" mat-raised-button>
-        pesquisar
-      </button>
-    </div>
-  </mat-expansion-panel>
-</div>
+<div [ngClass]="isMobile? 'panel-mobile': ''"></div>
+<!--<div class="search-panel" >-->
+<!--  <mat-expansion-panel [expanded]="searchUserPanelOpened" (afterCollapse)="onPanelSearchUserCollapse()">-->
+<!--    <div class="expansion-panel-content">-->
+<!--      <input matInput type="text" [(ngModel)]="searchText" placeholder="Pesquisar usuário">-->
+<!--      <button class="W-100" (click)="searchUser()" mat-raised-button>-->
+<!--        pesquisar-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </mat-expansion-panel>-->
+<!--</div>-->
 
 <app-post-form *ngIf="!isMobile"></app-post-form>
 
+
+<div *ngIf="newPostItems.length>0" class="show-new-post-section">
+  <a class="show-post-button" mat-button
+     (click)="showNewPost()"> {{ timelineService.languageService.getText('mostrarnovaspostagens')}}
+    ({{newPostItems.length}})</a>
+</div>
+
+<div *ngIf="isSearchUser && postItems.length==0" class="show-new-post-section">
+  <h3>
+    {{ replaceTranslate()  }}
+  </h3>
+</div>
+
+<div *ngIf="isSearchUser && postItems.length>0">
+  <h3>
+    {{ timelineService.languageService.getText('pesquisandopor') + ' : ' + searchText }}
+  </h3>
+</div>
 <div #posts class="posts" [ngClass]="isSearchUser? 'post-colum' : 'post-colum-reverse'" *ngIf="postItems">
 
-  <!--  <div class="message-saved" *ngIf="isSavedPost">-->
-  <!--    <h3>Nenhuma postagem salva</h3>-->
-  <!--  </div>-->
-
-
-  <div *ngFor="let item of postItems|async;let i = index;">
+  <ng-container *ngFor="let item of postItems; let i = index;">
     <a id="p{{i}}"></a>
-    <app-timeline-post [index]="i" [post]="item">
+    <app-timeline-post
+      *ngIf="!item.hasImages || (!(item.hasImages && item?.images?.length==0) && (item.hasImages && item?.images)) "
+      [index]="i" [post]="item">
     </app-timeline-post>
-  </div>
+  </ng-container>
 
 </div>
 

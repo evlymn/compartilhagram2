@@ -14,14 +14,13 @@
                  alt=".." src="./assets/images/exchangeagram-logo-menor.png">
           </div>
         </li>
-        <li [routerLink]="'/home'">
-
+        <li (click)="routeToHome()">
           <span *ngIf="!isMiddleSize"> Feed</span>
           <i class='bx bx-world' [ngClass]=" isMiddleSize ? 'i-middle': ''"></i>
-
-
-          <!--          <mat-icon [ngClass]="isMiddleSize? 'icon-middle': ''" >home-->
-          <!--          </mat-icon>-->
+        </li>
+        <li  (click)="searchUser()">
+          <span *ngIf="!isMiddleSize"> {{languageService.getText('pesquisar')}}</span>
+          <i class='bx bx-search-alt' [ngClass]=" isMiddleSize ? 'i-middle': ''"></i>
         </li>
         <li [routerLink]="'/home/following'">
           <span *ngIf="!isMiddleSize"> {{languageService.getText('seguindo')}}</span>

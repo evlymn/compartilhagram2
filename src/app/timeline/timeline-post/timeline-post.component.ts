@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {MatDialog} from "@angular/material/dialog";
@@ -15,6 +15,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
   @Input() index!: any;
   @Input() isDetail = false;
   @Input() isRepost = false;
+  @Output() onDelete = new EventEmitter();
   img = false
   postId = '';
   images: any[] = [];
@@ -27,15 +28,15 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _timelineService: TimelineService,
+    public timelineService: TimelineService,
     private _dialog: MatDialog,
     private _router: Router
   ) {
     this.postId = this._route.snapshot.paramMap.get('id') as string;
     this.index = this._route.snapshot.paramMap.get('index');
-    this.loggedUId = this._timelineService.auth.user?.uid as string;
+    this.loggedUId = this.timelineService.auth.user?.uid as string;
 
-    this._timelineService.auth.authState.subscribe(() => {
+    this.timelineService.auth.authState.subscribe(() => {
       this.getPost().catch();
     })
   }
@@ -44,7 +45,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
   async getPost() {
     if (!this.isRepost) {
       if (this.postId) {
-        this.post = await this._timelineService.getPost(this.postId);
+        this.post = await this.timelineService.getPost(this.postId);
         this.postText = this.post.postText;
       }
     }

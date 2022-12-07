@@ -1,78 +1,114 @@
 <div class="timeline-form-mobile">
-  <div class="close-div" *ngIf="isMobile">
+
+
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="panelPost">
+
+
+      <div class="close-div" *ngIf="isMobile">
     <span [mat-dialog-close]=""
-          class=" button-close-radius">fechar</span>
-  </div>
-  <textarea cdkTextareaAutosize
-            [(ngModel)]="postText"
-            [placeholder]="postFormService.languageService.getText('doceoutravessura')"
-            maxlength="300"></textarea>
-
-  <div class="form-actions">
-    <div>
-      <button [disabled]="images.length>5 || sendingPost" mat-icon-button
-              class="icon-button-mobile"
-              (click)="file.click()">
-        <mat-icon [ngClass]="isMobile? '': 'smaller-icon' ">image</mat-icon>
-      </button>
-      <small> {{ 6 - images.length}}</small>
-      <!--      <button  [disabled]="true" mat-icon-button class="icon-button-mobile">-->
-      <!--        <mat-icon>location_on</mat-icon>-->
-      <!--      </button>-->
-
-      <span *ngIf="sendingPost" class="send-post">{{postFormService.languageService.getText('enviando')}}...</span>
-    </div>
-
-    <div class="div-spinner">
-
-      <span> {{ 300 - postText.length}}</span>
-    </div>
-
-  </div>
-
-
-  <div class="images-upload-grid" *ngIf="images.length> 0">
-    <!--    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>-->
-    <div *ngFor="let img  of images; let i = index"
-         [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
-         class="image-grid-item"
-         [style]="'background-image:url(' + img.image64 + ')'">
-      <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="100" alt="">
-      <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)"
-                [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
-                class="image-grid-item-delete">disabled_by_default
-      </mat-icon>
-      <mat-spinner class="image-grid-spinner" *ngIf="img.progress" color="accent" mode="determinate"
-                   [value]="img.progress"></mat-spinner>
-    </div>
-  </div>
-
-  <div *ngIf="images.length>0">
-    <div class="autocomplete-title"
-         [ngClass]="isMobile?'autocomplete-title-mobile': ''">{{postFormService.languageService.getText('criarouadicionaralbum')}} </div>
-    <div class="form-actions-dialog">
-      <div *ngIf="images.length>0" class="input-flex-autocomplete">
-        <mat-form-field
-          class="custom-mat-form-field mat-form-field-W100"
-          appearance="fill"
-          floatLabel="auto">
-          <input matInput [disabled]="sendingPost" type="text"
-                 [placeholder]="postFormService.languageService.getText('albuns')"
-                 [formControl]="albumControl"
-                 [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
-            <mat-option *ngFor="let option of albumsFiltered | async" [value]="option">
-              {{ option}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+          class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</span>
       </div>
-    </div>
 
-  </div>
-  <button (click)="savePost()" [disabled]="sendingPost" mat-button class="form-button form-button-post-dialog">
-    {{postFormService.languageService.getText('postar')}}
-  </button>
+
+      <textarea cdkTextareaAutosize
+                [(ngModel)]="postText"
+                [placeholder]="postFormService.languageService.getText('doceoutravessura')"
+                maxlength="300"></textarea>
+
+      <div class="form-actions">
+        <div>
+          <button [disabled]="images.length>5 || sendingPost" mat-icon-button
+                  class="icon-button-mobile"
+                  (click)="file.click()">
+            <mat-icon [ngClass]="isMobile? '': 'smaller-icon' ">image</mat-icon>
+          </button>
+          <small> {{ 6 - images.length}}</small>
+
+          <span *ngIf="sendingPost" class="send-post">{{postFormService.languageService.getText('enviando')}}...</span>
+        </div>
+
+        <div class="div-spinner">
+
+          <span> {{ 300 - postText.length}}</span>
+        </div>
+
+      </div>
+
+
+      <div class="images-upload-grid" *ngIf="images.length> 0">
+        <!--    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>-->
+        <div *ngFor="let img  of images; let i = index"
+             [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
+             class="image-grid-item"
+             [style]="'background-image:url(' + img.image64 + ')'">
+          <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="100" alt="">
+          <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)"
+                    [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
+                    class="image-grid-item-delete">disabled_by_default
+          </mat-icon>
+          <mat-spinner class="image-grid-spinner" *ngIf="img.progress" color="accent" mode="determinate"
+                       [value]="img.progress"></mat-spinner>
+        </div>
+      </div>
+
+      <div *ngIf="images.length>0">
+        <div class="autocomplete-title"
+             [ngClass]="isMobile?'autocomplete-title-mobile': ''">{{postFormService.languageService.getText('criarouadicionaralbum')}} </div>
+        <div class="form-actions-dialog">
+          <div *ngIf="images.length>0" class="input-flex-autocomplete">
+            <mat-form-field
+              class="custom-mat-form-field mat-form-field-W100"
+              appearance="fill"
+              floatLabel="auto">
+              <input matInput [disabled]="sendingPost" type="text"
+                     [placeholder]="postFormService.languageService.getText('albuns')"
+                     [formControl]="albumControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
+                <mat-option *ngFor="let option of albumsFiltered | async" [value]="option">
+                  {{ option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="post-form-actions" >
+      <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
+                             [sendingPost]="sendingPost"
+                             [panelSearch]="panelSearch"
+                             [panelPost]="panelPost"></app-post-form-actions>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="" [expanded]="panelSearch">
+
+      <input class="input-search search-panel" matInput
+             type="text"
+             [(ngModel)]="searchText" [placeholder]="postFormService.languageService.getText('pesquisarporusuario')">
+
+      <div class="post-form-actions" >
+      <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
+                             [sendingPost]="sendingPost"
+                             [panelSearch]="panelSearch"
+                             [panelPost]="panelPost"></app-post-form-actions>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!--  <div class="post-form-actions">-->
+  <!--    <button *ngIf="panelSearch" (click)="cancel()" [disabled]="sendingPost" mat-button-->
+  <!--            class="form-button form-button-post-dialog">-->
+  <!--      {{ postFormService.languageService.getText('cancelar') }}-->
+  <!--    </button>-->
+
+  <!--    <button (click)=" panelPost ? savePost() : searchUser()" [disabled]="sendingPost" mat-button-->
+  <!--            class="form-button form-button-post-dialog">-->
+  <!--      {{  panelPost ? postFormService.languageService.getText('postar') : postFormService.languageService.getText('pesquisar')}}-->
+  <!--    </button>-->
+  <!--  </div>-->
 </div>
 
 

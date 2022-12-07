@@ -9,24 +9,28 @@ import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from "@angular/material/expansion";
+import { PostFormActionsComponent } from './post-form-actions/post-form-actions.component';
 
 
 @NgModule({
   declarations: [
     PostFormComponent,
-    FormAlertDialogComponent
+    FormAlertDialogComponent,
+    PostFormActionsComponent
   ],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    FormsModule,
-    MatDialogModule,
-    MatIconModule
-  ],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        FormsModule,
+        MatDialogModule,
+        MatIconModule,
+        MatExpansionModule
+    ],
   exports: [PostFormComponent,
     FormAlertDialogComponent]
 

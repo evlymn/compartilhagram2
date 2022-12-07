@@ -70,7 +70,8 @@ mat-tab-group {
 .mdc-dialog__surface {
   background-color: #481a34!important;
 }
-.bg-color  .mat-mdc-dialog-container {
+
+.bg-color .mat-mdc-dialog-container {
   background-color: #481a34!important;
 }
 
@@ -107,5 +108,8 @@ mat-tab-group {
 .mat-mdc-chip-action-label {
   color: #b9b9b9!important;
 }
-
-
+mat-expansion-panel {
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: transparent !important;
+  }
+}

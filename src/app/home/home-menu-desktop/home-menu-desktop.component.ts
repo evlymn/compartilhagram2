@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {HomeService} from "../home.service";
 import {AlertsService} from "../../alerts/alerts.service";
 import {LanguageService} from "../../shared/services/language/language.service";
+import {NotificationService} from "../../shared/services/notification/notification.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-menu-desktop',
@@ -17,10 +19,11 @@ export class HomeMenuDesktopComponent {
   isMiddleSize = this.homeService.windowService.sizes.isMiddleSize;
 
   constructor(
-
     public languageService: LanguageService,
     public homeService: HomeService,
-    public alertsService: AlertsService) {
+    public alertsService: AlertsService,
+    private _router: Router,
+    private _notificationService: NotificationService) {
     this.isExchangeagram = window.location.host == 'exchangeagram.app';
     this.homeService.windowService.getSizes.subscribe(s => {
       this.isDesktop = s.isDesktop;
@@ -34,5 +37,17 @@ export class HomeMenuDesktopComponent {
 
   logOut() {
     this.homeService.auth.signOut();
+  }
+
+  searchUser() {
+    this._notificationService.next('showSearchPanel',null);
+  }
+
+  routeToHome() {
+
+      this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this._router.navigate(['/home']).catch();
+      });
+
   }
 }

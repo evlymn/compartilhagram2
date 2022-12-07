@@ -1,56 +1,69 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WindowService} from "../shared/services/window/window.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineService} from "./timeline.service";
 import {NotificationService} from "../shared/services/notification/notification.service";
+import {limitToLast} from "@angular/fire/database";
+import {PostData} from "../post-form/interfaces/post-data";
 
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']
 })
-export class TimelineComponent implements OnInit, AfterViewInit {
+export class TimelineComponent implements OnInit, OnDestroy {
   showScrollTo = false;
   isMobile = this.windowService.sizes.isMobile;
   urlFragment;
   postId = '';
-  postItems: any;
   isSearchUser = false;
   post: any;
   searchUserPanelOpened = false;
   searchText = '';
-  isSavedPost = false;
-  totalSavedPost = 0;
+  firstPosts: any[] = [];
+  postItems: PostData[] = [];
+  newPostItems: any[] = [];
+  localPosts = false;
+
 
   constructor(public windowService: WindowService,
               private _dialog: MatDialog,
               private _route: ActivatedRoute,
               private _router: Router,
-              private _timelineService: TimelineService,
+              public timelineService: TimelineService,
               private _notificationService: NotificationService) {
     this.urlFragment = this._route.snapshot.fragment;
+    this.localPosts = !!this._route.snapshot.paramMap.get('local');
     this.postId = this._route.snapshot.paramMap.get('id') as string;
-    this._timelineService.auth.authState.subscribe(() => {
+    this.timelineService.auth.authState.subscribe(() => {
 
       if (this.checkIsSearchRoute()) {
         this.openSearchPanel();
       }
 
-      this._notificationService.observable().subscribe(notice => {
-        if (notice.key == 'toggleSearchPanel') {
+      this._notificationService.observable().subscribe(n => {
+        if (n.key == 'postEdited') {
+        }
+
+        if (n.key == 'postDeleted') {
+        }
+
+        if (n.key == 'postSaved') {
+        }
+
+        if (n.key == 'toggleSearchPanel') {
           if (!this.checkIsHomeRoute()) {
             this._router.navigate(['/home/search']).catch()
           } else {
             this.openSearchPanel();
           }
         }
-
-        // if (notice.key == 'searchUser') {
-        //   const search = notice.value.trim().length > 0 ? notice.value.trim() : null
-        //   this.isSearchUser = search ?? false;
-        //   this.getPosts(search).catch();
-        // }
+        if (n.key == 'searchUser') {
+          this.searchText = n.value.trim();
+          this.isSearchUser = true;
+          this.getPosts(this.searchText).catch();
+        }
       })
       if (!this.isSearchUser)
         this.getPosts().catch();
@@ -59,6 +72,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
       this.isMobile = size.isMobile;
     })
   }
+
 
   openSearchPanel() {
     this.searchUserPanelOpened = !this.searchUserPanelOpened
@@ -79,68 +93,77 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
   }
 
+  showNewPost() {
+    this.postItems.push(...this.newPostItems);
+    this.newPostItems = [];
+  }
+
   async getPosts(search?: string) {
-    this.isSearchUser = false;
+    this.isSearchUser = !!search;
+    console.log(this.isSearchUser)
+    const snapshot = await this.timelineService.getMessages(limitToLast(100))
+    snapshot.forEach(p => {
+      this.firstPosts.push(p.val());
+    })
+    this.postItems.push(...this.firstPosts);
+
     if (search) {
       this.isSearchUser = true;
-      this.postItems = this._timelineService.getMessagesSearch(search)
+      this.timelineService.getMessagesSearch(search).subscribe((s: PostData[]) => {
+        this.postItems = s.filter(d => d.displayNameSearch.includes(search.toLowerCase()));
+      })
+    } else if (this._router.url.includes('following')) {
+      this.timelineService.getFollowingMessages().subscribe(s => {
+        this.postItems = s;
+      })
     } else {
-      if (this._router.url.includes('saved')) {
-        this.isSavedPost = true;
-        this.postItems = this._timelineService.getMessagesSavedAsync()
-      } else if (this._router.url.includes('following')) {
-        this.postItems = this._timelineService.getFollowingMessages();
-      } else
-        this.postItems = this._timelineService.getMessagesAsync();
+      this.timelineService.getMessagesOnChildAdded(snapshot => {
+        if (!this.postItems.some(p => p.id == snapshot.val().id)) {
+          this.newPostItems.push(snapshot.val());
+          if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
+            this.postItems.push(snapshot.val());
+            this.newPostItems = this.newPostItems.filter(p => p.id != snapshot.val().id);
+          }
+        }
+      }, limitToLast(100))
+
+      this.timelineService.getMessageOnChanged(snapshot => {
+        const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
+        this.postItems[index] = snapshot.val();
+      })
+
+      this.timelineService.getMessageOnRemoved(snapshot => {
+        const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
+        if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
+          this.postItems.splice(index, 1);
+        }
+      })
     }
-  }
-
-  // async getPostsHeader(type: string, search?: string) {
-  //   this.selectedIndex = 0;
-  //   this.isSearchUser = false;
-  //   switch (type) {
-  //     case 'search':
-  //       this.postItems = this._timelineService.getMessagesSearch(search as string);
-  //       break;
-  //     case 'saved':
-  //       this.postItems = this._timelineService.getMessagesSavedAsync();
-  //       break;
-  //     case 'following':
-  //       console.log('dddd')
-  //       this.postItems = this._timelineService.getFollowingMessages();
-  //       break;
-  //     default:
-  //       this.postItems = this._timelineService.getMessagesAsync();
-  //   }
-  // }
-
-
-  ngOnInit(): void {
 
   }
+
 
   scrollTo() {
     window.scrollTo({top: 0, left: 0, behavior: "smooth"});
-  }
-
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   if (this.urlFragment) {
-    //     this._router.navigate(['/principal'], {fragment: this.urlFragment}).then(() => {
-    //     })
-    //   }
-    // }, 1000)
-  }
-
-  onPanelSearchUserCollapse() {
-
   }
 
   searchUser() {
     if (this.searchText.trim().length > 0)
       this.getPosts(this.searchText.trim()).catch();
 
-    this.searchUserPanelOpened =false;
+    this.searchUserPanelOpened = false;
   }
 
+  ngOnInit(): void {
+
+  }
+
+  ngOnDestroy(): void {
+
+  }
+
+
+  replaceTranslate() {
+   return  this.timelineService.languageService.getText('usuariopostounadaainda').replace('####', this.searchText)
+  }
 }

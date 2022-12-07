@@ -1,0 +1,11 @@
+<div class="post-form-actions">
+  <button *ngIf="panelSearch" (click)="cancel()" [disabled]="sendingPost" mat-button
+          class="form-button"  [ngClass]="panelPost?   'mat-form-field-W100' : ' mat-form-field-W49-5'">
+    {{ postFormService.languageService.getText('cancelar') }}
+  </button>
+
+  <button (click)=" panelPost ? savePost() : searchUser()" [disabled]="sendingPost" mat-button
+          class="form-button" [ngClass]="panelPost?   'mat-form-field-W100' : '  mat-form-field-W49-5'">
+    {{  panelPost ? postFormService.languageService.getText('postar') : postFormService.languageService.getText('pesquisar')}}
+  </button>
+</div>

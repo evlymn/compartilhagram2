@@ -7,9 +7,10 @@ import {StorageService} from "../shared/services/firebase/storage/storage.servic
 import {MatDialog} from "@angular/material/dialog";
 import {NotificationService} from "../shared/services/notification/notification.service";
 import {FormAlertDialogComponent} from "./form-alert-dialog/form-alert-dialog.component";
-import {ImageSet} from "./image-set";
+import {ImageSet} from "./interfaces/image-set";
 import {PostFormService} from "./post-form.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-post-form',
@@ -27,6 +28,9 @@ export class PostFormComponent implements OnInit {
   sendingPost = false;
   albums: any;
   albumsFiltered!: Observable<string[]>;
+  panelPost = true;
+  panelSearch = false;
+  searchText  = '';
 
   constructor(
     public windowService: WindowService,
@@ -35,9 +39,15 @@ export class PostFormComponent implements OnInit {
     public postFormService: PostFormService,
     private _notificationService: NotificationService,
     private _snackBar: MatSnackBar,
-
+    private _router: Router
   ) {
 
+    this._notificationService.observable().subscribe(n => {
+      if (n.key == 'showSearchPanel') {
+        this.panelPost =  !this.panelPost;
+        this.panelSearch =  !this.panelSearch;
+      }
+    })
     this.windowService.getSizes.subscribe(size => {
       this.isMobile = size.isMobile;
     });
@@ -74,9 +84,13 @@ export class PostFormComponent implements OnInit {
 
       let total = 0;
       this.images = await this.postFormService.savePost(postId, this.images, this.postText, albumData);
+
       if (this.images.length > 0) {
+        const postImages: string[] = [];
         for (let i = 0; i < this.images.length; i++) {
-          const sub = this.images[i].uploadTask?.subscribe(s => {
+
+          const sub = this.images[i].uploadTask?.subscribe(async s => {
+
               this.images[i].progress = s.progress;
               if (s.progress == 100) {
                 console.log('fim do upload ' + i.toString());
@@ -85,8 +99,11 @@ export class PostFormComponent implements OnInit {
                 if (total == this.images.length * 100) {
                   this.postFormService.repostToFollowers(postId);
                   this.cleanForm();
-
-                  this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
+                  this._notificationService.next('postSaved', postId);
+                  this.openAlert({
+                    text: this.postFormService.languageService.getText('postenviado'),
+                    action: 'closeForm'
+                  });
                 }
               }
             }
@@ -95,6 +112,7 @@ export class PostFormComponent implements OnInit {
       } else {
         this.postFormService.repostToFollowers(postId);
         this.cleanForm();
+        this._notificationService.next('postSaved', postId);
         this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
       }
     }
@@ -128,12 +146,13 @@ export class PostFormComponent implements OnInit {
   }
 
   openSnack() {
-    if(!this.isMobile)
-    this._snackBar.open('Post enviado', 'fechar', {
-      verticalPosition: 'top',
-      duration: 2000
-    });
+    if (!this.isMobile)
+      this._snackBar.open('Post enviado', 'fechar', {
+        verticalPosition: 'top',
+        duration: 2000
+      });
   }
+
   cleanForm() {
     this.sendingPost = false;
     this.postText = '';
@@ -143,7 +162,7 @@ export class PostFormComponent implements OnInit {
 
   openAlert(data: any) {
 
-    if(!this.isMobile)
+    if (!this.isMobile)
       return
     const dialogRef = this._dialog.open(FormAlertDialogComponent, {
       width: '100%',
@@ -155,7 +174,7 @@ export class PostFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'closeForm') {
         this.close.next('closeForm')
-       }
+      }
       console.log('The dialog was closed');
     });
   }
@@ -166,5 +185,21 @@ export class PostFormComponent implements OnInit {
 
   deleteAutocompleteText() {
     this.albumControl.setValue('');
+  }
+
+  searchUser() {
+    if (this.searchText.trim().length > 0) {
+      this._notificationService.next('searchUser', this.searchText);
+      this._router.navigate(['/home']).catch();
+    }
+  }
+
+  cancelSearch() {
+    this.panelPost =  !this.panelPost;
+    this.panelSearch =  !this.panelSearch;
+    this.searchText = '';
+    this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this._router.navigate(['/home']).catch();
+    });
   }
 }

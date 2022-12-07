@@ -28,7 +28,7 @@ export class MessagesComponent implements OnInit {
       this.guest = await this._messagesService.getUserInfo(this.guestId);
       this.hostId = user?.uid as string;
       this.room = await this._messagesService.checkRoom(user, this.guest);
-       this.getMessages(this.room);
+      this.getMessages(this.room);
     })
   }
 
@@ -55,11 +55,10 @@ export class MessagesComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    const d = this._bottomSheet.open(MessagesFormBottomSheetComponent, {
+    const bottomSheetRef = this._bottomSheet.open(MessagesFormBottomSheetComponent, {
       panelClass: 'bottom-sheet-class'
     });
-    d.afterDismissed().subscribe(result => {
-
+    bottomSheetRef.afterDismissed().subscribe(result => {
       this.createMessage(result).catch();
     })
   }

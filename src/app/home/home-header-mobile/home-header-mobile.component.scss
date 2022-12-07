@@ -12,6 +12,7 @@ button {
   padding: 5px;
   border-radius: 5px;
 }
+
 .home-toolbar {
   position: fixed;
   left: 0;
@@ -22,19 +23,93 @@ button {
   padding-right: 10px;
   padding-left: 10px;
   height: 40px;
-  max-height: 40px!important;
+  max-height: 40px !important;
   display: flex;
   justify-content: space-between;
 }
 
 .mat-toolbar-row {
   height: 40px;
-  max-height: 40px!important;
+  max-height: 40px !important;
 }
 
-i{
+i {
   font-size: 16px;
 }
+
 .icon-font-mobile {
   color: whitesmoke;
+}
+
+mat-tab-group {
+  width: 100%;
+}
+
+mat-tab {
+  width: 100%;
+}
+
+.mat-mdc-tab-group {
+  background-color: transparent !important;
+}
+
+
+.mat-tab-div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 36px;
+  overflow: hidden;
+}
+
+.mat-tab-div-padding {
+  padding-left: 5px;
+}
+
+
+.input-search {
+
+  height: 30px;
+  width: 80%;
+  border-radius: 5px;
+  color: #cccccc;
+  box-sizing: border-box;
+  border-width: 0;
+  outline: none;
+  //padding: 10px;
+  background-color: #5e3248;
+  font-size: 16px;
+ padding-left: 5px;
+}
+
+mat-toolbar {
+  //padding-left: 0!important;
+  //padding-right: 0!important;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  padding-left: 5px;
+  color: #9a6a84;
+  opacity: 1; /* Firefox */
+  font-size: 15px;
+  //font-size: 13.5px!important;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  padding-left: 5px;
+  color: #9a6a84;
+  opacity: 1; /* Firefox */
+  font-size: 15px;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  padding-left: 5px;
+  color: #9a6a84;
+  opacity: 1; /* Firefox */
+  font-size: 15px;
+
 }

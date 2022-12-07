@@ -1,7 +1,10 @@
 <mat-divider></mat-divider>
 <div class="timeline-post "
      *ngIf="post"
-     [ngClass]="isRepost ? 'timeline-post-background-repost' : 'timeline-post-background'">
+     [ngClass]="isRepost && !post?.deleted ? 'timeline-post-background-repost' : post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
+  <small class="post-deleted" *ngIf="post?.deleted">
+    {{timelineService.languageService.getText('postagemdeletada')}}
+  </small>
   <app-post-header [isDetail]="isDetail"
                    [loggedUId]="loggedUId"
                    [isRepost]="isRepost"
@@ -23,7 +26,9 @@
     </ng-container>
     <ng-container *ngIf="post.repostDeleted">
       <div>
-        <h2> essa repostagem foi deletada... </h2>
+
+        <h2>
+          {{timelineService.languageService.getText('postagemdeletada')}}</h2>
       </div>
     </ng-container>
   </div>

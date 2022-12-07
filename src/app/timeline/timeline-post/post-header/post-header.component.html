@@ -1,6 +1,6 @@
 <div class="post-header">
 
-  <div class="user-info">
+  <div class="user-info" [ngClass]="post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
     <div class="post-avatar" [routerLink]="['/home/profile', post?.uid]">
       <img class="post-avatar-image" alt="image profile" [src]="post?.photoURL">
     </div>
@@ -25,7 +25,8 @@
       <div *ngIf="loggedUId === post?.uid" mat-menu-item class="mat-item-div">
         <button mat-button color="whitespace" (click)="togglePostPanel()">
           <mat-icon color="whitespace" class="post-action-icon">edit_note</mat-icon>
-          <span>Editar</span>
+
+          <span> {{timelineService.languageService.getText('editar')}}</span>
         </button>
 
       </div>
@@ -33,12 +34,12 @@
 
         <button mat-button color="whitespace" (click)="openDeletePanel()">
           <mat-icon class="post-action-icon">do_not_disturb_on</mat-icon>
-          <span>Deletar</span>
+          <span> {{timelineService.languageService.getText('deletar')}}</span>
         </button>
       </div>
       <div *ngIf="loggedUId != post?.uid" mat-menu-item class="mat-item-div">
         <mat-icon color="accent" class="post-action-icon icon-warning">warning</mat-icon>
-        <span>Denunciar</span>
+        <span> {{timelineService.languageService.getText('denunciar')}}</span>
       </div>
     </mat-menu>
     <br>
@@ -49,7 +50,7 @@
       arrow_forward
     </mat-icon>
 <!--    fragment="p{{index}}"-->
-     <mat-icon [routerLink]="['/home']"  class="post-action-icon back-icon" *ngIf="isDetail"
+     <mat-icon [routerLink]="['/home','l']"   class="post-action-icon back-icon" *ngIf="isDetail"
               color="accent">
       arrow_back
     </mat-icon>

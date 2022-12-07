@@ -14,6 +14,9 @@ import { HomeMenuMobileComponent } from './home-menu-mobile/home-menu-mobile.com
 import {MatMenuModule} from "@angular/material/menu";
 import { HomeMenuDesktopComponent } from './home-menu-desktop/home-menu-desktop.component';
 import {PostFormModule} from "../post-form/post-form.module";
+import {MatTabsModule} from "@angular/material/tabs";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -34,6 +37,9 @@ import {PostFormModule} from "../post-form/post-form.module";
     MatRippleModule,
     MatMenuModule,
     PostFormModule,
+    MatTabsModule,
+    FormsModule,
+    MatInputModule,
 
 
   ]

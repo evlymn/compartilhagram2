@@ -1,21 +1,7 @@
 import {Injectable} from '@angular/core';
 import {
-  child,
-  Database,
-  DataSnapshot,
-  get,
-  onChildAdded,
-  onChildChanged,
-  onChildRemoved,
-  onValue,
-  push,
-  query,
-  Query,
-  QueryConstraint,
-  ref,
-  remove,
-  set,
-  update
+  child, Database, DataSnapshot, get, onChildAdded, onChildChanged, onChildRemoved, onValue, push, query, Query,
+  QueryConstraint, ref, remove, set, update
 } from "@angular/fire/database";
 
 import {Observable} from 'rxjs';
@@ -52,20 +38,16 @@ export class RealtimeService {
     return remove(ref(this.db, path));
   }
 
-  // deleteByRef(refe:  DatabaseReference) {
-  //   return remove(ref(this.db, path));
-  // }
-
-  onChildAdded(q: Query, callback: (snapshot: DataSnapshot, previousChildName?: string | null) => unknown) {
-    return onChildAdded(q, callback);
+  onChildAdded(path: string, callback: (snapshot: DataSnapshot, previousChildName?: string | null) => unknown, ...queryConstraints: QueryConstraint[]) {
+    return onChildAdded(query(ref(this.db, path), ...queryConstraints), callback);
   }
 
-  onChildChanged(q: Query, callback: (snapshot: DataSnapshot, previousChildName: string | null) => unknown) {
-    return onChildChanged(q, callback);
+  onChildChanged(path: string, callback: (snapshot: DataSnapshot, previousChildName: string | null) => unknown) {
+    return onChildChanged(ref(this.db, path), callback);
   }
 
-  onChildRemoved(q: Query, callback: (snapshot: DataSnapshot) => unknown) {
-    return onChildRemoved(q, callback);
+  onChildRemoved(path: string, callback: (snapshot: DataSnapshot) => unknown) {
+    return onChildRemoved(ref(this.db, path), callback);
   }
 
   onValue(path: string, callback: (snapshot: DataSnapshot) => unknown, ...queryConstraints: QueryConstraint[]) {
@@ -76,7 +58,6 @@ export class RealtimeService {
     return new Observable<any[]>(subscriber => {
       onValue(query(ref(this.db, path), ...queryConstraints), snapshot => {
         const items = new Array<any>()
-
         snapshot.forEach(childSnapshot => {
           const newObj = childSnapshot.val()
           if (idField)
@@ -84,6 +65,18 @@ export class RealtimeService {
           items.push(newObj);
         })
         subscriber.next(items);
+      });
+    })
+  }
+
+  onChildAddedChanges(path: string, idField?: string, ...queryConstraints: QueryConstraint[]) {
+    return new Observable<any>(subscriber => {
+      onChildAdded(query(ref(this.db, path), ...queryConstraints), snapshot => {
+        console.log(snapshot.val());
+        const newObj = snapshot.val()
+        if (idField)
+          newObj[idField] = snapshot.key;
+        subscriber.next([newObj]);
       });
     })
   }

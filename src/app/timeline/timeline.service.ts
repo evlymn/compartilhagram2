@@ -22,8 +22,20 @@ export class TimelineService {
   ) {
   }
 
-  getMessages(callback: (snapshot: DataSnapshot) => unknown, ...queryConstraints: QueryConstraint[]) {
+  getMessagesOnValue(callback: (snapshot: DataSnapshot) => unknown, ...queryConstraints: QueryConstraint[]) {
     return this._realtime.onValue('timeline/messages/', callback, ...queryConstraints)
+  }
+
+  getMessages(...queryConstraints: QueryConstraint[]) {
+    return this._realtime.get('timeline/messages/', ...queryConstraints)
+  }
+
+  getMessageOnChanged(callback: (snapshot: DataSnapshot) => unknown,) {
+    return this._realtime.onChildChanged('timeline/messages/', callback,)
+  }
+
+  getMessageOnRemoved(callback: (snapshot: DataSnapshot) => unknown) {
+    return this._realtime.onChildRemoved('timeline/messages/', callback,)
   }
 
   createId() {
@@ -54,8 +66,8 @@ export class TimelineService {
   }
 
   deleteReposts(repostId: string, postId: string) {
-    this._realtime.get('timeline/messages/', orderByChild('repostId'), equalTo(postId)).then(snapshot=> {
-      snapshot.forEach(p=> {
+    this._realtime.get('timeline/messages/', orderByChild('repostId'), equalTo(postId)).then(snapshot => {
+      snapshot.forEach(p => {
         this._realtime.update('timeline/messages/' + p.key, {
           repostDeleted: true
         }).catch();
@@ -115,17 +127,23 @@ export class TimelineService {
   }
 
   deletePost(postId: string, repostId: string, albumId: string, images: any[]) {
+    return this._realtime.update('timeline/messages/' + postId, {
+      deleted: true
+    }).then(() =>{
 
-    return this._realtime.delete('timeline/messages/' + postId).then(() => {
-      this.deleteFollowMessages(postId);
-      this.deleteFavorites(postId);
-      this.deleteReposts(repostId, postId);
-      this.deleteStorageImages(images);
-      this.deleteAlbumPhotosByPost(albumId, postId);
-      this.deleteAlbumPhotosByUser(postId);
-      this.deleteMessagesByUser(postId);
-      this.deleteSavedPosts(postId);
-    });
+        this._realtime.delete('timeline/messages/' + postId).then(() => {
+          this.deleteFollowMessages(postId);
+          this.deleteFavorites(postId);
+          this.deleteReposts(repostId, postId);
+          this.deleteStorageImages(images);
+          this.deleteAlbumPhotosByPost(albumId, postId);
+          this.deleteAlbumPhotosByUser(postId);
+          this.deleteMessagesByUser(postId);
+          this.deleteSavedPosts(postId);
+        });
+
+    })
+
   }
 
   getReposts(postId: string) {
@@ -179,12 +197,24 @@ export class TimelineService {
     return this._realtime.delete(`timeline/saved/${this.auth.user?.uid}/${postId}`);
   }
 
+  getMessagesOnChildAdded(callback: (snapshot: DataSnapshot, previousChildName?: string | null) => unknown, ...queryConstraints: QueryConstraint[]) {
+    return this._realtime.onChildAdded('timeline/messages/', callback, ...queryConstraints,);
+  }
+
+
+  getMessagesOnAddAsync(): Observable<any[]> {
+    return this._realtime.onChildAddedChanges('timeline/messages/', 'id', limitToLast(100));
+  }
+
   getMessagesAsync(): Observable<any[]> {
     return this._realtime.onValueChanges('timeline/messages/', 'id', limitToLast(100));
   }
 
   getMessagesSearch(search: string): Observable<any[]> {
-    return this._realtime.onValueChanges('timeline/messages/', 'id', orderByChild('displayNameSearch'), startAt(search.toLowerCase()));
+    return this._realtime.onValueChanges('timeline/messages/',
+      'id',
+      orderByChild('displayNameSearch'),
+      startAt(search.toLowerCase()), limitToLast(30));
   }
 
   getFollowingMessages(): Observable<any[]> {

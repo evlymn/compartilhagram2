@@ -4,6 +4,7 @@ import {NotificationService} from "../../../shared/services/notification/notific
 import {
   TimelineBadgeInfoBottomSheetComponent
 } from "../../timeline-badge-info-bottom-sheet/timeline-badge-info-bottom-sheet.component";
+import {TimelineService} from "../../timeline.service";
 
 
 @Component({
@@ -19,7 +20,8 @@ export class PostHeaderComponent implements OnInit {
   @Input() loggedUId = '';
 
   constructor(private _bottomSheet: MatBottomSheet,
-              private _notificationService: NotificationService
+              private _notificationService: NotificationService,
+              public  timelineService: TimelineService
   ) {
 
   }

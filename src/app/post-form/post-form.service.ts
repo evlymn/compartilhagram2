@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {ImageSet} from "./image-set";
+import {ImageSet} from "./interfaces/image-set";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
@@ -8,6 +8,7 @@ import {AlertsService} from "../alerts/alerts.service";
 import {TimelineService} from "../timeline/timeline.service";
 import {AlbumService} from "../shared/services/album/album.service";
 import {LanguageService} from "../shared/services/language/language.service";
+import {PostData} from "./interfaces/post-data";
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +31,11 @@ export class PostFormService {
   async getAlbum(albumId: string, postUId: string) {
     return this._albumService.getAlbum(albumId, postUId);
   }
+
   async getAlbums() {
     return this._albumService.getAlbums();
   }
+
   async createAlbum(album: string) {
     return await this._albumService.createAlbum(album);
   }
@@ -54,7 +57,8 @@ export class PostFormService {
       dateTime: new Date().getTime(),
       albumName: album?.album ?? null,
       albumId: album?.id ?? null,
-    }
+      hasImages: images.length > 0
+    } as PostData
     await this._realtime.set('timeline/messages/' + postId, postData);
     this._realtime.set(`timeline/messages-by-user/${uid}/${postId}`, postData).catch();
 

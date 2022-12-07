@@ -30,6 +30,8 @@ export class PostBodyComponent implements OnInit {
       if (s.key == 'togglePostPanel' && s.value == this.post.id) {
         this.togglePostPanel();
       }
+
+
       if (s.key == 'toggleDeletePanel' && s.value == this.post.id) {
         this.toggleDeletePanel();
       }
@@ -43,8 +45,8 @@ export class PostBodyComponent implements OnInit {
   async deletePost() {
     // @ts-ignore
     this._timelineService.deletePost(this.post.id, this.post?.repost?.id, this.post?.albumId, this.post?.images).then(() => {
+      this._notificationService.next('postDeleted', this.post.id);
       this._router.navigate(['/home']).then(() => null);
-
     })
   }
 
@@ -86,7 +88,14 @@ export class PostBodyComponent implements OnInit {
   async editPost() {
     this.postPanelOpened = !this.postPanelOpened;
     const newPostText = this.postText;
-    this._timelineService.editPost(this.post.id, {postText: newPostText}).catch();
+    this._timelineService.editPost(this.post.id, {postText: newPostText}).then(() => {
+      this._notificationService.next('postEdited', {
+        text: newPostText.trim(),
+        id: this.post.id
+
+      });
+      this.post.postText = newPostText.trim();
+    }).catch();
   }
 
   onExpansionPostOpen() {

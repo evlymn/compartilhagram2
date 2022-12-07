@@ -38,17 +38,20 @@ mat-icon {
   justify-content: center;
   align-items: center;
 }
+
 .search-panel {
- padding-right: 10px;
+  padding-right: 10px;
   padding-left: 10px;
 }
-.search-panel-mobile{
+
+.panel-mobile {
   margin-top: 40px;
 }
 
 mat-expansion-panel {
   background-color: #88456b;
 }
+
 .expansion-panel-content {
   width: 100%;
   display: flex;
@@ -70,12 +73,32 @@ mat-expansion-panel {
   padding: 10px;
   background-color: #5e3248;
 }
+
 .expansion-panel-content > button {
   margin-top: 5px;
   color: whitesmoke;
   background-color: #481a34;
 }
+
 .message-saved {
   text-align: center;
   color: #f6b268;
+}
+
+.show-post-button {
+  color: whitesmoke !important;
+  width: 100%;
+  cursor: pointer;
+}
+
+show-new-post-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+h3{
+  text-align: center;
+  color: white;
+  padding: 10px;
 }

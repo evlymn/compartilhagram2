@@ -88,3 +88,12 @@ mat-icon {
   color: #8f5d78;
 }
 
+.disabled-post{
+  pointer-events: none; opacity: .8;
+
+ }
+
+.disabled-post> .post-avatar > img{
+  opacity: .4;
+
+}

@@ -13,6 +13,11 @@
       "key": "algonaoconfere",
       "pt": "Oops, algo não confere aqui! 🙃"
     },
+    "cancelar": {
+      "en": "Cancel",
+      "key": "cancelar",
+      "pt": "Cancelar"
+    },
     "comentou": {
       "en": "Commented",
       "key": "comentou",
@@ -23,6 +28,16 @@
       "key": "criarouadicionaralbum",
       "pt": "Criar ou adicionar a um álbum"
     },
+    "deletar": {
+      "en": "delete",
+      "key": "deletar",
+      "pt": "deletar"
+    },
+    "denunciar": {
+      "en": "denounce",
+      "key": "denunciar",
+      "pt": "denunciar"
+    },
     "digitoualgoerrado": {
       "en": "I think you typed something wrong!",
       "key": "digitoualgoerrado",
@@ -32,6 +47,11 @@
       "en": "Trick or treat",
       "key": "doceoutravessura",
       "pt": "Doce ou travessura?"
+    },
+    "editar": {
+      "en": "edit",
+      "key": "editar",
+      "pt": "editar"
     },
     "enviando": {
       "en": "sending",
@@ -98,6 +118,11 @@
       "key": "minhasnotificacoes",
       "pt": "Minhas notificacões"
     },
+    "mostrarnovaspostagens": {
+      "en": "show new posts",
+      "key": "mostrarnovaspostagens",
+      "pt": "mostrar novas postagens"
+    },
     "naoesquecasenha": {
       "en": "Don't forget your password!",
       "key": "naoesquecasenha",
@@ -118,10 +143,15 @@
       "key": "perfil",
       "pt": "Perfil"
     },
+    "pesquisandopor": {
+      "en": "searching by",
+      "key": "pesquisandopor",
+      "pt": "pesquisando por"
+    },
     "pesquisar": {
-      "en": "search",
+      "en": "Search",
       "key": "pesquisar",
-      "pt": "pesquisar"
+      "pt": "Pesquisar"
     },
     "pesquisarporusuario": {
       "en": "search by user",
@@ -132,6 +162,11 @@
       "en": "Can you repeat it, please?",
       "key": "poderepetirporfavor",
       "pt": "Pode repetir, por favor? "
+    },
+    "postagemdeletada": {
+      "en": "this post was deleted",
+      "key": "postagemdeletada",
+      "pt": "essa postagem foi deletada..."
     },
     "postar": {
       "en": "Post",
@@ -202,6 +237,11 @@
       "en": "Every registration needs a password, right?",
       "key": "todocadastrosenha",
       "pt": " Todo cadastro precisa de uma senha né não? "
+    },
+    "usuariopostounadaainda": {
+      "en": "I think #### has posted nothing yet",
+      "key": "usuariopostounadaainda",
+      "pt": "Acho que #### postou nada ainda"
     }
   }
 }
