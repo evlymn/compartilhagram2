@@ -11,12 +11,14 @@ export class NotificationService {
     value: any
   }>();
 
-  next(key: string, value: any) {
-    this.notificationSubject.next({
+  async next(key: string, value: any) {
+    return new Promise<boolean>(resolve => {
+      this.notificationSubject.next({
         key,
         value
-      }
-    );
+      })
+      resolve(true)
+    })
   }
 
 

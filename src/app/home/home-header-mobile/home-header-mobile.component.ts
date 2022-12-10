@@ -12,35 +12,31 @@ export class HomeHeaderMobileComponent {
   tabSelectedIndex = 0;
   searchText = '';
 
-
   constructor(private _notificationService: NotificationService,
               public homeService: HomeService,
               private router: Router) {
-
   }
 
   toggleSideNav() {
-    this._notificationService.next('toggleSideNav', null);
+    this._notificationService.next('toggleSideNav', null).catch();
   }
-
 
   toggleSearchUser(index: number) {
     this.tabSelectedIndex = index;
     if (index == 1)
       this.searchText = '';
-
   }
 
   logout() {
     this.homeService.auth.signOut()
   }
 
-
   searchUser() {
-    if (this.searchText.trim().length > 0) {
-      this._notificationService.next('searchUser', this.searchText);
-      this.router.navigate(['/home']).catch();
-    }
+
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate(['/home/search/', this.searchText]).catch()
+    });
+
   }
 
   routeToHome() {

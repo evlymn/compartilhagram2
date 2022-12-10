@@ -33,11 +33,13 @@ export class TimelineComponent implements OnInit, OnDestroy {
               private _router: Router,
               public timelineService: TimelineService,
               private _notificationService: NotificationService) {
+    this.searchText = '';
     this.urlFragment = this._route.snapshot.fragment;
     this.localPosts = !!this._route.snapshot.paramMap.get('local');
     this.postId = this._route.snapshot.paramMap.get('id') as string;
     this.timelineService.auth.authState.subscribe(() => {
-
+      this.searchText = this._route.snapshot.paramMap.get('search') as string
+      this.getPosts(this.searchText).catch();
       if (this.checkIsSearchRoute()) {
         this.openSearchPanel();
       }
@@ -60,8 +62,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
           }
         }
         if (n.key == 'searchUser') {
-          this.searchText = n.value.trim();
-          this.isSearchUser = true;
+          this.timelineService.searchUserText = n.value.trim();
+          this.timelineService.isSearchUser = true;
           this.getPosts(this.searchText).catch();
         }
       })
@@ -100,12 +102,16 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   async getPosts(search?: string) {
     this.isSearchUser = !!search;
-    console.log(this.isSearchUser)
+    console.log(this.timelineService.isSearchUser);
     const snapshot = await this.timelineService.getMessages(limitToLast(100))
-    snapshot.forEach(p => {
-      this.firstPosts.push(p.val());
-    })
-    this.postItems.push(...this.firstPosts);
+
+    if (!this.timelineService.isSearchUser) {
+      snapshot.forEach(p => {
+        this.firstPosts.push(p.val());
+      })
+
+      this.postItems.push(...this.firstPosts);
+    }
 
     if (search) {
       this.isSearchUser = true;
@@ -114,6 +120,10 @@ export class TimelineComponent implements OnInit, OnDestroy {
       })
     } else if (this._router.url.includes('following')) {
       this.timelineService.getFollowingMessages().subscribe(s => {
+        this.postItems = s;
+      })
+    } else if (this._router.url.includes('saved')) {
+      this.timelineService.getMessagesSavedAsync().subscribe(s => {
         this.postItems = s;
       })
     } else {
@@ -164,6 +174,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
 
   replaceTranslate() {
-   return  this.timelineService.languageService.getText('usuariopostounadaainda').replace('####', this.searchText)
+    return this.timelineService.languageService.getText('usuariopostounadaainda').replace('####', this.searchText)
   }
 }

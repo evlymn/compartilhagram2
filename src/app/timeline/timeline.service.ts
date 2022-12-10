@@ -12,8 +12,8 @@ import {LanguageService} from "../shared/services/language/language.service";
   providedIn: 'root'
 })
 export class TimelineService {
-
-
+  isSearchUser = false;
+  searchUserText = '';
   constructor(private _realtime: RealtimeService,
               private _storage: StorageService,
               public auth: AuthenticationService,
@@ -61,6 +61,7 @@ export class TimelineService {
   }
 
   deleteFavorites(postId: string) {
+    console.log(`timeline/favorites/comments/${postId}/`)
     this._realtime.delete(`timeline/favorites/comments/${postId}/`).catch();
     this._realtime.delete(`timeline/favorites/messages/${postId}/`).catch();
   }
@@ -234,7 +235,9 @@ export class TimelineService {
   }
 
   deleteComment(postId: string, commentId: string) {
-    return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).catch();
+    return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).then(()=>{
+      this.removeCommentFavorite(postId,commentId).catch();
+    });
   }
 
   async setFavorite(post: any) {

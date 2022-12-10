@@ -1,0 +1,13 @@
+<div class="component">
+  <h3 mat-dialog-title>App Update available</h3>
+  <div mat-dialog-content>
+    Choose Ok to update
+  </div>
+
+
+  <div mat-dialog-actions class="actions">
+    <button class="form-button" (click)="dialogRef.close()" mat-button   color="primary">Cancel</button>
+    <button class="form-button" (click)="dialogRef.close(true)" mat-button  color="accent" cdkFocusInitial>Update</button>
+  </div>
+
+</div>

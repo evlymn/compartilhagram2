@@ -58,7 +58,7 @@ const routes: Routes = [
     children: homeChildren
   },
   {
-    path: "home/:local",
+    path: "home/search/:search",
     component: HomeComponent,
     children: homeChildren
   }
