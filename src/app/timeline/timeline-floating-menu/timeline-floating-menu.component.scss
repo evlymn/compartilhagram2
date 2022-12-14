@@ -1,6 +1,8 @@
-.icon-font-mobile-add, .icon-font-mobile-top, .icon-font-mobile-home {
+.icon-font-mobile-add, .icon-font-mobile-top,
+.icon-font-mobile-home, .icon-font-mobile-actions,
+.icon-font-mobile-actions-search,.icon-font-mobile-actions-following {
   position: fixed;
-  right: 30px;
+  right: 22px;
   background-color: #f5972d;
   -webkit-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
@@ -8,22 +10,41 @@
   z-index: 1000;
   color: #523d23;
 }
-
-.icon-font-mobile-add {
-  bottom: 30px;
-  transform: scale(1.2);
-  background-color: #f5972d;
-}
-
-
+ $height: 35px;
+ $scale_actions: 0.9;
+ $scale_add:1.1;
 .icon-font-mobile-top {
-  bottom: 135px;
-  transform: scale(1.0);
+  bottom:  calc(115px + $height);
+  transform: scale($scale_actions);
   background-color: #837eb4;
 }
 
 .icon-font-mobile-home {
-  bottom: 85px;
-  transform: scale(1.0);
+  bottom: calc(75px + $height);
+  transform: scale($scale_actions);
   background-color: #b9b9b9;
+}
+
+.icon-font-mobile-add {
+  bottom: calc(30px + $height);
+  transform: scale($scale_add);
+  background-color: #f5972d;
+}
+
+.icon-font-mobile-actions {
+  bottom: 20px;
+  transform: scale($scale_actions);
+  background-color: #b9b9b9;
+}
+.icon-font-mobile-actions-search {
+  right: 65px!important;
+  bottom: 20px;
+  transform: scale($scale_actions);
+  background-color: #837eb4;
+}
+.icon-font-mobile-actions-following {
+  right: 110px!important;
+  bottom: 20px;
+  transform: scale($scale_actions);
+  background-color: #837eb4;
 }

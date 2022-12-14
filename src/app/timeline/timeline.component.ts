@@ -25,6 +25,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
   postItems: PostData[] = [];
   newPostItems: any[] = [];
   localPosts = false;
+  isFollowing = false;
+  isSaved = false;
 
 
   constructor(public windowService: WindowService,
@@ -36,9 +38,12 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.onMessageUpdate();
     this.searchText = '';
     this.urlFragment = this._route.snapshot.fragment;
+    this.isFollowing = this._router.url.includes('following');
+    this.isSaved = this._router.url.includes('saved');
     this.localPosts = !!this._route.snapshot.paramMap.get('local');
     this.postId = this._route.snapshot.paramMap.get('id') as string;
     this.timelineService.auth.authState.subscribe(() => {
+
       this.searchText = this._route.snapshot.paramMap.get('search') as string
       this.getPosts(this.searchText).catch();
       if (this.checkIsSearchRoute()) {
@@ -63,8 +68,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
           }
         }
         if (n.key == 'searchUser') {
-          this.timelineService.searchUserText = n.value.trim();
-          this.timelineService.isSearchUser = true;
+          // this.timelineService.searchUserText = n.value.trim();
+          // this.timelineService.isSearchUser = true;
           this.getPosts(this.searchText).catch();
         }
       })
@@ -79,7 +84,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   onMessageUpdate() {
     this.timelineService.onMessageUpdate(snapshot => {
       const message = snapshot.val()
-      if(this.timelineService.auth.user?.uid == message.uid) {
+      if (this.timelineService.auth.user?.uid == message.uid) {
         console.log(message)
         this.timelineService.updateReposts(message);
       }
@@ -106,21 +111,19 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   showNewPost() {
+
     this.postItems.push(...this.newPostItems);
     this.newPostItems = [];
   }
 
   async getPosts(search?: string) {
     this.isSearchUser = !!search;
-    console.log(this.timelineService.isSearchUser);
-    const snapshot = await this.timelineService.getMessages(limitToLast(100))
-
-    if (!this.timelineService.isSearchUser) {
+    if (!search && !this.isFollowing && !this.isSaved) {
+      const snapshot = await this.timelineService.getMessages();
       snapshot.forEach(p => {
-        this.firstPosts.push(p.val());
+        this.postItems.push(p.val());
       })
-
-      this.postItems.push(...this.firstPosts);
+      //this.postItems.push(...this.firstPosts);
     }
 
     if (search) {
@@ -128,11 +131,11 @@ export class TimelineComponent implements OnInit, OnDestroy {
       this.timelineService.getMessagesSearch(search).subscribe((s: PostData[]) => {
         this.postItems = s.filter(d => d.displayNameSearch.includes(search.toLowerCase()));
       })
-    } else if (this._router.url.includes('following')) {
+    } else if (this.isFollowing) {
       this.timelineService.getFollowingMessages().subscribe(s => {
         this.postItems = s;
       })
-    } else if (this._router.url.includes('saved')) {
+    } else if (this.isSaved) {
       this.timelineService.getMessagesSavedAsync().subscribe(s => {
         this.postItems = s;
       })

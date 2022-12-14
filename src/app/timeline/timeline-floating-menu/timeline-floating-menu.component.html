@@ -3,8 +3,8 @@
   </mat-icon>
 </button>
 
-
-<button [routerLink]="['/home']" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-home">
+<!--[routerLink]="['/home']"-->
+<button (click)="routeToHome()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-home">
   <mat-icon >home
   </mat-icon>
 </button>
@@ -14,3 +14,24 @@
   <mat-icon  >add
   </mat-icon>
 </button>
+
+
+<button  [routerLink]="['/home/following']" [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"   *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-following">
+  <mat-icon  >directions_run
+  </mat-icon>
+</button>
+
+
+<!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
+<button  [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"   *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-search">
+  <mat-icon>search
+  </mat-icon>
+</button>
+
+
+<!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
+<button  (click)="openActions()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions">
+  <mat-icon> {{ actionsOpened? "chevron_right": "chevron_left"   }}
+  </mat-icon>
+</button>
+

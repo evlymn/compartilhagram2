@@ -37,4 +37,8 @@ export class HomeComponent implements OnInit {
       this.sideNavOpened = JSON.parse(localStorage.getItem('sideNavOpened')!);
     }
   }
+
+  toggleSideNav() {
+
+  }
 }

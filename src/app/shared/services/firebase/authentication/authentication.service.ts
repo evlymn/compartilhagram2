@@ -76,7 +76,7 @@ export class AuthenticationService {
           this.router.navigate([this._route]).catch(reason => console.log(reason));
         });
       } else {
-        this.router.navigateByUrl('/').catch(reason => console.log(reason));
+        this.router.navigateByUrl('/login').catch(reason => console.log(reason));
       }
     });
   }

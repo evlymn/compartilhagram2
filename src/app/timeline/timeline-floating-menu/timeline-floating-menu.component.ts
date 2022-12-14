@@ -1,18 +1,21 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
- import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {WindowService} from "../../shared/services/window/window.service";
- import {FormDialogComponent} from "../timeline-form-dialog/form-dialog.component";
+import {FormDialogComponent} from "../timeline-form-dialog/form-dialog.component";
+import FloatingMenuAnimations from "./floating-menu.animations";
 
 @Component({
   selector: 'app-timeline-floating-menu',
   templateUrl: './timeline-floating-menu.component.html',
-  styleUrls: ['./timeline-floating-menu.component.scss']
+  styleUrls: ['./timeline-floating-menu.component.scss'],
+  animations: [FloatingMenuAnimations]
 })
 export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
   showScrollTo = false;
   isMobile = this.windowService.sizes.isMobile;
   urlFragment;
+  actionsOpened = false;
 
   constructor(public windowService: WindowService,
               private _dialog: MatDialog,
@@ -36,7 +39,7 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     });
+    });
   }
 
   ngOnInit(): void {
@@ -49,5 +52,16 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
     if (this.urlFragment) {
       this._router.navigate(['/principal'], {fragment: this.urlFragment}).catch();
     }
+  }
+
+  openActions() {
+    this.actionsOpened = !this.actionsOpened;
+  }
+
+  routeToHome() {
+    this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this._router.navigate(['/home']).catch();
+    });
+
   }
 }

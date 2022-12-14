@@ -75,8 +75,8 @@ export class StorageService {
   }
 
 
-  blobToFile(blob: any, fileName: string) {
-    return new File([blob], fileName);
+  blobToFile(blob: any, fileName: string, options?: any) {
+    return new File([blob], fileName, options);
   }
 
   resizeImage(settings: IResizeImageOptions) {

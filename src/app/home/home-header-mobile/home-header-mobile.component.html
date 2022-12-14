@@ -29,18 +29,18 @@
     </mat-tab>
 
   </mat-tab-group>
-  <mat-icon [matMenuTriggerFor]="menu" color="#ccc">more_vert</mat-icon>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">
-      <mat-icon class="icon-font-mobile">logout</mat-icon>
-      {{homeService.languageService.getText('logout')}}
-    </button>
-    <button mat-menu-item [routerLink]="['profile', homeService.auth.user?.uid]">
-      <mat-icon class="icon-font-mobile"> account_circle</mat-icon>
-      {{homeService.languageService.getText('perfil')}}
+<!--  <mat-icon [matMenuTriggerFor]="menu" color="#ccc">more_vert</mat-icon>-->
+<!--  <mat-menu #menu="matMenu">-->
+<!--    <button mat-menu-item (click)="logout()">-->
+<!--      <mat-icon class="icon-font-mobile">logout</mat-icon>-->
+<!--      {{homeService.languageService.getText('logout')}}-->
+<!--    </button>-->
+<!--    <button mat-menu-item [routerLink]="['profile', homeService.auth.user?.uid]">-->
+<!--      <mat-icon class="icon-font-mobile"> account_circle</mat-icon>-->
+<!--      {{homeService.languageService.getText('perfil')}}-->
 
-    </button>
-  </mat-menu>
+<!--    </button>-->
+<!--  </mat-menu>-->
 
 
 </mat-toolbar>

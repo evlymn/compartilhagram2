@@ -18,6 +18,7 @@ import {MatInputModule} from "@angular/material/input";
 import {LoginErrorMessageDialogComponent} from "./login-error-message-dialog/login-error-message-dialog.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatButtonModule} from "@angular/material/button";
+import { LoginSplashScreenComponent } from './login-splash-screen/login-splash-screen.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatButtonModule} from "@angular/material/button";
     LoginSignInComponent,
     LoginCreateUserComponent,
     LoginImageProfileDialogComponent,
-    LoginErrorMessageDialogComponent
+    LoginErrorMessageDialogComponent,
+    LoginSplashScreenComponent
   ],
     imports: [
         CommonModule,

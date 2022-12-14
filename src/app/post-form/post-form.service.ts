@@ -69,7 +69,12 @@ export class PostFormService {
       const objectId = `${environment.firebase.storageBucket}/${objectName}`
       const maxsize = 2500;
       const blob = await this._storage.resizeImage({maxSize: maxsize, file: images[i].file}) as Blob;
-      const file = this._storage.blobToFile(blob, images[i].file.name);
+      const file = this._storage.blobToFile(blob, images[i].file.name, {
+        type: images[i].file.type,
+        lastModified: images[i].file.lastModified
+      });
+      console.log(file);
+
       const uploadTask = this._storage.uploadBytesResumable(objectName, file,
         {
           cacheControl: 'public, max-age=31536000', customMetadata: {

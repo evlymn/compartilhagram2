@@ -1,10 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./login.component";
+import {LoginSplashScreenComponent} from "./login-splash-screen/login-splash-screen.component";
 
 const routes: Routes = [
   {
-    path: "", component: LoginComponent
+    path: "login", component: LoginComponent
+  },{
+    path: "", component: LoginSplashScreenComponent
   }
 ];
 
