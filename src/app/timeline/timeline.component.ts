@@ -33,6 +33,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
               private _router: Router,
               public timelineService: TimelineService,
               private _notificationService: NotificationService) {
+    this.onMessageUpdate();
     this.searchText = '';
     this.urlFragment = this._route.snapshot.fragment;
     this.localPosts = !!this._route.snapshot.paramMap.get('local');
@@ -75,6 +76,15 @@ export class TimelineComponent implements OnInit, OnDestroy {
     })
   }
 
+  onMessageUpdate() {
+    this.timelineService.onMessageUpdate(snapshot => {
+      const message = snapshot.val()
+      if(this.timelineService.auth.user?.uid == message.uid) {
+        console.log(message)
+        this.timelineService.updateReposts(message);
+      }
+    })
+  }
 
   openSearchPanel() {
     this.searchUserPanelOpened = !this.searchUserPanelOpened
@@ -149,7 +159,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
         }
       })
     }
-
   }
 
 

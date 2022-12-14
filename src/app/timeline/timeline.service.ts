@@ -14,12 +14,46 @@ import {LanguageService} from "../shared/services/language/language.service";
 export class TimelineService {
   isSearchUser = false;
   searchUserText = '';
+
   constructor(private _realtime: RealtimeService,
               private _storage: StorageService,
               public auth: AuthenticationService,
               private _alertsService: AlertsService,
               public languageService: LanguageService
   ) {
+  }
+
+
+  onMessageUpdate(callback: (snapshot: DataSnapshot) => unknown) {
+    this._realtime.onChildChanged('timeline/messages/', callback)
+  }
+
+  updateReposts(post: any) {
+    const postId = post.id, repostId = post.repostId, postText = post.postText
+    console.log('timeline/repost-by-posts/' + postId)
+    this._realtime.get('timeline/repost-by-post/' + postId).then(snapshot => {
+      snapshot.forEach(p => {
+        this._realtime.update('timeline/messages/' + p.val().id + '/repost/', {
+          postText
+        }).catch();
+        //TODO: fix this algorithm
+        this._realtime.update(`timeline/repost-by-post/${postId}/${p.val().id}`, {
+          postText
+        }).catch();
+        this._realtime.update(`timeline/repost-by-user/${this.auth.user?.uid}/` + p.val().id, {
+          postText
+        }).catch();
+      })
+    })
+    // this._realtime.get('timeline/messages/', orderByChild('repostId'), equalTo(postId)).then(snapshot => {
+    //   snapshot.forEach(p => {
+    //     this._realtime.update('timeline/messages/' + p.key + '/repost/', {
+    //       postText
+    //     }).catch();
+    //   })
+    // })
+
+
   }
 
   getMessagesOnValue(callback: (snapshot: DataSnapshot) => unknown, ...queryConstraints: QueryConstraint[]) {
@@ -127,24 +161,23 @@ export class TimelineService {
     }).catch()
   }
 
-  deletePost(postId: string, repostId: string, albumId: string, images: any[]) {
+  deletePost(post: any) {
+    const postId = post.id, repostId = post?.repost, albumId = post?.albumId, images: any[] = post.images;
+
     return this._realtime.update('timeline/messages/' + postId, {
       deleted: true
-    }).then(() =>{
-
-        this._realtime.delete('timeline/messages/' + postId).then(() => {
-          this.deleteFollowMessages(postId);
-          this.deleteFavorites(postId);
-          this.deleteReposts(repostId, postId);
-          this.deleteStorageImages(images);
-          this.deleteAlbumPhotosByPost(albumId, postId);
-          this.deleteAlbumPhotosByUser(postId);
-          this.deleteMessagesByUser(postId);
-          this.deleteSavedPosts(postId);
-        });
-
+    }).then(() => {
+      this._realtime.delete('timeline/messages/' + postId).then(() => {
+        this.deleteFollowMessages(postId);
+        this.deleteFavorites(postId);
+        this.deleteReposts(repostId, postId);
+        this.deleteStorageImages(images);
+        this.deleteAlbumPhotosByPost(albumId, postId);
+        this.deleteAlbumPhotosByUser(postId);
+        this.deleteMessagesByUser(postId);
+        this.deleteSavedPosts(postId);
+      });
     })
-
   }
 
   getReposts(postId: string) {
@@ -235,8 +268,8 @@ export class TimelineService {
   }
 
   deleteComment(postId: string, commentId: string) {
-    return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).then(()=>{
-      this.removeCommentFavorite(postId,commentId).catch();
+    return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).then(() => {
+      this.removeCommentFavorite(postId, commentId).catch();
     });
   }
 
@@ -297,7 +330,8 @@ export class TimelineService {
       postText: repostText,
       dateTime: new Date().getTime(),
       repost: repost,
-      repostId: repost.id
+      repostId: repost.id,
+      isRepost: true
     }).then(() => {
       if (repost.uid != uid) {
         this._alertsService.createAlert('repost', repost.uid as string, {

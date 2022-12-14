@@ -80,7 +80,7 @@ export class PostFooterComponent implements OnInit {
         this._alertsService.createAlert('comment', this.post.uid, {
           postId: this.post.id,
           commentId,
-          type: 'comment',
+          type: 'comment ',
           ptText: this._timelineService.languageService.getTextByLang('comentou','pt'),
           enText: this._timelineService.languageService.getTextByLang('comentou','en'),
           icon: 'chat_bubble',

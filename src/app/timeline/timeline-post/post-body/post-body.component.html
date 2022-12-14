@@ -27,7 +27,7 @@
 
 
   <mat-expansion-panel
-    hideToggle [expanded]="postPanelOpened"
+    hideToggle [expanded]="postPanelOpened && !isRepost"
     (afterExpand)="onExpansionPostOpen()"
     (afterCollapse)="onExpansionPostClose()">
        <textarea cdkTextareaAutosize [(ngModel)]="postText"
@@ -44,7 +44,7 @@
   </mat-expansion-panel>
 </div>
 
-<mat-expansion-panel class="panel-delete" hideToggle [expanded]="deletePanelOpened"
+<mat-expansion-panel class="panel-delete" hideToggle [expanded]="deletePanelOpened  && !isRepost"
                      (afterExpand)="onExpansionDeleteOpen()">
 
   <button (click)="toggleDeletePanel()" class="button-expansion button-warning" mat-button>

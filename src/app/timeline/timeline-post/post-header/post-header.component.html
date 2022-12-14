@@ -16,7 +16,7 @@
       </mat-icon>
     </div>
   </div>
-  <div class="header-actions">
+  <div class="header-actions" *ngIf="!isRepost" >
     <mat-icon [matMenuTriggerFor]="beforeMenu"
               [ngClass]="loggedUId == post?.uid ? 'color-mine': ''">
       more_horiz
