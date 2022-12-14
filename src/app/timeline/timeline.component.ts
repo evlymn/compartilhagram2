@@ -43,7 +43,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.localPosts = !!this._route.snapshot.paramMap.get('local');
     this.postId = this._route.snapshot.paramMap.get('id') as string;
     this.timelineService.auth.authState.subscribe(() => {
-
       this.searchText = this._route.snapshot.paramMap.get('search') as string
       this.getPosts(this.searchText).catch();
       if (this.checkIsSearchRoute()) {
@@ -67,14 +66,14 @@ export class TimelineComponent implements OnInit, OnDestroy {
             this.openSearchPanel();
           }
         }
-        if (n.key == 'searchUser') {
-          // this.timelineService.searchUserText = n.value.trim();
-          // this.timelineService.isSearchUser = true;
-          this.getPosts(this.searchText).catch();
-        }
+        // if (n.key == 'searchUser') {
+        //   // this.timelineService.searchUserText = n.value.trim();
+        //   // this.timelineService.isSearchUser = true;
+        //   this.getPosts(this.searchText).catch();
+        // }
       })
-      if (!this.isSearchUser)
-        this.getPosts().catch();
+      // if (!this.isSearchUser)
+      //   this.getPosts().catch();
     })
     this.windowService.getSizes.subscribe(size => {
       this.isMobile = size.isMobile;
@@ -119,7 +118,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
   async getPosts(search?: string) {
     this.isSearchUser = !!search;
     if (!search && !this.isFollowing && !this.isSaved) {
-      const snapshot = await this.timelineService.getMessages();
+      const snapshot = await this.timelineService.getMessages(limitToLast(100));
+
       snapshot.forEach(p => {
         this.postItems.push(p.val());
       })
@@ -167,13 +167,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   scrollTo() {
     window.scrollTo({top: 0, left: 0, behavior: "smooth"});
-  }
-
-  searchUser() {
-    if (this.searchText.trim().length > 0)
-      this.getPosts(this.searchText.trim()).catch();
-
-    this.searchUserPanelOpened = false;
   }
 
   ngOnInit(): void {

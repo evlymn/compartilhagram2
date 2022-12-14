@@ -2,7 +2,7 @@
 .icon-font-mobile-home, .icon-font-mobile-actions,
 .icon-font-mobile-actions-search,.icon-font-mobile-actions-following {
   position: fixed;
-  right: 22px;
+  right: 24px;
   background-color: #f5972d;
   -webkit-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 14px -1px rgba(0, 0, 0, 0.75);
@@ -10,23 +10,23 @@
   z-index: 1000;
   color: #523d23;
 }
- $height: 35px;
- $scale_actions: 0.9;
- $scale_add:1.1;
+ $height: 40px;
+ $scale_actions: 1;
+ $scale_add:1.2;
 .icon-font-mobile-top {
-  bottom:  calc(115px + $height);
+  bottom:  calc(130px + $height);
   transform: scale($scale_actions);
   background-color: #837eb4;
 }
 
 .icon-font-mobile-home {
-  bottom: calc(75px + $height);
+  bottom: calc(83px + $height);
   transform: scale($scale_actions);
   background-color: #b9b9b9;
 }
 
 .icon-font-mobile-add {
-  bottom: calc(30px + $height);
+  bottom: calc(32px + $height);
   transform: scale($scale_add);
   background-color: #f5972d;
 }
@@ -37,13 +37,15 @@
   background-color: #b9b9b9;
 }
 .icon-font-mobile-actions-search {
-  right: 65px!important;
+  //opacity: 0;
+  right: 70px!important;
   bottom: 20px;
   transform: scale($scale_actions);
   background-color: #837eb4;
 }
 .icon-font-mobile-actions-following {
-  right: 110px!important;
+  //opacity: 0;
+  right: 120px!important;
   bottom: 20px;
   transform: scale($scale_actions);
   background-color: #837eb4;

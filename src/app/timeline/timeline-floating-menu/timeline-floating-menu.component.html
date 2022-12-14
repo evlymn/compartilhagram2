@@ -16,18 +16,19 @@
 </button>
 
 
-<button  [routerLink]="['/home/following']" [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"   *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-following">
+<div [@openCloseActions]=" actionsOpened ? 'open' : 'closed'">
+<button     [routerLink]="['/home/following']"  *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-following">
   <mat-icon  >directions_run
   </mat-icon>
 </button>
 
 
 <!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
-<button  [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"   *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-search">
+<button      *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-search">
   <mat-icon>search
   </mat-icon>
 </button>
-
+</div>
 
 <!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
 <button  (click)="openActions()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions">
