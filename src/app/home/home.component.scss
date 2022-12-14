@@ -10,10 +10,6 @@
   //left: 0;
   //right: 0;
 }
-//.example-toolbar {
-//  position: fixed;
-//  z-index: 2;
-//}
 
 mat-nav-list{
   padding-top: 0!important;
@@ -23,12 +19,7 @@ app-home-header-mobile {
   //width: 100%;
 }
 
-//
-//.example-sidenav-container {
-//  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-//     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-//  flex: 1;
-//}
+
 
  .sidenav-container {
    flex: 1 0 auto;

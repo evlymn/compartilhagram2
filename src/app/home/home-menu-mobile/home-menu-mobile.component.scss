@@ -26,11 +26,23 @@ li {
 }
 
 .menu-mobile-avatar-image {
-  width: 35px;
+  width: 30px;
   border-radius: 17.5px;
-  margin-top: 15px;
-  border: solid 2px #88456b;
-  //margin-left: -9;
+   border: solid 2px #88456b;
+  margin-left: -20!important;
+}
+
+.a-avatar {
+  padding-left: 5px!important;
+}
+a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a:last-child{
+  margin-top: 20px;
+  padding-left: 9px!important;
 }
 
 i {
@@ -42,3 +54,9 @@ i {
 mat-icon{
   color: whitesmoke;
 }
+
+mat-tooltip-component {
+  margin-left: -2px!important;
+}
+
+

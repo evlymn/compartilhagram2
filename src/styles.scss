@@ -154,3 +154,13 @@ mat-expansion-panel {
     box-shadow: transparent !important;
   }
 }
+
+.mdc-tooltip__surface {
+  background-color: #481a34!important;
+  border-top-right-radius: 10px!important;
+  border-bottom-right-radius: 10px!important;
+  border-top-left-radius: 0!important;
+  border-bottom-left-radius: 0!important;
+
+  transform: scale(1.12) !important;
+}

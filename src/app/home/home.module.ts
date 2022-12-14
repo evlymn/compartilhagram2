@@ -17,6 +17,7 @@ import {PostFormModule} from "../post-form/post-form.module";
 import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -26,23 +27,24 @@ import {MatInputModule} from "@angular/material/input";
     HomeMenuMobileComponent,
     HomeMenuDesktopComponent
   ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatRippleModule,
-    MatMenuModule,
-    PostFormModule,
-    MatTabsModule,
-    FormsModule,
-    MatInputModule,
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        MatSidenavModule,
+        MatListModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatRippleModule,
+        MatMenuModule,
+        PostFormModule,
+        MatTabsModule,
+        FormsModule,
+        MatInputModule,
+        MatTooltipModule,
 
 
-  ]
+    ]
 })
 export class HomeModule {
 }

@@ -1,42 +1,71 @@
 <mat-nav-list>
-  <!--    (click)="navigate('/principal')"-->
-  <!--  <a mat-list-item> <img class="logo-smaller"-->
-  <!--                         alt="..." src="./assets/images/compartilhagram-menor.png">-->
-  <!--  </a>-->
 
-
-  <!--    (click)="navigate('/principal')"-->
-  <!--  <a mat-list-item [routerLink]="['/home/timeline']">-->
-  <!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
-  <!--  </a>-->
-
-
-  <a mat-list-item [routerLink]="['alerts']">
+  <a mat-list-item (click)="routeToHome()"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('feed')"
+     matTooltipPosition="right">
+    <mat-icon class="icon-font-mobile ">home</mat-icon>
+  </a>
+  <a mat-list-item [routerLink]="['/home/following']"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('seguindo')"
+     matTooltipPosition="right">
+    <i class='bx bx-run'></i>
+  </a>
+  <a mat-list-item [routerLink]="['alerts']" #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('notificacoes')"
+     matTooltipPosition="right">
     <i class='bx bx-bell' [ngClass]="alertsService.totalAlerts>0 ?'bx-tada': ''"> </i>
   </a>
-  <a mat-list-item [routerLink]="['messages']">
+  <a mat-list-item [routerLink]="['messages']"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('mensagens')"
+     matTooltipPosition="right">
     <mat-icon class="icon-font-mobile ">mail_outlined</mat-icon>
   </a>
-  <a mat-list-item [routerLink]="['groups']">
+  <a mat-list-item [routerLink]="['groups']"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('grupos')"
+     matTooltipPosition="right">
     <mat-icon class="icon-font-mobile">forum_outlined</mat-icon>
   </a>
-  <a mat-list-item [routerLink]="['saved']">
+  <a mat-list-item [routerLink]="['saved']"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('itenssalvos') "
+     matTooltipPosition="right">
     <mat-icon class="icon-font-mobile">bookmarks_outlined</mat-icon>
   </a>
-  <a mat-list-item [routerLink]="['photos']">
+  <a mat-list-item [routerLink]="['photos']"
+     #tooltip="matTooltip"
+
+     [matTooltip]="homeService.languageService.getText('minhasfotos')"
+     matTooltipPosition="right"
+  >
     <mat-icon class="icon-font-mobile">photo_library</mat-icon>
   </a>
 
-  <a mat-list-item  [routerLink]="['profile', user?.uid]">
+  <a class="a-avatar" mat-list-item [routerLink]="['profile', user?.uid]"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('perfil')"
+
+     matTooltipPosition="right">
 
     <img class="menu-mobile-avatar-image" *ngIf="user?.photoURL"
          [src]="user?.photoURL"
          alt="image profile">
   </a>
+  <a mat-list-item (click)="viewToolTips()">
+    <mat-icon class="icon-font-mobile">info_outlined</mat-icon>
+  </a>
+
+  <a mat-list-item (click)="logout()"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('logout')"
+     matTooltipPosition="right">
+    <i class='bx bx-log-out-circle'></i>
+  </a>
+
+
 
 </mat-nav-list>
-
-<!--  <img [routerLink]="['profile', auth.user?.uid]" *ngIf="auth.user?.photoURL" class="menu-mobile-avatar-image"-->
-<!--         alt="image profile" [src]="auth.user?.photoURL">-->
-
 

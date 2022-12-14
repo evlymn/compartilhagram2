@@ -11,6 +11,8 @@ button {
   border: 0 solid transparent;
   padding: 5px;
   border-radius: 5px;
+  font-size: 15px;
+  text-overflow: ellipsis;
 }
 
 .home-toolbar {
@@ -22,8 +24,8 @@ button {
   color: whitesmoke;
   padding-right: 10px;
   padding-left: 10px;
-  height: 40px;
-  max-height: 40px !important;
+  height: 50px;
+  max-height: 50px !important;
   display: flex;
   justify-content: space-between;
 }
@@ -81,8 +83,8 @@ mat-tab {
   outline: none;
   //padding: 10px;
   background-color: #5e3248;
-  font-size: 16px;
- padding-left: 5px;
+  font-size: 18px;
+  padding-left: 5px;
 }
 
 mat-toolbar {
