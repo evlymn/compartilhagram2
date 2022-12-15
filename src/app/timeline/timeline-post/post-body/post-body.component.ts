@@ -23,7 +23,7 @@ export class PostBodyComponent implements OnInit {
 
   constructor(private _timelineService: TimelineService,
               private _router: Router,
-              private _dialog: MatDialog,
+              // private _dialog: MatDialog,
               private _notificationService: NotificationService) {
     this.isExchangeagram = window.location.host == 'exchangeagram.app';
     this._notificationService.observable().subscribe(s => {
@@ -70,18 +70,19 @@ export class PostBodyComponent implements OnInit {
   }
 
   openImageViewDialog(data: any) {
-    const dialogRef = this._dialog.open(ImageViewComponent, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      panelClass: ['no-padding', 'bg-color'],
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
-    });
+    this._timelineService.openImageViewDialog(data);
+    // const dialogRef = this._dialog.open(ImageViewComponent, {
+    //   maxWidth: '100vw',
+    //   maxHeight: '100vh',
+    //   height: '100%',
+    //   width: '100%',
+    //   panelClass: ['no-padding', 'bg-color'],
+    //   data: data
+    // });
+    //
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log('The dialog was closed');
+    // });
   }
 
   async editPost() {

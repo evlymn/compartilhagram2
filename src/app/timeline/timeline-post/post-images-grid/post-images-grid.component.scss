@@ -45,18 +45,30 @@
   overflow: hidden;
 
 }
+
 .mat-tab-div-mobile {
   height: 200px;
 }
-.mat-tab-div-desktop{
+
+.mat-tab-div-mobile:active {
+  filter: grayscale(.5);
+  transform: scale(.992);
+  opacity: 0.9;
+}
+
+.mat-tab-div-desktop {
   height: 350px;
 }
 
-::ng-deep .mat-ripple {
-  display: none !important;
-}
 
 .one-image {
   width: 100%;
+
   //border-radius: 5px;
+}
+
+.one-image:active {
+  filter: grayscale(.5);
+  transform: scale(.992);
+  opacity: 0.9;
 }

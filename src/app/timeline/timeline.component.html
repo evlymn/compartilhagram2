@@ -45,6 +45,8 @@
 
 <app-timeline-floating-menu></app-timeline-floating-menu>
 
-<div class="waiting-div" *ngIf="!postItems">
-  <mat-spinner color="accent"></mat-spinner>
+<div class="waiting-div" *ngIf="!postItems?.length">
+
+  <i class='bx bxl-firebase bx-flashing ' ></i>
+<!--  <mat-spinner color="accent"></mat-spinner>-->
 </div>

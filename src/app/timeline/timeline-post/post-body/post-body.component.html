@@ -56,7 +56,7 @@
 
 </mat-expansion-panel>
 
-<app-post-images-grid *ngIf="!isDetail" [postId]="post?.id" [postIndex]="index"
+<app-post-images-grid *ngIf="!isDetail" [post]="post" [postId]="post?.id" [postIndex]="index"
 
                       [images]="post?.images"></app-post-images-grid>
 

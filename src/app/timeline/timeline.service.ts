@@ -6,6 +6,8 @@ import {DataSnapshot, equalTo, limitToLast, orderByChild, QueryConstraint, start
 import {Observable} from "rxjs";
 import {AlertsService} from "../alerts/alerts.service";
 import {LanguageService} from "../shared/services/language/language.service";
+import {ImageViewComponent} from "../image-view/image-view.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Injectable({
@@ -19,7 +21,8 @@ export class TimelineService {
               private _storage: StorageService,
               public auth: AuthenticationService,
               private _alertsService: AlertsService,
-              public languageService: LanguageService
+              public languageService: LanguageService,
+              private _dialog: MatDialog,
   ) {
   }
 
@@ -270,6 +273,21 @@ export class TimelineService {
   deleteComment(postId: string, commentId: string) {
     return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).then(() => {
       this.removeCommentFavorite(postId, commentId).catch();
+    });
+  }
+
+  openImageViewDialog(data: any) {
+    const dialogRef = this._dialog.open(ImageViewComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      panelClass: ['no-padding', 'bg-color'],
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
     });
   }
 

@@ -33,6 +33,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {TimelineAlbumViewComponent} from "./timeline-album-view/timeline-album-view.component";
 import {AlertsModule} from "../alerts/alerts.module";
 import {PostFormModule} from "../post-form/post-form.module";
+import {MatRippleModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -52,27 +53,28 @@ import {PostFormModule} from "../post-form/post-form.module";
     FormDialogComponent,
     TimelineAlbumViewComponent,
   ],
-  imports: [
-    CommonModule,
-    TimelineRoutingModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatTabsModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatButtonModule,
-    TextFieldModule,
-    FormsModule,
-    MatChipsModule,
-    MatMenuModule,
-    MatBottomSheetModule,
-    MatInputModule,
-    MatDialogModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    AlertsModule,
-    PostFormModule
-  ],
+    imports: [
+        CommonModule,
+        TimelineRoutingModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatTabsModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatButtonModule,
+        TextFieldModule,
+        FormsModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatBottomSheetModule,
+        MatInputModule,
+        MatDialogModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        AlertsModule,
+        PostFormModule,
+        MatRippleModule
+    ],
 
 })
 export class TimelineModule { }
