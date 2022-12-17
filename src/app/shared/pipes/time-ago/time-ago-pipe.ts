@@ -36,7 +36,7 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
     if (Number.isNaN(seconds)) {
       return '';
     } else if (seconds <= 45) {
-      return this.host == 'pt' ? 'alguns segundos' : 'a few seconds';
+      return this.host == 'pt' ? '<1min' : 'a few seconds';
     } else if (seconds <= 90) {
       return '1min';
     } else if (minutes <= 45) {

@@ -53,6 +53,8 @@ textarea {
 .user-interaction {
   display: flex;
   justify-content: flex-start;
+  border-radius: 15px;
+  padding: 3px;
 }
 
 .user-interaction > button {
@@ -61,26 +63,50 @@ textarea {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  padding: 5px;
+  padding: 2px;
+}
+
+.button-action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+
+.button-action >i {
+  color: #8f5d78;
+  font-size: 19px;
+}
+.button-action> small{
+  color:  #8f5d78;
+}
+
+.detail {
+  color:#f6b268!important;
+  font-size: 26px!important;
 
 }
+
 .mat-mdc-icon-button  {
   height: 30px!important;
 }
 
-
-
-
-.icon-count {
-  color: #915c77;
-  margin-left: 2px;
-  align-items: center;
+.button-action-disabled {
+  color: #5e4d55 !important;
 }
+
 
 mat-icon {
   color: #8f5d78;
   transform: scale(.75);
 }
+
+
+
+
+
 
 .mat-icon-disabled {
   color: #643e54;

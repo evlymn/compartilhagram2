@@ -28,18 +28,19 @@ export class PostImagesGridComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  clickCount = 0;
+  // clickCount = 0;
 
   onDoubleClick(url: string) {
-    this.clickCount++;
-    setTimeout(() => {
-      if (this.clickCount === 1) {
-        this.openImage(url);
-      } else if (this.clickCount === 2) {
-        this.favoritePost()
-      }
-      this.clickCount = 0;
-    }, 250)
+    // this.clickCount++;
+    this.openImage(url);
+    // setTimeout(() => {
+    //   if (this.clickCount === 1) {
+    //     this.openImage(url);
+    //   } else if (this.clickCount === 2) {
+    //     this.favoritePost()
+    //   }
+    //   this.clickCount = 0;
+    // }, 250)
   }
 
 

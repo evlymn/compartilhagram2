@@ -1,0 +1,21 @@
+.component {
+  margin: 5px;
+  color: #a6758f;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+}
+div {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-wrap: none!important;
+}
+
+h5 {
+  margin: 0;
+  padding: 5px;
+  color: #a6758f;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 0;
+}

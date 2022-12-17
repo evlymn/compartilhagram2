@@ -5,7 +5,7 @@
 
 }
 
-.gallery > img {
+.gallery> div > img {
   width: 0;
   height: 0;
   min-height: 40px;
@@ -50,11 +50,11 @@
   height: 200px;
 }
 
-.mat-tab-div-mobile:active {
-  filter: grayscale(.5);
-  transform: scale(.992);
-  opacity: 0.9;
-}
+//.mat-tab-div-mobile:active {
+//  filter: grayscale(.5);
+//  transform: scale(.992);
+//  opacity: 0.9;
+//}
 
 .mat-tab-div-desktop {
   height: 350px;
@@ -67,8 +67,8 @@
   //border-radius: 5px;
 }
 
-.one-image:active {
-  filter: grayscale(.5);
-  transform: scale(.992);
-  opacity: 0.9;
-}
+//.one-image:active {
+//  filter: grayscale(.5);
+//  transform: scale(.992);
+//  opacity: 0.9;
+//}

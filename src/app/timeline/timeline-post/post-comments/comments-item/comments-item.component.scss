@@ -6,6 +6,8 @@
   display: flex;
   flex-direction: row;
   margin: 5px;
+
+  justify-content: space-around;
 }
 
 
@@ -33,13 +35,23 @@
   margin-top: 5px;
   padding: 3px;
   color: #b9b9b9;
+  overflow: hidden;
+  width: calc(100% - 39px);
+
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .comment-favorite {
   display: flex;
-  justify-content: center;
-  width: 30px;
+  justify-content: space-around;
+  align-items: flex-end;
+  min-width: 39px;
+  width: 39px;
   flex-direction: column;
+
   color: #cccccc;
 }
 
@@ -48,12 +60,15 @@
 }
 
 .comment-action-icon {
-  transform: scale(0.8);
+  display: flex;
+  align-items: center;
+ font-size: 16px;
   cursor: pointer;
+  text-align: center;
 }
 
 .comment-items {
-  width: 100%;
+  width: 95%;
 }
 
 .icon-delete {
@@ -61,6 +76,7 @@
 }
 
 .favorite-item {
+  width: 25px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,6 +95,7 @@ mat-expansion-panel {
   background-color: #723753;
 
 }
+
 //
 //button {
 //  color: #cccccc!important;
@@ -90,6 +107,7 @@ mat-expansion-panel {
   display: flex;
   justify-content: space-evenly;
 }
+
 .button-warning {
   color: #d5d5d5 !important;
 }

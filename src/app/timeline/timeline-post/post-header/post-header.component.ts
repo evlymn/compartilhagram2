@@ -5,6 +5,7 @@ import {
   TimelineBadgeInfoBottomSheetComponent
 } from "../../timeline-badge-info-bottom-sheet/timeline-badge-info-bottom-sheet.component";
 import {TimelineService} from "../../timeline.service";
+import {WindowService} from "../../../shared/services/window/window.service";
 
 
 @Component({
@@ -18,11 +19,17 @@ export class PostHeaderComponent implements OnInit {
   @Input() index = 0;
   @Input() isRepost = false;
   @Input() loggedUId = '';
+  isMobile = this._windowService.sizes.width< 350;
+
 
   constructor(private _bottomSheet: MatBottomSheet,
               private _notificationService: NotificationService,
-              public  timelineService: TimelineService
-  ) {
+              public timelineService: TimelineService,
+              private _windowService: WindowService) {
+    this._windowService.sizes.isMobile;
+    this._windowService.getSizes.subscribe(s => {
+      this.isMobile = s.width< 350;
+    })
 
   }
 
@@ -40,19 +47,19 @@ export class PostHeaderComponent implements OnInit {
   }
 
   togglePostPanel() {
-    this._notificationService.next('togglePostPanel', this.post.id);
+    this._notificationService.next('togglePostPanel', this.post.id).catch();
   }
 
   openDeletePanel() {
-    this._notificationService.next('toggleDeletePanel', this.post.id);
+    this._notificationService.next('toggleDeletePanel', this.post.id).catch();
 
   }
 
   showDetail() {
-    this._notificationService.next('showDetail', {post: this.post, index: 1});
+    this._notificationService.next('showDetail', {post: this.post, index: 1}).catch();
   }
 
   showFeed() {
-    this._notificationService.next('showFeed', null);
+    this._notificationService.next('showFeed', null).catch();
   }
 }

@@ -9,19 +9,21 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import {MatDialogModule} from "@angular/material/dialog";
+import {TimelineModule} from "../timeline/timeline.module";
 
 @NgModule({
   declarations: [
     ProfileComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatButtonModule,
-    ProfileRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatButtonModule,
+        ProfileRoutingModule,
+        TimelineModule
+    ],
   providers: [
     MatSnackBarModule,
     MatBottomSheetModule,

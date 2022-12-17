@@ -1,7 +1,11 @@
-<mat-divider></mat-divider>
-<div class="timeline-post "
+
+<div  *ngIf="isDetail" style="margin-top: 50px"></div>
+
+
+<div class="timeline-post  "
      *ngIf="post"
      [ngClass]="isRepost && !post?.deleted ? 'timeline-post-background-repost' : post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
+
   <small class="post-deleted" *ngIf="post?.deleted">
     {{timelineService.languageService.getText('postagemdeletada')}}
   </small>
@@ -16,22 +20,25 @@
                  [loggedUId]="loggedUId"></app-post-body>
 
 
-  <div *ngIf="post?.repost" class="repost">
-    <ng-container *ngIf="!post.repostDeleted">
-      <app-timeline-post
-        [isRepost]="true"
-        [index]="index"
-        [post]="post.repost">
-      </app-timeline-post>
-    </ng-container>
-    <ng-container *ngIf="post.repostDeleted">
-      <div>
+<!--  <div *ngIf="post?.repost" class="repost">-->
+<!--    <ng-container *ngIf="!post.repostDeleted">-->
+<!--      <app-timeline-post-->
+<!--        [isRepost]="true"-->
+<!--        [index]="index"-->
+<!--        [post]="post.repost">-->
+<!--      </app-timeline-post>-->
+<!--    </ng-container>-->
 
-        <h2>
-          {{timelineService.languageService.getText('postagemdeletada')}}</h2>
-      </div>
-    </ng-container>
-  </div>
+<!--    <ng-container *ngIf="post.repostDeleted">-->
+<!--      <div>-->
+<!--        <h2>-->
+<!--          {{timelineService.languageService.getText('postagemdeletada')}}</h2>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+
+
+
+
 
   <app-post-footer *ngIf="!isRepost"
                    [totalComments]="totalComments"
@@ -39,6 +46,10 @@
                    [loggedUId]="loggedUId"
                    [isDetail]="isDetail"
                    [post]="post"></app-post-footer>
+
+  <app-post-last-comments *ngIf="post?.comments"
+                          [isDetail]="isDetail" [postId]="post.id"
+                          [comments]="post?.comments"></app-post-last-comments>
 
 
   <app-post-comments
@@ -48,4 +59,4 @@
     [postId]="post?.id"
     [comments]="comments"></app-post-comments>
 
-
+</div>

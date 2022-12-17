@@ -10,6 +10,7 @@ import {WindowService} from "../shared/services/window/window.service";
 export class ImageViewComponent {
   url = '';
   isMobile = this.windowService.sizes.isMobile as boolean;
+
   constructor(private _dialogRef: MatDialogRef<ImageViewComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private windowService: WindowService) {

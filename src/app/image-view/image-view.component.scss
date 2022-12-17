@@ -1,9 +1,22 @@
 .component {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  //object-fit: cover;
+  overflow: visible;
+  //overflow-y:scroll ;
+  display: flex;
+  //flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
-
+.component>div{
+  height: 500px;
+  max-height: 500px;
+}
+.carousel-item {
+  height: 500px!important;
+  max-height: 500px!important;
+}
 .img-dialog {
   height: 100% !important;
   max-height: 100% !important;
@@ -16,9 +29,11 @@
   object-fit: cover !important;
   object-position: center !important;
 }
-app-image-view{
-  background-color: #481a34!important;
+
+app-image-view {
+  background-color: #481a34 !important;
 }
+
 .mat-dialog-content {
 
   display: inline-flex;

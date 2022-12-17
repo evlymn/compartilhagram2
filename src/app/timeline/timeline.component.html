@@ -11,8 +11,6 @@
 <!--</div>-->
 
 <app-post-form *ngIf="!isMobile"></app-post-form>
-
-
 <div *ngIf="newPostItems.length>0" class="show-new-post-section">
   <a class="show-post-button" mat-button
      (click)="showNewPost()"> {{ timelineService.languageService.getText('mostrarnovaspostagens')}}
@@ -32,12 +30,16 @@
 </div>
 <div #posts class="posts" [ngClass]="isSearchUser? 'post-colum' : 'post-colum-reverse'" *ngIf="postItems">
 
+
   <ng-container *ngFor="let item of postItems; let i = index;">
+
     <a id="p{{i}}"></a>
     <app-timeline-post
       *ngIf="!item.hasImages || (!(item.hasImages && item?.images?.length==0) && (item.hasImages && item?.images)) "
       [index]="i" [post]="item">
     </app-timeline-post>
+
+
   </ng-container>
 
 </div>
@@ -47,6 +49,5 @@
 
 <div class="waiting-div" *ngIf="!postItems?.length">
 
-  <i class='bx bxl-firebase bx-flashing ' ></i>
-<!--  <mat-spinner color="accent"></mat-spinner>-->
+  <i class='bx bxl-firebase bx-flashing '></i>
 </div>

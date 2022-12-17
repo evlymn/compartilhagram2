@@ -22,7 +22,7 @@ mat-expansion-panel {
 .post-body {
   font-weight: normal;
   font-size: 15px;
-  padding: 0 10px;
+  padding: 0 7px;
   color: #d5d5d5;
 }
 
@@ -35,22 +35,17 @@ mat-expansion-panel {
 }
 
 .post-text-edit {
-  display: flex;
-  flex-direction: row;
-  padding-left: 5px;
+  //width: 100%;
+  //display: flex;
+  //flex-direction: row;
+  //padding-left: 5px;
 }
 
-.post-text-edit > div:first-child {
-  width: 95%;
-}
 
-.post-text-edit > div:last-child {
-  width: 10%;
-}
 
 .post-text {
-  margin-top: 5px;
-  margin-bottom: 8px;
+  //margin-top: 5px;
+  //margin-bottom: 8px;
 }
 
 .mat-item-div {
@@ -131,8 +126,11 @@ mat-expansion-panel {
   color: #9a6a84;
   display: flex;
   justify-content: flex-end;
+  flex-wrap: nowrap;
   align-items: center;
   width: 100%;
+  text-overflow: ellipsis;
+  text-wrap: none;
 }
 
 .mat-mdc-chip-action-label {

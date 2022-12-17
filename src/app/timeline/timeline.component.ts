@@ -21,6 +21,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   newPostItems: any[] = [];
   isFollowing = false;
   isSaved = false;
+  isProfile =false;
   authStateSubscription: Subscription;
   windowServiceSubscription: Subscription;
   messagesSearchSubscription!: Subscription;
@@ -36,7 +37,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
     this.isFollowing = this._router.url.includes('following');
     this.isSaved = this._router.url.includes('saved');
+    this.isProfile =  this._router.url.includes('profile');
     this.searchText = this._route.snapshot.paramMap.get('search');
+
 
     this.onMessageUpdate();
     this.authStateSubscription = this.timelineService.auth.authState.subscribe(() => {
@@ -82,7 +85,12 @@ export class TimelineComponent implements OnInit, OnDestroy {
       this.messagesSavedSubscription = this.timelineService.getMessagesSavedAsync().subscribe(s => {
         this.postItems = s;
       })
-    } else {
+    } else if (this.isProfile) {
+      const id = this._route.snapshot.paramMap.get('userId') as string;
+      this.messagesSavedSubscription = this.timelineService.getMessagesByUser(id).subscribe(s => {
+        this.postItems = s;
+      })
+    }else {
       this.timelineService.getMessagesOnChildAdded(snapshot => {
         if (!this.postItems.some(p => p.id == snapshot.val().id)) {
           this.newPostItems.push(snapshot.val());

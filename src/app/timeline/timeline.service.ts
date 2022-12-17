@@ -192,6 +192,22 @@ export class TimelineService {
     return this._realtime.update('timeline/messages/' + postId, data);
   }
 
+  getLast3Comments(postId: string) {
+    this._realtime.get(`timeline/comments/${postId}`, limitToLast(3)).then(snapshot => {
+      const comments: any[] = [];
+      snapshot.forEach(comment => {
+        comments.push({
+            text: comment.val().commentText,
+            time: comment.val().time
+          }
+        )
+      })
+      this._realtime.update(`timeline/messages/${postId}`, {
+        comments
+      }).catch();
+    })
+  }
+
   async createComment(postId: string, commentText: string) {
     const commentId = this._realtime.createId();
     const path = `timeline/comments/${postId}/${commentId}`;
@@ -204,7 +220,10 @@ export class TimelineService {
       photoURL: this.auth.user?.photoURL,
       bad_word: false,
       postId
-    }).then(() => commentId)
+    }).then(() => {
+      this.getLast3Comments(postId)
+      return commentId
+    })
   }
 
   repostToFollowers(postId: string) {
@@ -243,6 +262,11 @@ export class TimelineService {
     return this._realtime.onChildAddedChanges('timeline/messages/', 'id', limitToLast(100));
   }
 
+
+  getMessagesByUser(userId:string): Observable<any[]> {
+    return this._realtime.onValueChanges('timeline/messages-by-user/' + userId, 'id', limitToLast(10));
+  }
+
   getMessagesAsync(): Observable<any[]> {
     return this._realtime.onValueChanges('timeline/messages/', 'id', limitToLast(100));
   }
@@ -273,6 +297,7 @@ export class TimelineService {
   deleteComment(postId: string, commentId: string) {
     return this._realtime.delete(`timeline/comments/${postId}/${commentId}/`).then(() => {
       this.removeCommentFavorite(postId, commentId).catch();
+      this.getLast3Comments(postId)
     });
   }
 

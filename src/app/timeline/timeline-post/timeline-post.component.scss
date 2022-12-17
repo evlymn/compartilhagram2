@@ -11,7 +11,9 @@ textarea {
   resize: none;
   color: #f6e1cd;
 }
-
+.back-icon {
+  margin-left: 10px;
+}
 .timeline-post {
   display: flex;
   flex-direction: column;
@@ -148,8 +150,8 @@ mat-expansion-panel {
 }
 
 .repost {
-  background-color: #481a34;
-  border: solid 1px #481a34;
+  //background-color: #481a34;
+  //border: solid 1px #481a34;
 }
 
 .post-album {

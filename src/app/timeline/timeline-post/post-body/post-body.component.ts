@@ -21,7 +21,7 @@ export class PostBodyComponent implements OnInit {
   postPanelOpened = false;
   deletePanelOpened = false
 
-  constructor(private _timelineService: TimelineService,
+  constructor(public timelineService: TimelineService,
               private _router: Router,
               // private _dialog: MatDialog,
               private _notificationService: NotificationService) {
@@ -36,14 +36,14 @@ export class PostBodyComponent implements OnInit {
         this.toggleDeletePanel();
       }
     })
-    this._timelineService.auth.authState.subscribe(() => {
+    this.timelineService.auth.authState.subscribe(() => {
       this.postText = this.post?.postText;
     })
   }
 
 
   async deletePost() {
-    this._timelineService.deletePost(this.post).then(() => {
+    this.timelineService.deletePost(this.post).then(() => {
       this._notificationService.next('postDeleted', this.post.id);
       this._router.navigate(['/home']).then(() => null);
     })
@@ -70,25 +70,13 @@ export class PostBodyComponent implements OnInit {
   }
 
   openImageViewDialog(data: any) {
-    this._timelineService.openImageViewDialog(data);
-    // const dialogRef = this._dialog.open(ImageViewComponent, {
-    //   maxWidth: '100vw',
-    //   maxHeight: '100vh',
-    //   height: '100%',
-    //   width: '100%',
-    //   panelClass: ['no-padding', 'bg-color'],
-    //   data: data
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log('The dialog was closed');
-    // });
+    this.timelineService.openImageViewDialog(data);
   }
 
   async editPost() {
     this.postPanelOpened = !this.postPanelOpened;
     const newPostText = this.postText;
-    this._timelineService.editPost(this.post.id, {postText: newPostText}).then(() => {
+    this.timelineService.editPost(this.post.id, {postText: newPostText}).then(() => {
       this._notificationService.next('postEdited', {
         text: newPostText.trim(),
         id: this.post.id

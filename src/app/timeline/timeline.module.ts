@@ -34,6 +34,8 @@ import {TimelineAlbumViewComponent} from "./timeline-album-view/timeline-album-v
 import {AlertsModule} from "../alerts/alerts.module";
 import {PostFormModule} from "../post-form/post-form.module";
 import {MatRippleModule} from "@angular/material/core";
+import { PostLastCommentsComponent } from './timeline-post/post-last-comments/post-last-comments.component';
+import { LastCommentsItemComponent } from './timeline-post/post-last-comments/last-comments-item/last-comments-item.component';
 
 
 @NgModule({
@@ -52,6 +54,8 @@ import {MatRippleModule} from "@angular/material/core";
 
     FormDialogComponent,
     TimelineAlbumViewComponent,
+    PostLastCommentsComponent,
+    LastCommentsItemComponent,
   ],
     imports: [
         CommonModule,
@@ -75,6 +79,7 @@ import {MatRippleModule} from "@angular/material/core";
         PostFormModule,
         MatRippleModule
     ],
+  exports:[ TimelineComponent]
 
 })
 export class TimelineModule { }

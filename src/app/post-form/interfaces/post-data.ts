@@ -9,5 +9,6 @@ export interface PostData {
   albumName: string,
   albumId:string,
   hasImages: boolean,
-  images: string[]
+  images: string[],
+  comments: string[]
 }

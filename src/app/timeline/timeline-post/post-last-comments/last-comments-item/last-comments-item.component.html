@@ -1,0 +1,10 @@
+<div *ngIf="comment" class="info">
+  <!--  {{getSeconds(comment.time)}}-->
+  <div>
+    <small>{{comment?.text?.length > subStringFactor ? comment.text.substring(0, subStringFactor) + '...' : comment.text }}</small>
+    &nbsp;<small  class="timeago">{{comment?.time | timeAgo }} </small>
+  </div>
+<!--  <div>-->
+<!--    <small>{{comment?.time | timeAgo }} </small>-->
+<!--  </div>-->
+</div>
