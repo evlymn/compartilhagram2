@@ -6,12 +6,12 @@
 
 
       <div class="close-div" *ngIf="isMobile">
-    <span [mat-dialog-close]=""
-          class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</span>
+    <button mat-button (click)="close.emit()" [disabled]="sendingPost"
+          class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</button>
       </div>
 
 
-      <textarea cdkTextareaAutosize
+      <textarea cdkTextareaAutosize autofocus #postTextElement
                 [(ngModel)]="postText"
                 [placeholder]="postFormService.languageService.getText('doceoutravessura')"
                 maxlength="300"></textarea>
@@ -76,11 +76,11 @@
 
       </div>
 
-      <div class="post-form-actions" >
-      <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
-                             [sendingPost]="sendingPost"
-                             [panelSearch]="panelSearch"
-                             [panelPost]="panelPost"></app-post-form-actions>
+      <div class="post-form-actions">
+        <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
+                               [sendingPost]="sendingPost"
+                               [panelSearch]="panelSearch"
+                               [panelPost]="panelPost"></app-post-form-actions>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel class="" [expanded]="panelSearch">
@@ -89,11 +89,11 @@
              type="text"
              [(ngModel)]="searchText" [placeholder]="postFormService.languageService.getText('pesquisarporusuario')">
 
-      <div class="post-form-actions" >
-      <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
-                             [sendingPost]="sendingPost"
-                             [panelSearch]="panelSearch"
-                             [panelPost]="panelPost"></app-post-form-actions>
+      <div class="post-form-actions">
+        <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
+                               [sendingPost]="sendingPost"
+                               [panelSearch]="panelSearch"
+                               [panelPost]="panelPost"></app-post-form-actions>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

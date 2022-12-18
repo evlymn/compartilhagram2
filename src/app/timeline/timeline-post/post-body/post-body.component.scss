@@ -45,7 +45,8 @@ mat-expansion-panel {
 
 .post-text {
   //margin-top: 5px;
-  //margin-bottom: 8px;
+  margin-left: 3px;
+  margin-bottom: 1px;
 }
 
 .mat-item-div {
@@ -136,12 +137,12 @@ mat-expansion-panel {
 .mat-mdc-chip-action-label {
   color: #b9b9b9!important;
 }
-mat-chip {
-  transform: scale(.8);
-  background-color: #885b70 !important;
-  color: #f6e1cd !important;
-  font-weight: normal !important;
-}
+//mat-chip {
+//  transform: scale(.8);
+//  background-color: #885b70 !important;
+//  color: #f6e1cd !important;
+//  font-weight: normal !important;
+//}
 
 mat-icon {
   color: #8f5d78;

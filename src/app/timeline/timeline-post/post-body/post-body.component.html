@@ -71,20 +71,20 @@
 
 
 
-<ng-container  *ngIf="post?.albumName || !isRepost">
-<div class="post-album-time">
-  <div>
-<!--    <span *ngIf="post?.albumName">álbum:</span>-->
-    <mat-chip *ngIf="post?.albumName" [routerLink]="['album', post?.albumId, post?.uid ]"> {{ post?.albumName }}</mat-chip>
-  </div>
+<!--<ng-container  *ngIf="post?.albumName || !isRepost">-->
+<!--&lt;!&ndash;<div class="post-album-time">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;  <div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;    <span *ngIf="post?.albumName">álbum:</span>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <mat-chip *ngIf="post?.albumName" [routerLink]="['album', post?.albumId, post?.uid ]"> {{ post?.albumName }}</mat-chip>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;  </div>&ndash;&gt;&ndash;&gt;-->
 
-  <div class="timeago" *ngIf="!isRepost">
-    <small *ngIf="!isExchangeagram">
-      há {{post.dateTime | timeAgo }}
-    </small>
-    <small *ngIf="isExchangeagram">
-      {{post.dateTime | timeAgo }} ago
-    </small>
-  </div>
-</div>
-</ng-container>
+<!--&lt;!&ndash;&lt;!&ndash;  <div class="timeago" *ngIf="!isRepost">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <small *ngIf="!isExchangeagram">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;      há {{post.dateTime | timeAgo }}&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    </small>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <small *ngIf="isExchangeagram">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;      {{post.dateTime | timeAgo }} ago&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    </small>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</ng-container>-->

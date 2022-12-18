@@ -2,7 +2,7 @@
 <div  *ngIf="isDetail" style="margin-top: 50px"></div>
 
 
-<div class="timeline-post  "
+<div class="timeline-post  " [style]="isDetail? 'margin-bottom: 220px' : '' "
      *ngIf="post"
      [ngClass]="isRepost && !post?.deleted ? 'timeline-post-background-repost' : post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
 

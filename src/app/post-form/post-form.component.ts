@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
 
 import {map, Observable, startWith} from "rxjs";
@@ -17,7 +17,8 @@ import {Router} from "@angular/router";
   templateUrl: './post-form.component.html',
   styleUrls: ['./post-form.component.scss']
 })
-export class PostFormComponent implements OnInit {
+export class PostFormComponent implements OnInit, AfterViewInit {
+  @ViewChild('postTextElement') postTextElement!: ElementRef
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
   albumControl = new FormControl('');
@@ -125,6 +126,7 @@ export class PostFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.isMobile = this.windowService.sizes.isMobile;
     this.albumsFiltered = this.albumControl.valueChanges.pipe(
       startWith(''),
@@ -146,7 +148,7 @@ export class PostFormComponent implements OnInit {
   }
 
   openSnack() {
-    if (!this.isMobile)
+    // if (!this.isMobile)
       this._snackBar.open('Post enviado', 'fechar', {
         verticalPosition: 'top',
         duration: 2000
@@ -154,29 +156,31 @@ export class PostFormComponent implements OnInit {
   }
 
   cleanForm() {
+
     this.sendingPost = false;
     this.postText = '';
     this.images = [];
+    this.close.emit();
     this.openSnack();
   }
 
   openAlert(data: any) {
 
-    if (!this.isMobile)
-      return
-    const dialogRef = this._dialog.open(FormAlertDialogComponent, {
-      width: '100%',
-      height: '100px',
-      panelClass: 'bg-color',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'closeForm') {
-        this.close.next('closeForm')
-      }
-      console.log('The dialog was closed');
-    });
+    // if (!this.isMobile)
+    //   return
+    // const dialogRef = this._dialog.open(FormAlertDialogComponent, {
+    //   width: '100%',
+    //   height: '100px',
+    //   panelClass: 'bg-color',
+    //   data: data
+    // });
+    //
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result == 'closeForm') {
+    //     this.close.next('closeForm')
+    //   }
+    //   console.log('The dialog was closed');
+    // });
   }
 
   deleteImg(i: number) {
@@ -201,5 +205,9 @@ export class PostFormComponent implements OnInit {
     this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this._router.navigate(['/home']).catch();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.postTextElement.nativeElement.focus();
   }
 }

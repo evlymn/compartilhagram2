@@ -1,25 +1,40 @@
-
 <div style="margin-top: 5px" *ngIf="images">
-<mat-tab-group class="mat-tab-header" *ngIf="images?.length>1"
-               headerPosition="below" [selectedIndex]="index">
-  <mat-tab *ngFor="let img of images; let i=index">
-    <div class="mat-tab-div" matRipple (click)="onDoubleClick(img?.imageURL)"
-         [ngClass]="isMobile? 'mat-tab-div-mobile': 'mat-tab-div-desktop'"
-         [style]="'background-image:url(' + img?.imageURL + ')'">
+  <div class="mat-tab-div-relative" *ngIf="images?.length>1">
+  <mat-tab-group class="mat-tab-header" *ngIf="images?.length>1"
+                 headerPosition="below" [selectedIndex]="index">
+
+      <mat-tab *ngFor="let img of images; let i=index">
+        <div class="mat-tab-div" matRipple (click)="onDoubleClick(img?.imageURL)"
+             [ngClass]="isMobile? 'mat-tab-div-mobile': 'mat-tab-div-desktop'"
+             [style]="'background-image:url(' + img?.imageURL + ')'">
+
+        </div>
+      </mat-tab>
+
+
+
+  </mat-tab-group>
+    <div class="album-chip-mat-tab">
+      <mat-chip class="mat-album-chip" *ngIf="post?.albumName"
+                [routerLink]="['album', post?.albumId, post?.uid ]"> {{ post?.albumName }}</mat-chip>
     </div>
-  </mat-tab>
-</mat-tab-group>
-<div matRipple>
-  <img class="one-image"
-       (click)="onDoubleClick(images[0]?.imageURL)"
-       *ngIf="images?.length == 1"
-       [src]="images[0]?.imageURL" alt="...">
-</div>
-<div class="gallery" *ngIf="images?.length>1">
-  <div *ngFor="let img of images; let i=index" matRipple>
-    <img (click)="selectImage(i)" [src]="img?.imageURL" alt="...">
   </div>
-</div>
+  <div matRipple class="one-image-album">
+
+    <img class="one-image"
+         (click)="onDoubleClick(images[0]?.imageURL)"
+         *ngIf="images?.length == 1"
+         [src]="images[0]?.imageURL" alt="...">
+    <div class="album-chip">
+      <mat-chip  class="mat-album-chip" *ngIf="post?.albumName"
+                [routerLink]="['album', post?.albumId, post?.uid ]"> {{ post?.albumName }}</mat-chip>
+    </div>
+  </div>
+  <div class="gallery" *ngIf="images?.length>1">
+    <div *ngFor="let img of images; let i=index" matRipple>
+      <img (click)="selectImage(i)" [src]="img?.imageURL" alt="...">
+    </div>
+  </div>
 
 
 </div>

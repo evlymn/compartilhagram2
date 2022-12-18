@@ -33,7 +33,6 @@ export class TimelineService {
 
   updateReposts(post: any) {
     const postId = post.id, repostId = post.repostId, postText = post.postText
-    console.log('timeline/repost-by-posts/' + postId)
     this._realtime.get('timeline/repost-by-post/' + postId).then(snapshot => {
       snapshot.forEach(p => {
         this._realtime.update('timeline/messages/' + p.val().id + '/repost/', {
@@ -98,7 +97,6 @@ export class TimelineService {
   }
 
   deleteFavorites(postId: string) {
-    console.log(`timeline/favorites/comments/${postId}/`)
     this._realtime.delete(`timeline/favorites/comments/${postId}/`).catch();
     this._realtime.delete(`timeline/favorites/messages/${postId}/`).catch();
   }

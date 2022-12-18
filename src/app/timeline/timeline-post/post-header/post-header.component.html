@@ -6,6 +6,14 @@
     </div>
     <div class="post-user-name" [ngClass]="isMobile? 'post-user-name-mobile': ''" [routerLink]="['/home/profile', post?.uid]">
      <span> {{post?.displayName}}</span>
+      <div class="timeago">
+        <small *ngIf="!isExchangeagram">
+          há {{post.dateTime | timeAgo }}
+        </small>
+        <small *ngIf="isExchangeagram">
+          {{post.dateTime | timeAgo }} ago
+        </small>
+      </div>
     </div>
 <!--    <div class="post-user-badges">-->
 <!--      <mat-icon (click)="openBottomSheet('Usuária(o) Premium', 'workspace_premium')" title="Premium user"-->
@@ -21,6 +29,7 @@
               [ngClass]="loggedUId == post?.uid ? 'color-mine': ''">
       more_horiz
     </mat-icon>
+    <div> &nbsp; </div>
     <mat-menu #beforeMenu="matMenu" xPosition="before">
       <div *ngIf="loggedUId === post?.uid" mat-menu-item class="mat-item-div">
         <button mat-button color="whitespace" (click)="togglePostPanel()">

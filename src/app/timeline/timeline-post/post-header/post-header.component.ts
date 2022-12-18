@@ -20,12 +20,14 @@ export class PostHeaderComponent implements OnInit {
   @Input() isRepost = false;
   @Input() loggedUId = '';
   isMobile = this._windowService.sizes.width< 350;
-
+  isExchangeagram = false
 
   constructor(private _bottomSheet: MatBottomSheet,
               private _notificationService: NotificationService,
               public timelineService: TimelineService,
               private _windowService: WindowService) {
+    this.isExchangeagram = window.location.host.includes('exchangeagram');
+
     this._windowService.sizes.isMobile;
     this._windowService.getSizes.subscribe(s => {
       this.isMobile = s.width< 350;

@@ -54,7 +54,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.timelineService.onMessageUpdate(snapshot => {
       const message = snapshot.val()
       if (this.timelineService.auth.user?.uid == message.uid) {
-        console.log(message)
         this.timelineService.updateReposts(message);
       }
     })

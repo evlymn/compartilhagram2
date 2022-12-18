@@ -6,19 +6,19 @@
   justify-content: flex-start;
   padding-left: 5px;
   padding-right: 5px;
-  //text-wrap: none;
-  //text-overflow: ellipsis;
+  color: #b0899f;
+  font-size: 13px!important;
+
+}
+.info>div>small:first-child {
+  font-size: 13px!important;
 }
 .info   >div {
   text-wrap: none;
   text-overflow: ellipsis;
 }
-//.info   >div:last-child {
-//  text-wrap: none;
-//  text-overflow: ellipsis;
-//  text-align: right;
-//}
+
 
 .timeago {
-  color: #8d4d73;
+  color: #9a6785;
 }
