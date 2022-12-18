@@ -2,7 +2,6 @@
   <div class="comment-items">
     <div class="comment-header">
       <div class="comment-user-info">
-
         <div class="user-avatar">
           <div class="comment-avatar">
             <img class="post-avatar-image" alt="image profile" [src]="item?.photoURL">
@@ -13,49 +12,31 @@
         </div>
       </div>
     </div>
-
-
     <div class="comment-body">
       <span>
          {{ item?.commentText}}
       </span>
-
     </div>
-
-
-
   </div>
-
-
   <div class="comment-favorite">
     <div class="favorite-item">
-
       <div class="comment-action-icon" (click)="favoriteComment()">
         <i class='bx ' [ngClass]=" totalFavoritesByUser ? 'bxs-heart' : 'bx-heart'  "></i>
         <small *ngIf="totalFavorites>0" class="icon-count">{{totalFavorites}}</small>
       </div>
-
-
-<!--      -->
-<!--      -->
-<!--      <mat-icon (click)="favoriteComment()" class="comment-action-icon">-->
-<!--        {{totalFavoritesByUser > 0 ? 'favorite' : 'favorite_outlined' }}  </mat-icon>-->
-<!--      <small class="icon-count">{{totalFavorites > 0 ? totalFavorites : ''}}</small>-->
     </div>
-    <mat-icon class="comment-action-icon " (click)="commentPanelOpened2 = !commentPanelOpened2">
-      disabled_by_default_outlined
-    </mat-icon>
+    <div class="favorite-item">
+      <div class="comment-action-icon" (click)="commentPanelOpened2 = !commentPanelOpened2">
+        <i class='bx bx-message-alt-x'></i>
+      </div>
+    </div>
   </div>
-
-
 </div>
-
-
 <mat-expansion-panel class="panel-delete" [expanded]="commentPanelOpened2" (afterCollapse)="onPanelCollapse()">
-  <button  class="button-expansion button-warning"  (click)="openClosePanel()" mat-button>
+  <button class="button-expansion button-warning" (click)="openClosePanel()" mat-button>
     cancelar
   </button>
-  <button  class="button-expansion button-warning" (click)="deleteComment()" mat-button>
+  <button class="button-expansion button-warning" (click)="deleteComment()" mat-button>
     deletar
   </button>
 </mat-expansion-panel>

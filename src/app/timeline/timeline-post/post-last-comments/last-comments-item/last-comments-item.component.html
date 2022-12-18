@@ -1,6 +1,11 @@
 <div *ngIf="comment" class="info">
-   <div >
-    <small>{{comment?.text?.length > subStringFactor ? comment.text.substring(0, subStringFactor) + '...' : comment.text }}</small>
-    &nbsp;<small  class="timeago">{{comment?.time | timeAgo }} </small>
+  <div class="last-comment">
+
+
+    <img class="photo-url" [src]="comment?.photoURL" [alt]="comment.displayName">
+    <!--    <small>{{comment?.text?.length > subStringFactor ? comment.text.substring(0, subStringFactor) + '...' : comment.text }}</small>-->
+    {{ comment.text }}
+
+    <!--    &nbsp;<small  class="timeago">{{comment?.time | timeAgo }} </small>-->
   </div>
 </div>

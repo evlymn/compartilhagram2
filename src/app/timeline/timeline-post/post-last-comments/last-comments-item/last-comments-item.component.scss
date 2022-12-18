@@ -10,10 +10,24 @@
   font-size: 13px!important;
 
 }
+
+.photo-url {
+  width: 20px;
+  border-radius: 10px;
+  margin-right: 2px;
+}
+.last-comment {
+  width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
 .info>div>small:first-child {
   font-size: 13px!important;
 }
 .info   >div {
+  overflow: hidden;
   text-wrap: none;
   text-overflow: ellipsis;
 }

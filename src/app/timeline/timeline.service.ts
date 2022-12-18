@@ -196,7 +196,9 @@ export class TimelineService {
       snapshot.forEach(comment => {
         comments.push({
             text: comment.val().commentText,
-            time: comment.val().time
+            time: comment.val().time,
+            displayName: comment.val().displayName,
+            photoURL: comment.val().photoURL,
           }
         )
       })
@@ -261,7 +263,7 @@ export class TimelineService {
   }
 
 
-  getMessagesByUser(userId:string): Observable<any[]> {
+  getMessagesByUser(userId: string): Observable<any[]> {
     return this._realtime.onValueChanges('timeline/messages-by-user/' + userId, 'id', limitToLast(10));
   }
 
