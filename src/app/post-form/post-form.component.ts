@@ -6,7 +6,6 @@ import {WindowService} from "../shared/services/window/window.service";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {MatDialog} from "@angular/material/dialog";
 import {NotificationService} from "../shared/services/notification/notification.service";
-import {FormAlertDialogComponent} from "./form-alert-dialog/form-alert-dialog.component";
 import {ImageSet} from "./interfaces/image-set";
 import {PostFormService} from "./post-form.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -19,6 +18,8 @@ import {Router} from "@angular/router";
 })
 export class PostFormComponent implements OnInit, AfterViewInit {
   @ViewChild('postTextElement') postTextElement!: ElementRef
+  @ViewChild('textSearchElement') textSearchElement!: ElementRef
+
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
   albumControl = new FormControl('');
@@ -29,9 +30,9 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   sendingPost = false;
   albums: any;
   albumsFiltered!: Observable<string[]>;
-  panelPost = true;
-  panelSearch = false;
-  searchText  = '';
+  // panelPost = true;
+  // panelSearch = false;
+  searchText = '';
 
   constructor(
     public windowService: WindowService,
@@ -45,8 +46,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
     this._notificationService.observable().subscribe(n => {
       if (n.key == 'showSearchPanel') {
-        this.panelPost =  !this.panelPost;
-        this.panelSearch =  !this.panelSearch;
+        this.postFormService.panelPost = !this.postFormService.panelPost;
+        this.postFormService.panelSearch = !this.postFormService.panelSearch;
       }
     })
     this.windowService.getSizes.subscribe(size => {
@@ -100,7 +101,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
                 if (total == this.images.length * 100) {
                   this.postFormService.repostToFollowers(postId);
                   this.cleanForm();
-                  this._notificationService.next('postSaved', postId);
+                  this._notificationService.next('postSaved', postId).catch();
                   this.openAlert({
                     text: this.postFormService.languageService.getText('postenviado'),
                     action: 'closeForm'
@@ -113,7 +114,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       } else {
         this.postFormService.repostToFollowers(postId);
         this.cleanForm();
-        this._notificationService.next('postSaved', postId);
+        this._notificationService.next('postSaved', postId).catch();
         this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
       }
     }
@@ -149,10 +150,10 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
   openSnack() {
     // if (!this.isMobile)
-      this._snackBar.open('Post enviado', 'fechar', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
+    this._snackBar.open('Post enviado', 'fechar', {
+      verticalPosition: 'top',
+      duration: 2000
+    });
   }
 
   cleanForm() {
@@ -193,21 +194,30 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
   searchUser() {
     if (this.searchText.trim().length > 0) {
-      this._notificationService.next('searchUser', this.searchText);
-      this._router.navigate(['/home']).catch();
+      this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this._router.navigate(['/home/search/', this.searchText]).catch()
+      }).then(() => {
+        if (this.isDialog)
+          this.close.emit()
+      })
     }
   }
 
   cancelSearch() {
-    this.panelPost =  !this.panelPost;
-    this.panelSearch =  !this.panelSearch;
+    this.postFormService.panelPost = !this.postFormService.panelPost;
+    this.postFormService.panelSearch = !this.postFormService.panelSearch;
     this.searchText = '';
+    if(this.isDialog) {
+      this.close.emit()
+      return;
+    }
     this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this._router.navigate(['/home']).catch();
     });
   }
 
   ngAfterViewInit(): void {
-    this.postTextElement.nativeElement.focus();
+    this.postTextElement?.nativeElement?.focus();
+    this.textSearchElement?.nativeElement?.focus();
   }
 }

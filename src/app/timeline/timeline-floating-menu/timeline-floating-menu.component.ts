@@ -2,10 +2,11 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {WindowService} from "../../shared/services/window/window.service";
-import {FormDialogComponent} from "../timeline-form-dialog/form-dialog.component";
 import FloatingMenuAnimations from "./floating-menu.animations";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {TimelineFormBottomSheetComponent} from "../timeline-form-bottom-sheet/timeline-form-bottom-sheet.component";
+import {NotificationService} from "../../shared/services/notification/notification.service";
+import {PostFormService} from "../../post-form/post-form.service";
 
 @Component({
   selector: 'app-timeline-floating-menu',
@@ -23,7 +24,9 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
               private _dialog: MatDialog,
               private _bottomSheet: MatBottomSheet,
               private _route: ActivatedRoute,
-              private _router: Router) {
+              private _router: Router,
+              public notificationService: NotificationService,
+              private _postFormService: PostFormService) {
     this.urlFragment = this._route.snapshot.fragment;
   }
 
@@ -31,11 +34,15 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
     window.scrollTo({top: 0, left: 0, behavior: "smooth"});
   }
 
-  openForm() {
-    const bottomSheetRef = this._bottomSheet.open(TimelineFormBottomSheetComponent,{
-      panelClass: 'bottom-sheet-class',disableClose: true
-    })
-    bottomSheetRef.afterDismissed().subscribe(d=> {
+  openForm(isSearch?: boolean) {
+    if (isSearch) {
+      this._postFormService.selectSearchPanel();
+    }
+    const bottomSheetRef = this._bottomSheet.open(TimelineFormBottomSheetComponent, {
+      panelClass: 'bottom-sheet-class', disableClose: true
+    });
+
+    bottomSheetRef.afterDismissed().subscribe(d => {
       console.log(d)
     })
 

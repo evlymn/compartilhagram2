@@ -2,12 +2,12 @@
 
 
   <mat-accordion>
-    <mat-expansion-panel [expanded]="panelPost">
+    <mat-expansion-panel [expanded]="postFormService.panelPost">
 
 
       <div class="close-div" *ngIf="isMobile">
-    <button mat-button (click)="close.emit()" [disabled]="sendingPost"
-          class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</button>
+        <button mat-button (click)="close.emit()" [disabled]="sendingPost"
+                class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</button>
       </div>
 
 
@@ -79,36 +79,25 @@
       <div class="post-form-actions">
         <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
                                [sendingPost]="sendingPost"
-                               [panelSearch]="panelSearch"
-                               [panelPost]="panelPost"></app-post-form-actions>
+                               [panelSearch]="postFormService.panelSearch"
+                               [panelPost]="postFormService.panelPost"></app-post-form-actions>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel class="" [expanded]="panelSearch">
+    <mat-expansion-panel class="" [expanded]="postFormService.panelSearch">
 
-      <input class="input-search search-panel" matInput
+      <input class="input-search search-panel" matInput #textSearchElement
              type="text"
              [(ngModel)]="searchText" [placeholder]="postFormService.languageService.getText('pesquisarporusuario')">
 
       <div class="post-form-actions">
         <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
                                [sendingPost]="sendingPost"
-                               [panelSearch]="panelSearch"
-                               [panelPost]="panelPost"></app-post-form-actions>
+                               [panelSearch]="postFormService.panelSearch"
+                               [panelPost]="postFormService.panelPost"></app-post-form-actions>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
 
-  <!--  <div class="post-form-actions">-->
-  <!--    <button *ngIf="panelSearch" (click)="cancel()" [disabled]="sendingPost" mat-button-->
-  <!--            class="form-button form-button-post-dialog">-->
-  <!--      {{ postFormService.languageService.getText('cancelar') }}-->
-  <!--    </button>-->
-
-  <!--    <button (click)=" panelPost ? savePost() : searchUser()" [disabled]="sendingPost" mat-button-->
-  <!--            class="form-button form-button-post-dialog">-->
-  <!--      {{  panelPost ? postFormService.languageService.getText('postar') : postFormService.languageService.getText('pesquisar')}}-->
-  <!--    </button>-->
-  <!--  </div>-->
 </div>
 
 

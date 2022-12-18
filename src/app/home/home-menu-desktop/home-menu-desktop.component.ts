@@ -4,6 +4,7 @@ import {AlertsService} from "../../alerts/alerts.service";
 import {LanguageService} from "../../shared/services/language/language.service";
 import {NotificationService} from "../../shared/services/notification/notification.service";
 import {Router} from "@angular/router";
+import {PostFormService} from "../../post-form/post-form.service";
 
 @Component({
   selector: 'app-home-menu-desktop',
@@ -13,7 +14,7 @@ import {Router} from "@angular/router";
 export class HomeMenuDesktopComponent {
 
   user: any
-  isExchangeagram =false
+  isExchangeagram = false
   isSmaller900 = this.homeService.windowService.sizes.width < 900;
   isDesktop = this.homeService.windowService.sizes.isDesktop;
   isMiddleSize = this.homeService.windowService.sizes.isMiddleSize;
@@ -23,6 +24,7 @@ export class HomeMenuDesktopComponent {
     public homeService: HomeService,
     public alertsService: AlertsService,
     private _router: Router,
+    private _postFormService: PostFormService,
     private _notificationService: NotificationService) {
     this.isExchangeagram = window.location.host == 'exchangeagram.app';
     this.homeService.windowService.getSizes.subscribe(s => {
@@ -40,14 +42,16 @@ export class HomeMenuDesktopComponent {
   }
 
   searchUser() {
-    this._notificationService.next('showSearchPanel',null);
+    this._postFormService.togglePostForm();
   }
+
+
 
   routeToHome() {
 
-      this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this._router.navigate(['/home']).catch();
-      });
+    this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this._router.navigate(['/home']).catch();
+    });
 
   }
 }

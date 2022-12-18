@@ -1,4 +1,4 @@
-import {NgModule, isDevMode} from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -19,7 +19,7 @@ import {AlertsModule} from "./alerts/alerts.module";
 import {MessagesModule} from "./messages/messages.module";
 import {GroupsModule} from "./groups/groups.module";
 import {ProfileModule} from "./profile/profile.module";
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
       const auth = getAuth();
-      if (environment?.emulators) {
+      if (environment.emulators) {
         connectAuthEmulator(auth, 'http://localhost:9099');
       }
       return auth;

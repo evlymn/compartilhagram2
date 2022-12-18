@@ -14,6 +14,8 @@ import {PostData} from "./interfaces/post-data";
   providedIn: 'root'
 })
 export class PostFormService {
+  panelPost = true;
+  panelSearch = false;
 
   constructor(private _realtime: RealtimeService,
               private _storage: StorageService,
@@ -26,6 +28,16 @@ export class PostFormService {
 
   createId() {
     return this._realtime.createId();
+  }
+
+  togglePostForm() {
+    this.panelSearch = !this.panelSearch;
+    this.panelPost = !this.panelPost;
+  }
+
+  selectSearchPanel() {
+    this.panelSearch = true;
+    this.panelPost = false;
   }
 
   async getAlbum(albumId: string, postUId: string) {

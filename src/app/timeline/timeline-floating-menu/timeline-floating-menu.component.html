@@ -5,34 +5,36 @@
 
 <!--[routerLink]="['/home']"-->
 <button (click)="routeToHome()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-home">
-  <mat-icon >home
+  <mat-icon>home
   </mat-icon>
 </button>
 
 
 <button (click)="openForm()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-add">
-  <mat-icon  >add
+  <mat-icon>add
   </mat-icon>
 </button>
 
 
 <div [@openCloseActions]=" actionsOpened ? 'open' : 'closed'">
-<button     [routerLink]="['/home/following']"  *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-following">
-  <mat-icon  >directions_run
-  </mat-icon>
-</button>
+  <button [routerLink]="['/home/following']" *ngIf="isMobile" mat-mini-fab color="accent"
+          class="icon-font-mobile-actions-following">
+    <mat-icon>directions_run
+    </mat-icon>
+  </button>
 
 
-<!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
-<button      *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions-search">
-  <mat-icon>search
-  </mat-icon>
-</button>
+  <!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
+  <button (click)="openForm(true)" *ngIf="isMobile" mat-mini-fab
+          color="accent" class="icon-font-mobile-actions-search">
+    <mat-icon>search
+    </mat-icon>
+  </button>
 </div>
 
 <!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
-<button  (click)="openActions()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions">
-  <mat-icon> {{ actionsOpened? "chevron_right": "chevron_left"   }}
+<button (click)="openActions()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-actions">
+  <mat-icon> {{ actionsOpened ? "chevron_right" : "chevron_left"   }}
   </mat-icon>
 </button>
 
