@@ -1,12 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {WindowService} from "../../shared/services/window/window.service";
 import FloatingMenuAnimations from "./floating-menu.animations";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
- import {NotificationService} from "../../shared/services/notification/notification.service";
 import {PostFormService} from "../../post-form/post-form.service";
-import {PostFormBottomSheetComponent} from "../../post-form/post-form-bottom-sheet/post-form-bottom-sheet.component";
 
 @Component({
   selector: 'app-timeline-floating-menu',
@@ -21,11 +18,9 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
   actionsOpened = false;
 
   constructor(public windowService: WindowService,
-              private _dialog: MatDialog,
               private _bottomSheet: MatBottomSheet,
               private _route: ActivatedRoute,
               private _router: Router,
-
               private _postFormService: PostFormService) {
     this.urlFragment = this._route.snapshot.fragment;
   }
@@ -35,16 +30,7 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
   }
 
   openForm(e: any, isSearch?: boolean) {
-    if (isSearch) {
-        e.preventDefault();
-        e.stopPropagation();
-        this._postFormService.selectSearchPanel();
-    }
-    this._bottomSheet.open(PostFormBottomSheetComponent, {
-      panelClass: 'bottom-sheet-class', disableClose: true
-    });
-
-
+    this._postFormService.selectPanel(e, isSearch);
   }
 
   ngOnInit(): void {

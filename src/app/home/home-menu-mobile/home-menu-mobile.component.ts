@@ -39,7 +39,7 @@ export class HomeMenuMobileComponent {
     this.homeService.auth.signOut();
   }
 
-  search() {
-    this._postFormService.selectSearchPanel();
+  search(e:any) {
+    this._postFormService.selectPanel(e, true);
   }
 }

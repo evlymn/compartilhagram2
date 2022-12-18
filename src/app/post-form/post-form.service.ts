@@ -9,6 +9,8 @@ import {TimelineService} from "../timeline/timeline.service";
 import {AlbumService} from "../shared/services/album/album.service";
 import {LanguageService} from "../shared/services/language/language.service";
 import {PostData} from "./interfaces/post-data";
+import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,8 @@ export class PostFormService {
               private _alertsService: AlertsService,
               private _timelineService: TimelineService,
               private _albumService: AlbumService,
-              public languageService: LanguageService) {
+              public languageService: LanguageService,
+              private _bottomSheet: MatBottomSheet,) {
   }
 
   createId() {
@@ -35,14 +38,37 @@ export class PostFormService {
     this.panelPost = !this.panelPost;
   }
 
-  selectSearchPanel() {
-    this.panelSearch = true;
-    this.panelPost = false;
+  // openFormPanel() {
+  //   this._bottomSheet.open(PostFormBottomSheetComponent, {
+  //     panelClass: 'bottom-sheet-class', disableClose: true
+  //   });
+  // }
+
+  selectPanel(event: any, search?: boolean) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (search) {
+      this.panelSearch = true;
+      this.panelPost = false;
+    }
+    this._bottomSheet.open(PostFormBottomSheetComponent, {
+      panelClass: 'bottom-sheet-class', disableClose: true
+    });
   }
 
-  async getAlbum(albumId: string, postUId: string) {
-    return this._albumService.getAlbum(albumId, postUId);
-  }
+  // selectSearchPanel(event: any) {
+  //   this.panelSearch = true;
+  //   this.panelPost = false;
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   this._bottomSheet.open(PostFormBottomSheetComponent, {
+  //     panelClass: 'bottom-sheet-class', disableClose: true
+  //   });
+  // }
+
+  // async getAlbum(albumId: string, postUId: string) {
+  //   return this._albumService.getAlbum(albumId, postUId);
+  // }
 
   async getAlbums() {
     return this._albumService.getAlbums();
