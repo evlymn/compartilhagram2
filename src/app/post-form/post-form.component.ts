@@ -17,8 +17,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./post-form.component.scss']
 })
 export class PostFormComponent implements OnInit, AfterViewInit {
-  @ViewChild('postTextElement') postTextElement!: ElementRef
-  @ViewChild('textSearchElement') textSearchElement!: ElementRef
+
 
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
@@ -217,7 +216,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.postTextElement?.nativeElement?.focus();
-    this.textSearchElement?.nativeElement?.focus();
+
   }
 }
