@@ -6,12 +6,14 @@
 
 
       <div class="close-div" *ngIf="isMobile">
-        <button mat-button (click)="close.emit()" [disabled]="sendingPost"
-                class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</button>
+        <small matRipple (click)="!sendingPost ?  close.emit() : null"
+               [style]="sendingPost ? 'background-color:gray' : ''"
+               class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</small>
       </div>
 
 
       <textarea cdkTextareaAutosize autofocus #postTextElement
+                [disabled]="sendingPost"
                 [(ngModel)]="postText"
                 [placeholder]="postFormService.languageService.getText('doceoutravessura')"
                 maxlength="300"></textarea>

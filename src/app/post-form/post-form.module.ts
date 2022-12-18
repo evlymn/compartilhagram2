@@ -12,6 +12,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { PostFormActionsComponent } from './post-form-actions/post-form-actions.component';
 import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
+import {MatRippleModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-b
         FormsModule,
         MatDialogModule,
         MatIconModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatRippleModule
     ],
   exports: [PostFormComponent,
     FormAlertDialogComponent]
