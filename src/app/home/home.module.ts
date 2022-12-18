@@ -10,14 +10,15 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {HomeHeaderMobileComponent} from "./home-header-mobile/home-header-mobile.component";
 import {MatRippleModule} from "@angular/material/core";
-import { HomeMenuMobileComponent } from './home-menu-mobile/home-menu-mobile.component';
+import {HomeMenuMobileComponent} from './home-menu-mobile/home-menu-mobile.component';
 import {MatMenuModule} from "@angular/material/menu";
-import { HomeMenuDesktopComponent } from './home-menu-desktop/home-menu-desktop.component';
+import {HomeMenuDesktopComponent} from './home-menu-desktop/home-menu-desktop.component';
 import {PostFormModule} from "../post-form/post-form.module";
 import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -27,24 +28,26 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     HomeMenuMobileComponent,
     HomeMenuDesktopComponent
   ],
-    imports: [
-        CommonModule,
-        HomeRoutingModule,
-        MatSidenavModule,
-        MatListModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatRippleModule,
-        MatMenuModule,
-        PostFormModule,
-        MatTabsModule,
-        FormsModule,
-        MatInputModule,
-        MatTooltipModule,
+  imports: [
+
+    CommonModule,
+    BrowserAnimationsModule,
+    HomeRoutingModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatRippleModule,
+    MatMenuModule,
+    PostFormModule,
+    MatTabsModule,
+    FormsModule,
+    MatInputModule,
+    MatTooltipModule,
 
 
-    ]
+  ]
 })
 export class HomeModule {
 }

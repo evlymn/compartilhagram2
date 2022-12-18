@@ -13,7 +13,11 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="home-content" [style]=" homeService.sideNavOpened? 'margin-top: 50px': ''">
+     <div   [@openCloseMargin]=" homeService.sideNavOpened ? 'open' : 'closed'"
+            >
+
+     </div>
+      <div class="home-content" >
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

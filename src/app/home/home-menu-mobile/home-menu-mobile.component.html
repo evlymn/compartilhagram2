@@ -6,6 +6,14 @@
     <i class='bx bx-world' ></i>
 <!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
   </a>
+
+  <a mat-list-item (click)="search()"
+     #tooltip="matTooltip"
+     [matTooltip]="homeService.languageService.getText('pesquisar')"
+     matTooltipPosition="right">
+    <i class='bx bx-search' ></i>
+    <!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
+  </a>
   <a mat-list-item [routerLink]="['/home/following']"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('seguindo')"

@@ -45,20 +45,8 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
     });
 
     bottomSheetRef.afterDismissed().subscribe(d => {
-      console.log(d)
+      //console.log(d)
     })
-
-    // const dialogRef = this._dialog.open(FormDialogComponent, {
-    //   maxWidth: '100vw',
-    //   maxHeight: '100vh',
-    //   height: '100%',
-    //   width: '100%',
-    //   panelClass: 'bg-color',
-    //   data: true
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
   }
 
   ngOnInit(): void {
@@ -81,6 +69,5 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this._router.navigate(['/home']).catch();
     });
-
   }
 }

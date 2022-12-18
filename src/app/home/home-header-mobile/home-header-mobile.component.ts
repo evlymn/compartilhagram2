@@ -2,11 +2,13 @@ import {Component} from '@angular/core';
 import {NotificationService} from "../../shared/services/notification/notification.service";
 import {HomeService} from "../home.service";
 import {Router} from "@angular/router";
+import homeAnimations from "../home.animations";
 
 @Component({
   selector: 'app-home-header-mobile',
   templateUrl: './home-header-mobile.component.html',
-  styleUrls: ['./home-header-mobile.component.scss']
+  styleUrls: ['./home-header-mobile.component.scss'],
+  animations:[ homeAnimations]
 })
 export class HomeHeaderMobileComponent {
   tabSelectedIndex = 0;

@@ -3,6 +3,7 @@ import {HomeService} from "../home.service";
 import {AlertsService} from "../../alerts/alerts.service";
 import {Router} from "@angular/router";
 import {MatTooltip} from "@angular/material/tooltip";
+import {PostFormService} from "../../post-form/post-form.service";
 
 @Component({
   selector: 'app-home-menu-mobile',
@@ -15,7 +16,8 @@ export class HomeMenuMobileComponent {
 
   constructor(public homeService: HomeService,
               private _router: Router,
-              public alertsService: AlertsService) {
+              public alertsService: AlertsService,
+              private _postFormService: PostFormService) {
     this.homeService.authService.authState.subscribe(user => {
       this.user = user;
     })
@@ -35,5 +37,9 @@ export class HomeMenuMobileComponent {
 
   logout() {
     this.homeService.auth.signOut();
+  }
+
+  search() {
+    this._postFormService.selectSearchPanel();
   }
 }

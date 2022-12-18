@@ -1,6 +1,6 @@
-<mat-toolbar class="home-toolbar" *ngIf="homeService.sideNavOpened" >
+<mat-toolbar class="home-toolbar"    [@openCloseActions]=" homeService.sideNavOpened ? 'open' : 'closed'">
 
-  <mat-icon color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
+  <mat-icon class="toggle-sn" color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
 
   <mat-tab-group class="mat-tab-header" [selectedIndex]="tabSelectedIndex">
     <mat-tab>

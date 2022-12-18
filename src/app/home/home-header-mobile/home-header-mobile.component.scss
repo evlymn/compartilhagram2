@@ -30,6 +30,10 @@ button {
   justify-content: space-between;
 }
 
+.toggle-sn {
+  visibility: hidden;
+}
+
 .mat-toolbar-row {
   height: 40px;
   max-height: 40px !important;
