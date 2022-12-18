@@ -4,8 +4,6 @@
   <mat-tab-group class="mat-tab-header" [selectedIndex]="tabSelectedIndex">
     <mat-tab>
       <div class="mat-tab-div r">
-<!--        //[routerLink]="['/home']"-->
-<!--        (click)="routeToHome()"-->
         <button   (click)="routeToHome()"  mat-button color="#ccc" class="button-items-align-center">
           <i class='bx bx-world'></i> {{homeService.languageService.getText('feed')}}
         </button>
@@ -27,20 +25,5 @@
         <mat-icon (click)="searchUser()" color="#ccc">search</mat-icon>
       </div>
     </mat-tab>
-
   </mat-tab-group>
-<!--  <mat-icon [matMenuTriggerFor]="menu" color="#ccc">more_vert</mat-icon>-->
-<!--  <mat-menu #menu="matMenu">-->
-<!--    <button mat-menu-item (click)="logout()">-->
-<!--      <mat-icon class="icon-font-mobile">logout</mat-icon>-->
-<!--      {{homeService.languageService.getText('logout')}}-->
-<!--    </button>-->
-<!--    <button mat-menu-item [routerLink]="['profile', homeService.auth.user?.uid]">-->
-<!--      <mat-icon class="icon-font-mobile"> account_circle</mat-icon>-->
-<!--      {{homeService.languageService.getText('perfil')}}-->
-
-<!--    </button>-->
-<!--  </mat-menu>-->
-
-
 </mat-toolbar>

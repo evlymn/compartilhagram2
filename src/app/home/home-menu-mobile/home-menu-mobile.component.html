@@ -1,10 +1,10 @@
 <mat-nav-list>
-
   <a mat-list-item (click)="routeToHome()"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('feed')"
      matTooltipPosition="right">
-    <mat-icon class="icon-font-mobile ">home</mat-icon>
+    <i class='bx bx-world' ></i>
+<!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
   </a>
   <a mat-list-item [routerLink]="['/home/following']"
      #tooltip="matTooltip"
@@ -37,19 +37,14 @@
   </a>
   <a mat-list-item [routerLink]="['photos']"
      #tooltip="matTooltip"
-
      [matTooltip]="homeService.languageService.getText('minhasfotos')"
-     matTooltipPosition="right"
-  >
+     matTooltipPosition="right">
     <mat-icon class="icon-font-mobile">photo_library</mat-icon>
   </a>
-
   <a class="a-avatar" mat-list-item [routerLink]="['profile', user?.uid]"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('perfil')"
-
      matTooltipPosition="right">
-
     <img class="menu-mobile-avatar-image" *ngIf="user?.photoURL"
          [src]="user?.photoURL"
          alt="image profile">
@@ -57,15 +52,11 @@
   <a mat-list-item (click)="viewToolTips()">
     <mat-icon class="icon-font-mobile">info_outlined</mat-icon>
   </a>
-
   <a mat-list-item (click)="logout()"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('logout')"
      matTooltipPosition="right">
     <i class='bx bx-log-out-circle'></i>
   </a>
-
-
-
 </mat-nav-list>
 

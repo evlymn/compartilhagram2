@@ -5,12 +5,14 @@
 
 <!--[routerLink]="['/home']"-->
 <button (click)="routeToHome()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-home">
-  <mat-icon>home
-  </mat-icon>
+  <i class='bx bx-world' ></i>
+<!--  <mat-icon>home-->
+<!--  </mat-icon>-->
 </button>
 
 
 <button (click)="openForm($event)" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-add">
+
   <mat-icon>add
   </mat-icon>
 </button>

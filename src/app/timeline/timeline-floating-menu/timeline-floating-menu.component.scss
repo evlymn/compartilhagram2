@@ -24,6 +24,10 @@
   transform: scale($scale_actions);
   background-color: #b9b9b9;
 }
+.bx-world {
+  font-size: 27px!important;
+  margin-top: 3px;
+}
 
 .icon-font-mobile-add {
   bottom: calc(32px + $height);
