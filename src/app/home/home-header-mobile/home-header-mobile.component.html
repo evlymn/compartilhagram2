@@ -1,6 +1,7 @@
-<mat-toolbar class="home-toolbar">
+<mat-toolbar class="home-toolbar" *ngIf="homeService.sideNavOpened" >
 
   <mat-icon color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
+
   <mat-tab-group class="mat-tab-header" [selectedIndex]="tabSelectedIndex">
     <mat-tab>
       <div class="mat-tab-div r">

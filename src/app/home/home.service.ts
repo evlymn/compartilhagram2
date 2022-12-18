@@ -9,11 +9,28 @@ import {AppUpdateService} from "../shared/services/app/app-update.service";
 })
 export class HomeService {
 
+  set sideNavOpened(val){
+    localStorage.setItem('sideNavOpened',val.toString());
+  }
+  get sideNavOpened() {
+    if (localStorage.getItem('sideNavOpened')) {
+      return JSON.parse(localStorage.getItem('sideNavOpened')!) as boolean;
+    } else {
+      return true;
+    }
+  }
+
   constructor(public authService: AuthenticationService,
               public auth: AuthenticationService,
               public windowService: WindowService,
               public languageService: LanguageService,
               private appUpdateService: AppUpdateService
   ) {
+
   }
+
+  toggleSideNav() {
+    this.sideNavOpened = !this.sideNavOpened;
+  }
+
 }

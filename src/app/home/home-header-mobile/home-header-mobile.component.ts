@@ -18,17 +18,13 @@ export class HomeHeaderMobileComponent {
   }
 
   toggleSideNav() {
-    this._notificationService.next('toggleSideNav', null).catch();
+     this.homeService.toggleSideNav()
   }
 
   toggleSearchUser(index: number) {
     this.tabSelectedIndex = index;
     if (index == 1)
       this.searchText = '';
-  }
-
-  logout() {
-    this.homeService.auth.signOut()
   }
 
   searchUser() {

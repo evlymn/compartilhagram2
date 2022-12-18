@@ -1,17 +1,19 @@
 <div class="" *ngIf="isMobile">
   <!-- -->
-<!--  <mat-icon color="#ccc" (click)="toggleSideNav()">menu</mat-icon>-->
+  <div class="floating-toggle">
+    <mat-icon  (click)="toggleSideNav()">menu</mat-icon>
+  </div>
   <app-home-header-mobile *ngIf="isMobile"></app-home-header-mobile>
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #snav [mode]="'side'"
-                 [opened]="sideNavOpened"
+                 [opened]="homeService.sideNavOpened"
                  [fixedInViewport]="true" [fixedTopGap]="43">
 
       <app-home-menu-mobile></app-home-menu-mobile>
 
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="home-content">
+      <div class="home-content" [style]=" homeService.sideNavOpened? 'margin-top: 50px': ''">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
