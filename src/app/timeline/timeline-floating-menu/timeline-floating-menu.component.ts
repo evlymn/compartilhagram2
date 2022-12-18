@@ -35,7 +35,9 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     window.addEventListener('scroll', (d: any) => {
-      this.showScrollTo = d.srcElement.scrollingElement?.scrollTop > 200;
+      this.actionsOpened = false;
+      this.showScrollTo = d.target.scrollingElement?.scrollTop > 200;
+      // this.showScrollTo = d.srcElement.scrollingElement?.scrollTop > 200;
     }, {capture: true})
   }
 
