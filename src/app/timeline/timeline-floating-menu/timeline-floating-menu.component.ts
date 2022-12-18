@@ -34,9 +34,11 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
     window.scrollTo({top: 0, left: 0, behavior: "smooth"});
   }
 
-  openForm(isSearch?: boolean) {
+  openForm(e: any, isSearch?: boolean) {
     if (isSearch) {
-      this._postFormService.selectSearchPanel();
+        e.preventDefault();
+        e.stopPropagation();
+        this._postFormService.selectSearchPanel();
     }
     const bottomSheetRef = this._bottomSheet.open(TimelineFormBottomSheetComponent, {
       panelClass: 'bottom-sheet-class', disableClose: true

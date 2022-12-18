@@ -10,7 +10,7 @@
 </button>
 
 
-<button (click)="openForm()" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-add">
+<button (click)="openForm($event)" *ngIf="isMobile" mat-mini-fab color="accent" class="icon-font-mobile-add">
   <mat-icon>add
   </mat-icon>
 </button>
@@ -25,7 +25,7 @@
 
 
   <!--// [@openCloseActions]=" actionsOpened ? 'open' : 'closed'"-->
-  <button (click)="openForm(true)" *ngIf="isMobile" mat-mini-fab
+  <button (click)="openForm( $event, true)" *ngIf="isMobile" mat-mini-fab
           color="accent" class="icon-font-mobile-actions-search">
     <mat-icon>search
     </mat-icon>
