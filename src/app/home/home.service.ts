@@ -3,15 +3,17 @@ import {AuthenticationService} from "../shared/services/firebase/authentication/
 import {WindowService} from "../shared/services/window/window.service";
 import {LanguageService} from "../shared/services/language/language.service";
 import {AppUpdateService} from "../shared/services/app/app-update.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
 
-  set sideNavOpened(val){
-    localStorage.setItem('sideNavOpened',val.toString());
+  set sideNavOpened(val) {
+    localStorage.setItem('sideNavOpened', val.toString());
   }
+
   get sideNavOpened() {
     if (localStorage.getItem('sideNavOpened')) {
       return JSON.parse(localStorage.getItem('sideNavOpened')!) as boolean;
@@ -24,9 +26,15 @@ export class HomeService {
               public auth: AuthenticationService,
               public windowService: WindowService,
               public languageService: LanguageService,
-              private appUpdateService: AppUpdateService
+              private appUpdateService: AppUpdateService,
+              private _router: Router
   ) {
 
+  }
+
+  checkRoute(route: string) {
+    const routeArr = this._router.url.split('/');
+    return this._router.url.split('/')[routeArr.length - 1] == route;
   }
 
   toggleSideNav() {
