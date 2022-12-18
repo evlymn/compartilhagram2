@@ -3,13 +3,13 @@ import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom
 
 @Component({
   selector: 'app-timeline-form-bottom-sheet',
-  templateUrl: './timeline-form-bottom-sheet.component.html',
-  styleUrls: ['./timeline-form-bottom-sheet.component.scss']
+  templateUrl: './post-form-bottom-sheet.component.html',
+  styleUrls: ['./post-form-bottom-sheet.component.scss']
 })
-export class TimelineFormBottomSheetComponent {
+export class PostFormBottomSheetComponent {
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
-  constructor(private _bottomSheetRef: MatBottomSheetRef<TimelineFormBottomSheetComponent>,
+  constructor(private _bottomSheetRef: MatBottomSheetRef<PostFormBottomSheetComponent>,
               @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
 
     this.isDialog = data;

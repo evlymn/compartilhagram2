@@ -36,7 +36,6 @@ import {PostFormModule} from "../post-form/post-form.module";
 import {MatRippleModule} from "@angular/material/core";
 import { PostLastCommentsComponent } from './timeline-post/post-last-comments/post-last-comments.component';
 import { LastCommentsItemComponent } from './timeline-post/post-last-comments/last-comments-item/last-comments-item.component';
-import { TimelineFormBottomSheetComponent } from './timeline-form-bottom-sheet/timeline-form-bottom-sheet.component';
 
 
 @NgModule({
@@ -57,7 +56,6 @@ import { TimelineFormBottomSheetComponent } from './timeline-form-bottom-sheet/t
     TimelineAlbumViewComponent,
     PostLastCommentsComponent,
     LastCommentsItemComponent,
-    TimelineFormBottomSheetComponent,
   ],
     imports: [
         CommonModule,

@@ -4,9 +4,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {WindowService} from "../../shared/services/window/window.service";
 import FloatingMenuAnimations from "./floating-menu.animations";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {TimelineFormBottomSheetComponent} from "../timeline-form-bottom-sheet/timeline-form-bottom-sheet.component";
-import {NotificationService} from "../../shared/services/notification/notification.service";
+ import {NotificationService} from "../../shared/services/notification/notification.service";
 import {PostFormService} from "../../post-form/post-form.service";
+import {PostFormBottomSheetComponent} from "../../post-form/post-form-bottom-sheet/post-form-bottom-sheet.component";
 
 @Component({
   selector: 'app-timeline-floating-menu',
@@ -25,7 +25,7 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
               private _bottomSheet: MatBottomSheet,
               private _route: ActivatedRoute,
               private _router: Router,
-              public notificationService: NotificationService,
+
               private _postFormService: PostFormService) {
     this.urlFragment = this._route.snapshot.fragment;
   }
@@ -40,13 +40,11 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
         e.stopPropagation();
         this._postFormService.selectSearchPanel();
     }
-    const bottomSheetRef = this._bottomSheet.open(TimelineFormBottomSheetComponent, {
+    this._bottomSheet.open(PostFormBottomSheetComponent, {
       panelClass: 'bottom-sheet-class', disableClose: true
     });
 
-    bottomSheetRef.afterDismissed().subscribe(d => {
-      //console.log(d)
-    })
+
   }
 
   ngOnInit(): void {

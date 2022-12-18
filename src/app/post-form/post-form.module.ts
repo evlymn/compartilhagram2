@@ -11,13 +11,15 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { PostFormActionsComponent } from './post-form-actions/post-form-actions.component';
+import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
 
 
 @NgModule({
   declarations: [
     PostFormComponent,
     FormAlertDialogComponent,
-    PostFormActionsComponent
+    PostFormActionsComponent,
+    PostFormBottomSheetComponent,
   ],
     imports: [
         CommonModule,

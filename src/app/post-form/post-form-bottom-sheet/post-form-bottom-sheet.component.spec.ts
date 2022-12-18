@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimelineFormBottomSheetComponent } from './timeline-form-bottom-sheet.component';
+import { PostFormBottomSheetComponent } from './post-form-bottom-sheet.component';
 
 describe('TimelineFormBottomSheetComponent', () => {
-  let component: TimelineFormBottomSheetComponent;
-  let fixture: ComponentFixture<TimelineFormBottomSheetComponent>;
+  let component: PostFormBottomSheetComponent;
+  let fixture: ComponentFixture<PostFormBottomSheetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TimelineFormBottomSheetComponent ]
+      declarations: [ PostFormBottomSheetComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TimelineFormBottomSheetComponent);
+    fixture = TestBed.createComponent(PostFormBottomSheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
