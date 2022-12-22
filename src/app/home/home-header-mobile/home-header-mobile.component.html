@@ -1,4 +1,4 @@
-<mat-toolbar class="home-toolbar" [@openCloseActions]=" homeService.sideNavOpened ? 'open' : 'closed'">
+<mat-toolbar class="home-toolbar" [@openCloseActions]=" homeService.sideNavOpened && homeService.showUpMenu ? 'open' : 'closed'">
 
   <mat-icon class="toggle-sn" color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
 

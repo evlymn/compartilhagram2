@@ -4,7 +4,20 @@
     <h3>{{profile?.displayName}}</h3>
   </div>
   <h3>{{profile?.email}}</h3>
+  <div class="settings">
 
+    <div>
+      <i class='bx bx-cog'></i> Configurações
+    </div>
+
+    <mat-slide-toggle color="primary"  [(ngModel)]="homeService.showUpMenu" class="slide-toggle">Mostrar menu superior</mat-slide-toggle>
+
+    <div>
+
+
+    </div>
+
+  </div>
 
   <div class="activities">
     <div>
@@ -14,13 +27,12 @@
     <div> Reposts: {{ totalReposts}}</div>
   </div>
 
-  <button [disabled]="buttonDisabled" *ngIf="profile?.uid != auth.user?.uid" mat-stroked-button (click)="followUser(profile?.uid)">
+  <button [disabled]="buttonDisabled" *ngIf="profile?.uid != auth.user?.uid" mat-stroked-button
+          (click)="followUser(profile?.uid)">
     <mat-icon>
-      {{isFollowed? 'person_remove': 'person_add' }}
-
+      {{isFollowed ? 'person_remove' : 'person_add' }}
     </mat-icon>
-    {{isFollowed? 'Deixar de seguir': 'seguir' }}
-
+    {{isFollowed ? 'Deixar de seguir' : 'seguir' }}
   </button>
   <app-timeline></app-timeline>
 </div>

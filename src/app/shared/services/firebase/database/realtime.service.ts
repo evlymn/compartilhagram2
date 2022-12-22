@@ -1,17 +1,28 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
-  child, Database, DataSnapshot, get, onChildAdded, onChildChanged, onChildRemoved, onValue, push, query, Query,
+  child, Database, DataSnapshot, get, onChildAdded, onChildChanged, onChildRemoved, onValue, push, query,
   QueryConstraint, ref, remove, set, update
 } from "@angular/fire/database";
 
 import {Observable} from 'rxjs';
 
+export enum DatabaseURL {
+  default,
+  users,
+  timeline
+
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RealtimeService {
 
+
   constructor(private db: Database) {
+
+
+    //    this.db.app.options.databaseURL = base;
   }
 
   createId() {

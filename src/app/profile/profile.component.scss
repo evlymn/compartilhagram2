@@ -35,3 +35,23 @@ button {
   border-color: #6b4155 !important;
   background-color: #6b4155;
 }
+
+.settings {
+  margin: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+
+}
+.mdc-form-field>label {
+  color: antiquewhite!important;}
+
+  .mat-mdc-slide-toggle {
+    .mdc-form-field>label {
+      color: antiquewhite!important;}
+
+
+  }
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: transparent!important;
+}

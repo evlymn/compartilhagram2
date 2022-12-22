@@ -1,23 +1,12 @@
 import {Injectable, NgZone} from '@angular/core';
 import {
-  ActionCodeSettings,
-  Auth,
-  authState,
-  createUserWithEmailAndPassword,
-  getAdditionalUserInfo,
-  onAuthStateChanged,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signOut,
-  updateProfile,
-  user,
-  User,
+  ActionCodeSettings, Auth, authState, createUserWithEmailAndPassword, getAdditionalUserInfo, onAuthStateChanged,
+  sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile, user, User,
   UserCredential,
 } from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {onIdTokenChanged} from '@firebase/auth';
-import {RealtimeService} from "../database/realtime.service";
+import { RealtimeService} from "../database/realtime.service";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({
@@ -30,7 +19,11 @@ export class AuthenticationService {
   public logoutMessage = new BehaviorSubject<{ from: string }>({from: ''});
 
   constructor(private auth: Auth, private router: Router,
-              private ngZone: NgZone, private _realtime: RealtimeService) {
+              private ngZone: NgZone,
+              private _realtime: RealtimeService,
+
+  ) {
+
     this.setActiveRoute(this.router.url);
     this.onAuthStateChanged();
   }
@@ -51,6 +44,17 @@ export class AuthenticationService {
     return user(this.auth);
   }
 
+  set uid(val: string) {
+    localStorage.setItem('uid', val);
+  }
+
+  get uid() {
+    if (localStorage.getItem('uid')) {
+      return localStorage.getItem('uid') as string;
+    } else {
+      return '';
+    }
+  }
 
   onIdTokenChanged() {
     onIdTokenChanged(this.auth, async usr => {
@@ -66,11 +70,11 @@ export class AuthenticationService {
   }
 
   private onAuthStateChanged() {
-
     onAuthStateChanged(this.auth, usr => {
       this.user = usr;
       if (usr) {
-        this.onDeleteLogout(usr?.uid!);
+        this.uid = usr.uid;
+        this.onDeleteLogout(usr.uid!);
         this.ngZone.run(() => {
           this._route = this._route == '/' ? '/home' : this._route;
           this.router.navigate([this._route]).catch(reason => console.log(reason));
@@ -115,6 +119,6 @@ export class AuthenticationService {
   }
 
   signOut() {
-    signOut(this.auth);
+    signOut(this.auth).catch();
   }
 }

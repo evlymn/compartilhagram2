@@ -114,4 +114,8 @@ export class PostFooterComponent implements OnInit {
       });
     }
   }
+
+  goBack() {
+   history.back();
+  }
 }

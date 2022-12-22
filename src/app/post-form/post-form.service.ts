@@ -111,7 +111,6 @@ export class PostFormService {
         type: images[i].file.type,
         lastModified: images[i].file.lastModified
       });
-      console.log(file);
 
       const uploadTask = this._storage.uploadBytesResumable(objectName, file,
         {

@@ -14,6 +14,7 @@ export class HomeHeaderMobileComponent {
   tabSelectedIndex = 0;
   searchText = '';
 
+
   constructor(private _notificationService: NotificationService,
               public homeService: HomeService,
               private router: Router) {

@@ -49,6 +49,31 @@ export const HomeAnimations = [
       ),
     ]),
   ]),
+
+  trigger('openCloseMenuMobile', [
+    state('open',
+      style({
+        opacity: 1,
+        //display: 'block',
+       // marginTop:45
+      })
+    ),
+    state('closed', style({
+      opacity: 0,
+    //  display: 'none',
+    //  marginTop:0
+       height: '0px',
+      // width: '0px'
+    })),
+    transition('open => closed', [
+      animate('.6s'),
+
+    ]),
+    transition('closed => open', [
+      animate('.6s',
+      ),
+    ]),
+  ]),
 ]
 
 export default HomeAnimations;

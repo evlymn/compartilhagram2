@@ -4,11 +4,13 @@ import {AlertsService} from "../../alerts/alerts.service";
 import {Router} from "@angular/router";
 import {MatTooltip} from "@angular/material/tooltip";
 import {PostFormService} from "../../post-form/post-form.service";
+import HomeAnimations from "../home.animations";
 
 @Component({
   selector: 'app-home-menu-mobile',
   templateUrl: './home-menu-mobile.component.html',
-  styleUrls: ['./home-menu-mobile.component.scss']
+  styleUrls: ['./home-menu-mobile.component.scss'],
+  animations: [HomeAnimations]
 })
 export class HomeMenuMobileComponent {
   @ViewChildren('tooltip') tooltips!: QueryList<MatTooltip>;

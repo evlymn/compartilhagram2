@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProfileService} from "./profile.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
+import {HomeService} from "../home/home.service";
 
 @Component({
   selector: 'app-profile',
@@ -16,10 +17,15 @@ export class ProfileComponent implements OnInit {
   totalReposts = 0;
   isFollowed = false;
   buttonDisabled = false;
+  panelOpenState = true;
+
+
+
 
   constructor(public auth: AuthenticationService,
               private _profileService: ProfileService,
-              private _route: ActivatedRoute,) {
+              private _route: ActivatedRoute,
+              public homeService: HomeService) {
     this.userId = this._route.snapshot.paramMap.get('userId') as string;
     this._profileService.auth.authState.subscribe(() => {
       this.getProfile().catch();

@@ -2,11 +2,11 @@
 
 
   <div class="post-actions" *ngIf="post">
-
-    <div class="user-interaction"  *ngIf="isDetail" matRipple>
-      <div class="button-action " [routerLink]="['/home']"  >
-        <i class='bx bxs-chevron-left detail' ></i>
-       </div>
+<!--    [routerLink]="['/home']"-->
+    <div class="user-interaction" (click)="goBack()  "  *ngIf="isDetail" matRipple>
+      <div class="button-action">
+        <i class='bx bxs-chevron-left detail'></i>
+      </div>
     </div>
 
 
@@ -26,41 +26,29 @@
     </div>
 
     <div class="user-interaction" matRipple *ngIf=" !post?.repost">
-      <div class="button-action "  (click)=" repostPanelOpened = !repostPanelOpened">
+      <div class="button-action " (click)=" repostPanelOpened = !repostPanelOpened">
         <i class='bx bx-repost'></i>
-        <small *ngIf="totalRepost>0" class="icon-count" >{{totalRepost}}</small>
+        <small *ngIf="totalRepost>0" class="icon-count">{{totalRepost}}</small>
       </div>
     </div>
 
 
-
-
     <div class="user-interaction" matRipple>
-      <div class="button-action "   (click)="createSaved(post)">
-        <i class='bx bx-bookmark' [ngClass]="this.existsSaved ? 'bxs-bookmark' : 'bx-bookmark' " ></i>
-
+      <div class="button-action " (click)="createSaved(post)">
+        <i class='bx bx-bookmark' [ngClass]="this.existsSaved ? 'bxs-bookmark' : 'bx-bookmark' "></i>
       </div>
     </div>
 
     <div class="user-interaction" matRipple *ngIf="post?.uid != loggedUId">
-
-
-      <div class="button-action "  [routerLink]="[this.messageRoute, post.uid]">
-        <i class='bx bx-envelope' ></i>
+      <div class="button-action " [routerLink]="[this.messageRoute, post.uid]">
+        <i class='bx bx-envelope'></i>
       </div>
-
-
     </div>
-
-
-    <div class="user-interaction"  matRipple *ngIf="!isDetail">
-      <div class="button-action " [routerLink]="['/home/post', post?.id, index]"  >
+    <div class="user-interaction" matRipple *ngIf="!isDetail">
+      <div class="button-action " [routerLink]="['/home/post', post?.id, index]">
         <i class='bx bxs-chevron-right detail'></i>
-
       </div>
     </div>
-
-
   </div>
 
   <div class="expansion-comment">

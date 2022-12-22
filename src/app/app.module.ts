@@ -22,6 +22,8 @@ import {ProfileModule} from "./profile/profile.module";
 import {ServiceWorkerModule} from '@angular/service-worker';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +51,7 @@ import {ServiceWorkerModule} from '@angular/service-worker';
       return auth;
     }),
     provideDatabase(() => {
-      const data = getDatabase();
+      const data = getDatabase( );
       if (environment.emulators) {
         connectDatabaseEmulator(data, '127.0.0.1', 9002);
       }
@@ -83,7 +85,7 @@ import {ServiceWorkerModule} from '@angular/service-worker';
   ],
   providers: [
     ScreenTrackingService,
-    UserTrackingService
+    UserTrackingService,
   ],
 
   bootstrap: [AppComponent]

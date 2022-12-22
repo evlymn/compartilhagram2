@@ -1,20 +1,22 @@
 <mat-nav-list>
-  <a mat-list-item (click)="routeToHome()"  [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' "
+  <a mat-list-item (click)="routeToHome()"
+     [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"
+     [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' "
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('feed')"
      matTooltipPosition="right">
     <i class='bx bx-world' ></i>
-<!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
   </a>
-
   <a mat-list-item (click)="search($event)"
+     [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('pesquisar')"
      matTooltipPosition="right">
     <i class='bx bx-search' ></i>
-    <!--    <mat-icon class="icon-font-mobile">home</mat-icon>-->
   </a>
-  <a mat-list-item [routerLink]="['/home/following']"  [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' "
+  <a mat-list-item [routerLink]="['/home/following']"
+     [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"
+     [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' "
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('seguindo')"
      matTooltipPosition="right">

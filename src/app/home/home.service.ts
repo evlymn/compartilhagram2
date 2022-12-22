@@ -10,6 +10,18 @@ import {Router} from "@angular/router";
 })
 export class HomeService {
 
+  set showUpMenu(val: boolean) {
+    localStorage.setItem('showUpMenu', val.toString())
+  }
+
+  get showUpMenu() {
+    if (localStorage.getItem('showUpMenu')) {
+      return JSON.parse(localStorage.getItem('showUpMenu')!) as boolean;
+    } else {
+      return true;
+    }
+  }
+
   set sideNavOpened(val) {
     localStorage.setItem('sideNavOpened', val.toString());
   }
