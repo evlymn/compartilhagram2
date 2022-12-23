@@ -13,7 +13,8 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-     <div   [@openCloseMargin]=" homeService.sideNavOpened && homeService.showUpMenu? 'open' : 'closed'"
+     <div   [@openCloseMargin]="   homeService.pinUpMenu ||
+             (homeService.sideNavOpened  && homeService.showUpMenu) ? 'open' : 'closed'"
             >
 
      </div>

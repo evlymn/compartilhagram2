@@ -10,7 +10,21 @@ import {Router} from "@angular/router";
 })
 export class HomeService {
 
+
+  set pinUpMenu(val: boolean) {
+    localStorage.setItem('pinUpMenu', val.toString())
+  }
+
+  get pinUpMenu() {
+    if (localStorage.getItem('pinUpMenu')) {
+      return JSON.parse(localStorage.getItem('pinUpMenu')!) as boolean;
+    } else {
+      return false;
+    }
+  }
+
   set showUpMenu(val: boolean) {
+    this.pinUpMenu = val ?   this.pinUpMenu : false ;
     localStorage.setItem('showUpMenu', val.toString())
   }
 

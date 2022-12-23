@@ -7,15 +7,23 @@
   <div class="settings">
 
     <div>
-      <i class='bx bx-cog'></i> Configurações
+      <i class='bx bx-cog'></i>
+      {{homeService.languageService.getText('configuracoes')}}
     </div>
+    <mat-slide-toggle color="primary"
+                      [(ngModel)]="homeService.showUpMenu" class="slide-toggle">
+      {{homeService.languageService.getText('mostrarmenusuperior')}}
+    </mat-slide-toggle>
+    <br>
 
-    <mat-slide-toggle color="primary"  [(ngModel)]="homeService.showUpMenu" class="slide-toggle">Mostrar menu superior</mat-slide-toggle>
+    <mat-slide-toggle color="primary"
+                      [disabled]="!homeService.showUpMenu"
+                      [(ngModel)]="homeService.pinUpMenu" class="slide-toggle">
+      {{homeService.languageService.getText('fixarmenusuperior')}}
+    </mat-slide-toggle>
 
-    <div>
+    <br>
 
-
-    </div>
 
   </div>
 

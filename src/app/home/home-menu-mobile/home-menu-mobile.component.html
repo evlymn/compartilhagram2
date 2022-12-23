@@ -1,28 +1,31 @@
 <mat-nav-list>
-  <a mat-list-item (click)="routeToHome()"
-     [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"
-     [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' "
-     #tooltip="matTooltip"
-     [matTooltip]="homeService.languageService.getText('feed')"
-     matTooltipPosition="right">
-    <i class='bx bx-world' ></i>
-  </a>
-  <a mat-list-item (click)="search($event)"
-     [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"
-     #tooltip="matTooltip"
-     [matTooltip]="homeService.languageService.getText('pesquisar')"
-     matTooltipPosition="right">
-    <i class='bx bx-search' ></i>
-  </a>
-  <a mat-list-item [routerLink]="['/home/following']"
-     [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"
-     [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' "
-     #tooltip="matTooltip"
-     [matTooltip]="homeService.languageService.getText('seguindo')"
-     matTooltipPosition="right">
-    <i class='bx bx-run'></i>
-  </a>
-  <a mat-list-item [routerLink]="['alerts']" #tooltip="matTooltip"  [ngClass]="homeService.checkRoute('alerts')? 'route' : 'no-route' "
+  <div [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'">
+    <a mat-list-item (click)="routeToHome()"
+       [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' "
+       #tooltip="matTooltip"
+       [matTooltip]="homeService.languageService.getText('feed')"
+       matTooltipPosition="right">
+      <i class='bx bx-world'></i>
+    </a>
+    <!--    [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"-->
+    <a mat-list-item (click)="search($event)"
+       #tooltip="matTooltip"
+       [matTooltip]="homeService.languageService.getText('pesquisar')"
+       matTooltipPosition="right">
+      <i class='bx bx-search'></i>
+    </a>
+
+    <!--  [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"-->
+    <a mat-list-item [routerLink]="['/home/following']"
+       [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' "
+       #tooltip="matTooltip"
+       [matTooltip]="homeService.languageService.getText('seguindo')"
+       matTooltipPosition="right">
+      <i class='bx bx-run'></i>
+    </a>
+  </div>
+  <a mat-list-item [routerLink]="['alerts']" #tooltip="matTooltip"
+     [ngClass]="homeService.checkRoute('alerts')? 'route' : 'no-route' "
      [matTooltip]="homeService.languageService.getText('notificacoes')"
      matTooltipPosition="right">
     <i class='bx bx-bell' [ngClass]="alertsService.totalAlerts>0 ?'bx-tada': ''"> </i>
@@ -31,25 +34,33 @@
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('mensagens')"
      matTooltipPosition="right">
-    <mat-icon  [ngClass]="homeService.checkRoute('messages')? 'route' : 'no-route' " class="icon-font-mobile ">mail_outlined</mat-icon>
+    <mat-icon [ngClass]="homeService.checkRoute('messages')? 'route' : 'no-route' " class="icon-font-mobile ">
+      mail_outlined
+    </mat-icon>
   </a>
   <a mat-list-item [routerLink]="['groups']"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('grupos')"
      matTooltipPosition="right">
-    <mat-icon   [ngClass]="homeService.checkRoute('groups')? 'route' : 'no-route' " class="icon-font-mobile">forum_outlined</mat-icon>
+    <mat-icon [ngClass]="homeService.checkRoute('groups')? 'route' : 'no-route' " class="icon-font-mobile">
+      forum_outlined
+    </mat-icon>
   </a>
   <a mat-list-item [routerLink]="['saved']"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('itenssalvos') "
      matTooltipPosition="right">
-    <mat-icon   [ngClass]="homeService.checkRoute('saved')? 'route' : 'no-route' " class="icon-font-mobile">bookmarks_outlined</mat-icon>
+    <mat-icon [ngClass]="homeService.checkRoute('saved')? 'route' : 'no-route' " class="icon-font-mobile">
+      bookmarks_outlined
+    </mat-icon>
   </a>
   <a mat-list-item [routerLink]="['photos']"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('minhasfotos')"
      matTooltipPosition="right">
-    <mat-icon  [ngClass]="homeService.checkRoute('photos')? 'route' : 'no-route' " class="icon-font-mobile">photo_library</mat-icon>
+    <mat-icon [ngClass]="homeService.checkRoute('photos')? 'route' : 'no-route' " class="icon-font-mobile">
+      photo_library
+    </mat-icon>
   </a>
   <a class="a-avatar" mat-list-item [routerLink]="['profile', user?.uid]"
      #tooltip="matTooltip"
@@ -62,7 +73,7 @@
   <a mat-list-item (click)="viewToolTips()">
     <mat-icon class="icon-font-mobile">info_outlined</mat-icon>
   </a>
-  <a mat-list-item (click)="logout()"
+  <a class="logout" mat-list-item (click)="logout()"
      #tooltip="matTooltip"
      [matTooltip]="homeService.languageService.getText('logout')"
      matTooltipPosition="right">

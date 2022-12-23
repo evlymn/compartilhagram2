@@ -54,7 +54,8 @@ export const HomeAnimations = [
     state('open',
       style({
         opacity: 1,
-        //display: 'block',
+        // height: 'auto',
+        // display: 'block',
        // marginTop:45
       })
     ),
@@ -62,15 +63,18 @@ export const HomeAnimations = [
       opacity: 0,
     //  display: 'none',
     //  marginTop:0
-       height: '0px',
+      height: '0px',
+      // transform: 'scale(0)'
+      // display: 'none'
+
       // width: '0px'
     })),
     transition('open => closed', [
-      animate('.6s'),
+      animate('.5s'),
 
     ]),
     transition('closed => open', [
-      animate('.6s',
+      animate('.5s',
       ),
     ]),
   ]),

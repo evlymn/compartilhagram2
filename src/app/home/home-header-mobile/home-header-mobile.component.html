@@ -1,17 +1,23 @@
-<mat-toolbar class="home-toolbar" [@openCloseActions]=" homeService.sideNavOpened && homeService.showUpMenu ? 'open' : 'closed'">
+<mat-toolbar class="home-toolbar"
+             [@openCloseActions]="
+             homeService.pinUpMenu ||
+             (homeService.sideNavOpened  && homeService.showUpMenu)   ? 'open' : 'closed'">
 
   <mat-icon class="toggle-sn" color="#ccc" (click)="toggleSideNav()">menu</mat-icon>
 
   <mat-tab-group class="mat-tab-header" [selectedIndex]="tabSelectedIndex">
     <mat-tab>
       <div class="mat-tab-div r">
-        <button [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' "  (click)="routeToHome()" mat-button class="button-items-align-center">
-          <i class='bx bx-world' ></i> {{homeService.languageService.getText('feed')}}
+        <button [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' " (click)="routeToHome()" mat-button
+                class="button-items-align-center">
+          <i class='bx bx-world'></i> {{homeService.languageService.getText('feed')}}
         </button>
-        <button [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' " [routerLink]="['/home/following']" mat-button color="#ccc" class="button-items-align-center">
+        <button [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' "
+                [routerLink]="['/home/following']" mat-button color="#ccc" class="button-items-align-center">
           <i class='bx bx-run'></i> {{homeService.languageService.getText('seguindo')}}
         </button>
-        <button  [ngClass]="homeService.checkRoute('search')? 'route' : 'no-route' " (click)="toggleSearchUser(1)" mat-button color="#ccc" class="button-items-align-center">
+        <button [ngClass]="homeService.checkRoute('search')? 'route' : 'no-route' " (click)="toggleSearchUser(1)"
+                mat-button color="#ccc" class="button-items-align-center">
           <i class='bx bx-search-alt'></i>
           {{homeService.languageService.getText('pesquisar')}}
         </button>
