@@ -12,62 +12,67 @@ import {limitToLast, orderByChild} from "@angular/fire/database";
 export class MessagesService {
 
 
-  constructor(private _realtime: RealtimeService,
+  constructor(public realtimeService: RealtimeService,
               private _router: Router,
               public auth: AuthenticationService,
               public languageService: LanguageService) {
   }
 
   getRooms(hostId: string) {
-    return this._realtime.onValueChanges(`chat/rooms/${hostId}/`, 'id',
+    return this.realtimeService.onValueChanges(`chat/rooms/${hostId}/`, 'id',
       orderByChild('dateTime'),
       limitToLast(30));
   }
 
   async getUserInfo(userId: string) {
-    const snapshot = await this._realtime.get('users/' + userId);
+    const snapshot = await this.realtimeService.get('users/' + userId);
     return snapshot.val();
   }
 
   async updateMessage(roomId: string, messageId: string, data: any) {
-    return this._realtime.update(`chat/messages/${roomId}/${messageId}`, data)
+    return this.realtimeService.update(`chat/messages/${roomId}/${messageId}`, data)
   }
 
   getMessages(room: string) {
-    return this._realtime.onValueChanges(`chat/messages/${room}`)
+    return this.realtimeService.onValueChanges(`chat/messages/${room}`)
+  }
+
+  async deleteMessage(roomId: string, messageId: string) {
+    console.log(`chat/messages/${roomId}/${messageId}`);
+    return this.realtimeService.delete(`chat/messages/${roomId}/${messageId}`)
   }
 
   updateRooms(hostId: string, guestId: string) {
-    this._realtime.update(`chat/rooms/${hostId}/${guestId}`, {
+    this.realtimeService.update(`chat/rooms/${hostId}/${guestId}`, {
       active: true,
       dateTime: new Date().getTime()
     }).catch();
-    this._realtime.update(`chat/rooms/${guestId}/${hostId}`, {
+    this.realtimeService.update(`chat/rooms/${guestId}/${hostId}`, {
       active: true,
       dateTime: new Date().getTime()
     }).catch();
   }
 
-  async createMessage(room: string, messageData: any) {
-    return this._realtime.add(`chat/messages/${room}`, messageData);
+  async createMessage(room: string, messageData: any): Promise<string> {
+    return this.realtimeService.set(`chat/messages/${room}/${messageData.id}`, messageData).then(() => messageData.id as string) ;
   }
 
   async checkRoom(host: any, guest: any) {
     let room = '';
-    const snapshot = await this._realtime.get(`chat/rooms/${host.uid}/${guest.uid}`);
+    const snapshot = await this.realtimeService.get(`chat/rooms/${host.uid}/${guest.uid}`);
     if (snapshot.exists()) {
       room = snapshot.val().room as string;
     } else {
-      room = this._realtime.createId() as string;
+      room = this.realtimeService.createId() as string;
 
-      await this._realtime.set(`chat/rooms/${host.uid}/${guest.uid}/`, {
+      await this.realtimeService.set(`chat/rooms/${host.uid}/${guest.uid}/`, {
         room,
         displayName: guest.displayName,
         photoURL: guest.photoURL,
         uid: guest.uid
 
       }).then(() => {
-        this._realtime.set(`chat/rooms/${guest.uid}/${host.uid}/`, {
+        this.realtimeService.set(`chat/rooms/${guest.uid}/${host.uid}/`, {
           room,
           displayName: host.displayName,
           photoURL: host.photoURL,

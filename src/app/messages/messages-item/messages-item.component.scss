@@ -126,7 +126,12 @@ button {
 
 
 .timeago {
-  color: #8d8d8d;
+  width: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  color: #ababab;
   font-size: 10px;
 }
 .timeago-right {
@@ -137,9 +142,24 @@ button {
 }
 .actions {
   //display: flex;
+  //align-items: center;
   //justify-content: space-between;
 }
 i {
   color: #5d5d5d;
   font-size: 12px;
+}
+.delete {
+  font-size: 13px!important;
+}
+
+
+.delete-item {
+  //background-color: #9a2929!important;
+  //color: white;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  //border-radius: 8px;
+  //padding: 5px;
+  margin-right: 5px;
 }

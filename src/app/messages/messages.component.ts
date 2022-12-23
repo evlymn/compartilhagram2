@@ -40,7 +40,10 @@ export class MessagesComponent implements OnInit {
   }
 
   async createMessage(message: any) {
+    const id = this._messagesService.realtimeService.createId();
     const messageData = {
+      id,
+      roomId: this.room,
       message: message.postText,
       uid: this.host.uid,
       hasImage: !!message.file,
@@ -48,7 +51,7 @@ export class MessagesComponent implements OnInit {
       displayName: this.host.displayName,
       dateTime: new Date().getTime()
     }
-    this._messagesService.createMessage(this.room, messageData).then(async dbref => {
+    this._messagesService.createMessage(this.room, messageData).then(async () => {
       if (message.file) {
         this._storageService.resizeImage(
           {maxSize: 2500, file: message.file}
@@ -57,14 +60,13 @@ export class MessagesComponent implements OnInit {
             type: message.file.type,
             lastModified: message.file.lastModified
           });
-          const path = `chat/messages/${this.room}/${dbref.key}/${message.file.name}`
+          const path = `chat/messages/${this.room}/${id}/${message.file.name}`
           this._storageService.uploadBytes(path, file, {
             customMetadata: {}
-          }).then( async () => {
-
+          }).then(async () => {
             const downloadURL = await this._storageService.getDownloadURL(path);
             console.log(downloadURL)
-            this._messagesService.updateMessage(this.room, dbref.key as string, {
+            this._messagesService.updateMessage(this.room, id as string, {
               imageURL: downloadURL,
             }).catch()
           });

@@ -32,7 +32,6 @@ export class MessagesFormBottomSheetComponent implements OnInit {
   }
 
   async fileChangeEvent(e: any) {
-    console.log(e.target.files[0])
     this.image.image64 = await this._storageService.fileToBase64(e.target.files[0]) as string
     this.image.file = e.target.files[0];
     this.file.nativeElement.value = '';
