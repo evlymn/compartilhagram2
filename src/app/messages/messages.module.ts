@@ -16,6 +16,9 @@ import {MessagesRoutingModule} from "./messages-routing.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AlertsModule} from "../alerts/alerts.module";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import {MatDialogModule} from "@angular/material/dialog";
     RouterLink,
     MessagesRoutingModule,
     MatBottomSheetModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    AlertsModule,
+    MatRippleModule
   ], providers: [
 
     MatBottomSheetModule,

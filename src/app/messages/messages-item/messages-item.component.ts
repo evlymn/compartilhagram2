@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ImageViewService} from "../../image-view/image-view.service";
 
 @Component({
   selector: 'app-messages-item',
@@ -8,11 +9,19 @@ import {Component, Input, OnInit} from '@angular/core';
 export class MessagesItemComponent implements OnInit {
   @Input() item: any;
   @Input() loggedUid = '';
+  userFavorited =false;
 
-  constructor() {
+  constructor(private _imageView: ImageViewService) {
   }
 
   ngOnInit(): void {
   }
 
+  openImage(imageURL: any) {
+    this._imageView.openImageViewDialog(imageURL);
+  }
+
+  setFavorite(post: any) {
+
+  }
 }

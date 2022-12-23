@@ -2,9 +2,38 @@
 <textarea cdkTextareaAutosize placeholder="?!?!"
           maxlength="300" [(ngModel)]="postText"></textarea>
 
-  <button (click)="createMessage()" mat-flat-button class="form-button form-button-post">
-    {{messageService.languageService.getText('postar')}}
-  </button>
-  <!---->
+
+  <div class="actions ">
+    <button mat-icon-button
+            class="icon-button-mobile"
+            (click)="file.click()">
+      <mat-icon [ngClass]="isMobile? '': 'smaller-icon' ">image</mat-icon>
+
+    </button>
+
+    <div class="images-upload-grid" *ngIf="image.image64">
+      <!--    <span *ngIf="images.length==0" class="upload-grid-placeholder"> Escolha algumas fotos :)</span>-->
+      <div
+        [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
+        class="image-grid-item"
+        [style]="'background-image:url(' + image.image64 + ')'">
+        <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="50" alt="">
+        <mat-icon *ngIf="!sendingPost" (click)="deleteImg()"
+                  [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
+                  class="image-grid-item-delete">disabled_by_default
+        </mat-icon>
+        <mat-spinner class="image-grid-spinner" *ngIf="image.progress" color="accent" mode="determinate"
+                     [value]="image.progress"></mat-spinner>
+      </div>
+    </div>
+    <button (click)="createMessage()" mat-flat-button class="form-button form-button-post">
+      {{messageService.languageService.getText('postar')}}
+    </button>
+  </div>
+
 
 </div>
+<input type="file" style="display: none;"
+       (change)="fileChangeEvent($event)"
+       accept="image/x-png,image/gif,image/jpeg"
+       #file/>

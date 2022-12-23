@@ -75,11 +75,11 @@ export class StorageService {
   }
 
 
-  blobToFile(blob: any, fileName: string, options?: any) {
+  blobToFile(blob: any, fileName: string, options?: FilePropertyBag) {
     return new File([blob], fileName, options);
   }
 
-  resizeImage(settings: IResizeImageOptions) {
+  resizeImage(settings: IResizeImageOptions) : Promise<Blob> {
     const file = settings.file;
     const maxSize = settings.maxSize;
     const reader = new FileReader();

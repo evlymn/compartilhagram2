@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 
 import {MessagesFormBottomSheetComponent} from "./messages-form-bottom-sheet/messages-form-bottom-sheet.component";
+import {StorageService} from "../shared/services/firebase/storage/storage.service";
 
 @Component({
   selector: 'app-messages',
@@ -20,7 +21,9 @@ export class MessagesComponent implements OnInit {
   rooms: any;
 
   constructor(private _messagesService: MessagesService,
-              private _route: ActivatedRoute, private _bottomSheet: MatBottomSheet) {
+              private _storageService: StorageService,
+              private _route: ActivatedRoute,
+              private _bottomSheet: MatBottomSheet) {
     this.guestId = this._route.snapshot.paramMap.get('userId') as string;
 
     this._messagesService.auth.authState.subscribe(async user => {
@@ -36,15 +39,38 @@ export class MessagesComponent implements OnInit {
     this.rooms = this._messagesService.getMessages(room)
   }
 
-  async createMessage(message: string) {
+  async createMessage(message: any) {
     const messageData = {
-      message,
+      message: message.postText,
       uid: this.host.uid,
+      hasImage: !!message.file,
       photoURL: this.host.photoURL,
       displayName: this.host.displayName,
       dateTime: new Date().getTime()
     }
-    this._messagesService.createMessage(this.room, messageData).then(() => {
+    this._messagesService.createMessage(this.room, messageData).then(async dbref => {
+      if (message.file) {
+        this._storageService.resizeImage(
+          {maxSize: 2500, file: message.file}
+        ).then(blob => {
+          const file = this._storageService.blobToFile(blob, message.file.name, {
+            type: message.file.type,
+            lastModified: message.file.lastModified
+          });
+          const path = `chat/messages/${this.room}/${dbref.key}/${message.file.name}`
+          this._storageService.uploadBytes(path, file, {
+            customMetadata: {}
+          }).then( async () => {
+
+            const downloadURL = await this._storageService.getDownloadURL(path);
+            console.log(downloadURL)
+            this._messagesService.updateMessage(this.room, dbref.key as string, {
+              imageURL: downloadURL,
+            }).catch()
+          });
+        });
+      }
+
       this.updateRoom();
       this.footer.nativeElement.scrollIntoView(true);
     })

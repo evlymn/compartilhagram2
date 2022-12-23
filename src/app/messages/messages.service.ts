@@ -29,6 +29,10 @@ export class MessagesService {
     return snapshot.val();
   }
 
+  async updateMessage(roomId: string, messageId: string, data: any) {
+    return this._realtime.update(`chat/messages/${roomId}/${messageId}`, data)
+  }
+
   getMessages(room: string) {
     return this._realtime.onValueChanges(`chat/messages/${room}`)
   }

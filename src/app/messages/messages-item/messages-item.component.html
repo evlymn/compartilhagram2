@@ -10,6 +10,16 @@
         <div class="comment-body"
              [ngClass]=" loggedUid == item?.uid ?' text-align-right body-margin-right background-color_alternate': 'body-margin-left background-color'  ">
           {{ item?.message}}
+          <div *ngIf="item?.hasImage">
+            <img class="message-image" *ngIf="item.imageURL" (click)="openImage(item.imageURL)" [src]="item.imageURL"
+                 alt="">
+            <i *ngIf="!item.imageURL" class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
+          </div>
+          <div class="actions"  [ngClass]="item.uid == loggedUid? 'timeago-right': 'timeago-left' ">
+            <span matRipple (click)="setFavorite(item.id)">
+              <i class='bx ' [ngClass]=" userFavorited ? 'bxs-heart' : 'bx-heart'  "></i>
+            </span>
+          </div>
         </div>
         <div class="user-avatar" *ngIf="loggedUid == item?.uid">
           <div class="comment-avatar">
@@ -19,4 +29,8 @@
       </div>
     </div>
   </div>
+  <div [ngClass]="item.uid == loggedUid? 'timeago-right': 'timeago-left' ">
+    <small class="timeago"> {{ item.dateTime | timeAgo }} </small>
+  </div>
+
 </div>

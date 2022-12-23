@@ -6,23 +6,23 @@ import {DataSnapshot, equalTo, limitToLast, orderByChild, QueryConstraint, start
 import {Observable} from "rxjs";
 import {AlertsService} from "../alerts/alerts.service";
 import {LanguageService} from "../shared/services/language/language.service";
-import {ImageViewComponent} from "../image-view/image-view.component";
-import {MatDialog} from "@angular/material/dialog";
+import {ImageViewService} from "../image-view/image-view.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimelineService {
-  isSearchUser = false;
-  searchUserText = '';
+
 
   constructor(private _realtime: RealtimeService,
               private _storage: StorageService,
               public auth: AuthenticationService,
               private _alertsService: AlertsService,
               public languageService: LanguageService,
-              private _dialog: MatDialog,
+              private _imageView: ImageViewService
+
+
   ) {
   }
 
@@ -302,18 +302,7 @@ export class TimelineService {
   }
 
   openImageViewDialog(data: any) {
-    const dialogRef = this._dialog.open(ImageViewComponent, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      panelClass: ['no-padding', 'bg-color'],
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
-    });
+  this._imageView.openImageViewDialog(data);
   }
 
   async setFavorite(post: any) {

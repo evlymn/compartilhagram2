@@ -1,12 +1,9 @@
 .post-comments {
   margin-top: 5px;
-
   padding: 4px;
   border-radius: 7px;
   display: flex;
-  flex-direction: row;
-
-
+  flex-direction: column;
 }
 
 
@@ -49,7 +46,7 @@
 }
 
 .comment-body {
-  padding: 10px 15px;
+  padding: 10px 10px 2px;
   font-size: 15px;
   color: #b9b9b9;
   border-radius: 10px;
@@ -120,4 +117,29 @@ mat-expansion-panel {
 
 button {
   color: #cccccc;
+}
+.message-image {
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+
+.timeago {
+  color: #8d8d8d;
+  font-size: 10px;
+}
+.timeago-right {
+  text-align: right;
+}
+.timeago-left {
+  text-align: left;
+}
+.actions {
+  //display: flex;
+  //justify-content: space-between;
+}
+i {
+  color: #5d5d5d;
+  font-size: 12px;
 }
