@@ -48,7 +48,7 @@ export class PostImagesGridComponent implements OnInit {
     this._timelineService.openImageViewDialog(url);
   }
 
-  private favoritePost() {
-    this._timelineService.setFavorite(this.post).catch();
-  }
+  // private favoritePost() {
+  //   this._timelineService.setFavorite(this.post).catch();
+  // }
 }

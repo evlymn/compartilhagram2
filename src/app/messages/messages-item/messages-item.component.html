@@ -17,7 +17,7 @@
           </div>
           <div class="actions" [ngClass]="item.uid == loggedUid? 'timeago-right': 'timeago-left' ">
             <span matRipple *ngIf="item.uid != loggedUid" (click)="setFavorite(item.id)">
-              <i class='bx ' [ngClass]=" userFavorited ? 'bxs-heart' : 'bx-heart'  "></i>
+              <i class='bx ' [ngClass]=" totalFavoritesByUser > 0 ? 'bxs-heart' : 'bx-heart'  "></i>
             </span>
 
             <a mat-button color="warn" *ngIf="isDelete" class="delete-item" (click)="delete(item.id)">
@@ -37,10 +37,4 @@
       </div>
     </div>
   </div>
-
-  <!--  <div [ngClass]="item.uid == loggedUid? 'timeago-right': 'timeago-left' ">-->
-  <!-- <span matRipple class="delete" *ngIf="item.uid == loggedUid"   (click)="setFavorite(item.id)">-->
-  <!--            <i class='bx bx-message-square-x' ></i>-->
-  <!--            </span>  </div>-->
-
-  <!--</div>-->
+</div>
