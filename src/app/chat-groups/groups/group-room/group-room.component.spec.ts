@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GroupRoomItemComponent} from './group-room-item.component';
+import {GroupRoomComponent} from './group-room.component';
 
-describe('GroupRoomItemComponent', () => {
-  let component: GroupRoomItemComponent;
-  let fixture: ComponentFixture<GroupRoomItemComponent>;
+describe('GroupRoomComponent', () => {
+  let component: GroupRoomComponent;
+  let fixture: ComponentFixture<GroupRoomComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GroupRoomItemComponent]
+      declarations: [GroupRoomComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(GroupRoomItemComponent);
+    fixture = TestBed.createComponent(GroupRoomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

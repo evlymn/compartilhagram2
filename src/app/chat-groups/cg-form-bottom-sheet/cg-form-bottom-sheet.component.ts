@@ -1,23 +1,24 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom-sheet";
-import {MessagesService} from "../messages.service";
 import {StorageService} from "../../shared/services/firebase/storage/storage.service";
+import {MessagesService} from "../../messages/messages.service";
 
 @Component({
-  selector: 'app-messages-form-bottom-sheet',
-  templateUrl: './messages-form-bottom-sheet.component.html',
-  styleUrls: ['./messages-form-bottom-sheet.component.scss']
+  selector: 'app-cg-form-bottom-sheet',
+  templateUrl: './cg-form-bottom-sheet.component.html',
+  styleUrls: ['./cg-form-bottom-sheet.component.scss']
 })
-export class MessagesFormBottomSheetComponent implements OnInit {
+export class CgFormBottomSheetComponent {
   @ViewChild('file') file!: ElementRef;
   postText = '';
   isMobile = true;
   image: any = {};
   sendingPost = false;
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<MessagesFormBottomSheetComponent>,
-              private _storageService: StorageService,
-              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, public messageService: MessagesService) {
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<CgFormBottomSheetComponent>,
+    private _storageService: StorageService,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, public messageService: MessagesService) {
   }
 
   ngOnInit(): void {

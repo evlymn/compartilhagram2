@@ -2,9 +2,10 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MessagesService} from "./messages.service";
 import {ActivatedRoute} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-
-import {MessagesFormBottomSheetComponent} from "./messages-form-bottom-sheet/messages-form-bottom-sheet.component";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
+import {
+  TextImageFormBottomSheetComponent
+} from "../shared/components/text-image-form-bottom-sheet/text-image-form-bottom-sheet.component";
 
 @Component({
   selector: 'app-messages',
@@ -20,10 +21,11 @@ export class MessagesComponent implements OnInit {
   host: any;
   rooms: any;
 
-  constructor(private _messagesService: MessagesService,
-              private _storageService: StorageService,
-              private _route: ActivatedRoute,
-              private _bottomSheet: MatBottomSheet) {
+  constructor(
+    private _messagesService: MessagesService,
+    private _storageService: StorageService,
+    private _route: ActivatedRoute,
+    private _bottomSheet: MatBottomSheet) {
     this.guestId = this._route.snapshot.paramMap.get('userId') as string;
 
     this._messagesService.auth.authState.subscribe(async user => {
@@ -65,8 +67,7 @@ export class MessagesComponent implements OnInit {
             customMetadata: {}
           }).then(async () => {
             const downloadURL = await this._storageService.getDownloadURL(path);
-            console.log(downloadURL)
-            this._messagesService.updateMessage(this.room, id as string, {
+             this._messagesService.updateMessage(this.room, id as string, {
               imageURL: downloadURL,
             }).catch()
           });
@@ -83,7 +84,7 @@ export class MessagesComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    const bottomSheetRef = this._bottomSheet.open(MessagesFormBottomSheetComponent, {
+    const bottomSheetRef = this._bottomSheet.open(TextImageFormBottomSheetComponent, {
       panelClass: 'bottom-sheet-class'
     });
     bottomSheetRef.afterDismissed().subscribe(result => {

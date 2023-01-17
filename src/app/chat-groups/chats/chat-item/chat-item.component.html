@@ -1,0 +1,40 @@
+<div class="post-comments">
+  <div class="comment-items">
+    <div class="comment-header" [ngClass]=" loggedUid == item?.uid ?'comment-header-user ': 'comment-header'  ">
+      <div class="comment-user-info">
+        <div class="user-avatar" *ngIf="loggedUid != item?.uid">
+          <div class="comment-avatar">
+            <img class="post-avatar-image" alt="image profile" [src]="item?.photoURL">
+          </div>
+        </div>
+        <div class="comment-body"
+             [ngClass]=" loggedUid == item?.uid ?' text-align-right body-margin-right background-color_alternate': 'body-margin-left background-color'  ">
+          {{ item?.message}}
+          <div *ngIf="item?.hasImage">
+            <img class="message-image" *ngIf="item.imageURL" (click)="openImage(item.imageURL)" [src]="item.imageURL"
+                 alt="">
+            <i *ngIf="!item.imageURL" class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
+          </div>
+          <div class="actions" [ngClass]="item.uid == loggedUid? 'timeago-right': 'timeago-left' ">
+            <span matRipple *ngIf="item.uid != loggedUid" (click)="setFavorite(item.id)">
+              <i class='bx ' [ngClass]=" totalFavoritesByUser > 0 ? 'bxs-heart' : 'bx-heart'  "></i>
+            </span>
+
+            <a mat-button color="warn" *ngIf="isDelete" class="delete-item" (click)="delete(item.id)">
+              {{messageService.languageService.getText('deletar')}}?
+              </a>
+            <span matRipple class="delete" *ngIf="item.uid == loggedUid" (click)="toggleDelete(item.id)">
+            <i class='bx bx-message-square-x'></i>
+            </span>
+          </div>
+        </div>
+        <div class="user-avatar" *ngIf="loggedUid == item?.uid">
+          <div class="comment-avatar">
+            <img class="post-avatar-image" alt="image profile" [src]="item?.photoURL">
+            <small class="timeago"> {{ item.dateTime | timeAgo }} </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

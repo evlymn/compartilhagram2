@@ -38,7 +38,7 @@ export class MessagesService {
   }
 
   async deleteMessage(roomId: string, messageId: string) {
-    console.log(`chat/messages/${roomId}/${messageId}`);
+
     return this.realtimeService.delete(`chat/messages/${roomId}/${messageId}`)
   }
 

@@ -19,6 +19,7 @@ import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AvatarComponent} from "../shared/components/avatar/avatar.component";
 
 
 @NgModule({
@@ -28,26 +29,27 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HomeMenuMobileComponent,
     HomeMenuDesktopComponent
   ],
-  imports: [
+    imports: [
 
-    CommonModule,
-    BrowserAnimationsModule,
-    HomeRoutingModule,
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatRippleModule,
-    MatMenuModule,
-    PostFormModule,
-    MatTabsModule,
-    FormsModule,
-    MatInputModule,
-    MatTooltipModule,
+        CommonModule,
+        BrowserAnimationsModule,
+        HomeRoutingModule,
+        MatSidenavModule,
+        MatListModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatRippleModule,
+        MatMenuModule,
+        PostFormModule,
+        MatTabsModule,
+        FormsModule,
+        MatInputModule,
+        MatTooltipModule,
+        AvatarComponent,
 
 
-  ]
+    ]
 })
 export class HomeModule {
 }

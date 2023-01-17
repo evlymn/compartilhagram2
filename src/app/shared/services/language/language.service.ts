@@ -5,7 +5,7 @@ import {RealtimeService} from "../firebase/database/realtime.service";
   providedIn: 'root'
 })
 export class LanguageService {
-  languageArr: any;
+  languageArr: any[] = [];
 
   constructor(private realtime: RealtimeService) {
     this.checkLanguageCache();
@@ -45,11 +45,19 @@ export class LanguageService {
   }
 
   getTextByLang(key: string, lng: string) {
-    return this.languageArr.filter((d: { key: string; }) => d.key == key)[0][lng]
+    const filtered = this.languageArr.filter((d: { key: string; }) => d.key == key)
+    if (filtered.length > 0)
+      return filtered[0][lng]
+    else
+      return key;
   }
 
   getText(key: string) {
     const lng = window.location.host.includes('exchangeagram.app') ? 'en' : 'pt';
-    return this.languageArr.filter((d: { key: string; }) => d.key == key)[0][lng]
+    const filtered = this.languageArr.filter((d: { key: string; }) => d.key == key)
+    if (filtered.length > 0)
+      return filtered[0][lng]
+    else
+      return key;
   }
 }

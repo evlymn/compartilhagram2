@@ -2,7 +2,8 @@
 
   <div class="user-info" [ngClass]="post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
     <div class="post-avatar" [routerLink]="['/home/profile', post?.uid]">
-      <img class="post-avatar-image" alt="image profile" [src]="post?.photoURL">
+      <app-avatar avatarClass="post-header-avatar-image"  (click)="showProfile(post?.uid)" alt="image profile" [src]="post?.photoURL"></app-avatar>
+
     </div>
     <div class="post-user-name" [ngClass]="isMobile? 'post-user-name-mobile': ''" [routerLink]="['/home/profile', post?.uid]">
      <span> {{post?.displayName}}</span>
@@ -54,12 +55,5 @@
       </div>
     </mat-menu>
 
-
-<!--    <mat-icon *ngIf="!isDetail"-->
-<!--              class="post-action-icon icon-detail"-->
-<!--              [routerLink]="['/home/post', post?.id, index]">-->
-<!--      arrow_forward-->
-<!--    </mat-icon>-->
-<!-- -->
   </div>
 </div>

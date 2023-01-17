@@ -1,6 +1,9 @@
 <div class="profile-component">
   <div class="post-avatar">
-    <img class="post-avatar-image" alt="image profile" [src]="profile?.photoURL">
+    <app-avatar [src]="profile?.photoURL" alt="image profile" title="image profile" avatarClass="post-avatar-image"></app-avatar>
+
+
+<!--    <img class="post-avatar-image" alt="image profile" [src]="profile?.photoURL">-->
     <h3>{{profile?.displayName}}</h3>
   </div>
   <h3>{{profile?.email}}</h3>

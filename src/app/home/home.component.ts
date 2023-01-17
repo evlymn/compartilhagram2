@@ -18,9 +18,12 @@ export class HomeComponent implements OnInit {
   windowHeight = this.homeService.windowService.sizes.height;
 
   constructor(
+
     private _notificationService: NotificationService,
     public homeService: HomeService
   ) {
+    // @ts-ignore
+    // navigator.setAppBadge(22);
     this.windowHeight = this.homeService.windowService.sizes.height;
     this.homeService.windowService.getSizes.subscribe(s => {
       this.isMobile = s.isMobile

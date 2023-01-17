@@ -1,0 +1,99 @@
+.actions-tab-group {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+mat-expansion-panel {
+  background-color: #88456b!important;
+}
+.actions-tab-group > button, .create-group-actions > button{
+  display: flex;
+  align-items: center;
+  color: whitesmoke;
+  background-color: #5e3248;
+}
+
+.groups-component {
+  margin: 40px 10px 10px;
+
+  height: 93%;
+  padding: 10px;
+}
+
+button {
+  color: whitesmoke;
+}
+
+.expansion-panel-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  flex-wrap: nowrap;
+}
+
+
+.expansion-panel-content > input {
+  width: 100%;
+  border-radius: 5px;
+  color: whitesmoke;
+  box-sizing: border-box;
+  border-width: 0;
+  outline: none;
+  background-color: #5e3248;
+  height: 40px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+
+.groups-action-panel {
+  display: flex;
+  justify-content: center;
+}
+
+h3 {
+  color: whitesmoke;
+}
+
+mat-expansion-panel {
+  background-color: #5e3248;
+}
+
+mat-slide-toggle {
+  color: whitesmoke!important;
+}
+
+.create-group-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-group-actions > button {
+  background-color: #915c77;
+  width: 50%;
+  margin-right: 5px;
+
+}
+
+.create-button {
+  margin-bottom: 10px;
+  //background-color: #481a34;
+  //background-color: #5e3248;
+}
+
+mat-divider {
+  margin-bottom: 20px;
+}
+
+mat-icon {
+  color: whitesmoke !important;
+  margin-right: 10px;
+  transform: scale(1.6);
+}
+
+.tab-icon {
+  transform: scale(.9);
+}

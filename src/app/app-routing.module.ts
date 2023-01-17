@@ -1,12 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
-
+//ChatGroupsModule
 const homeChildren: Routes = [
   {
     path: "",
     loadChildren: () => import('./timeline/timeline-routing.module').then(m => m.TimelineRoutingModule)
   },
+
   {
     path: "search",
     loadChildren: () => import('./timeline/timeline-routing.module').then(m => m.TimelineRoutingModule)
@@ -39,12 +40,20 @@ const homeChildren: Routes = [
     path: "profile/:userId",
     loadChildren: () => import('./profile/profile-routing.module').then(m => m.ProfileRoutingModule)
   },
+  // {
+  //   path: "chats/groups",
+  //   loadChildren: () => import('./chat-groups/chat-groups.module').then(m => m.ChatGroupsModule)
+  // }, {
+  //   path: "chats/groups/:groupId",
+  //   loadChildren: () => import('./groups/groups-routing.module').then(m => m.GroupsRoutingModule)
+  // },
+
   {
     path: "groups",
     loadChildren: () => import('./groups/groups-routing.module').then(m => m.GroupsRoutingModule)
   }, {
     path: "groups/:groupId",
-    loadChildren: () => import('./groups/groups-routing.module').then(m => m.GroupsRoutingModule)
+    loadChildren: () =>  import('./groups/groups-routing.module').then(m => m.GroupsRoutingModule)
   },
 ]
 

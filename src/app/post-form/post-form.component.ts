@@ -29,9 +29,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   sendingPost = false;
   albums: any;
   albumsFiltered!: Observable<string[]>;
-  // panelPost = true;
-  // panelSearch = false;
   searchText = '';
+  isProfile = false;
 
   constructor(
     public windowService: WindowService,
@@ -42,6 +41,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar,
     private _router: Router
   ) {
+
+    this.isProfile = window.location.pathname.includes('profile');
 
     this._notificationService.observable().subscribe(n => {
       if (n.key == 'showSearchPanel') {

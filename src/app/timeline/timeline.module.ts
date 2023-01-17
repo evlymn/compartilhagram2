@@ -36,6 +36,7 @@ import {PostFormModule} from "../post-form/post-form.module";
 import {MatRippleModule} from "@angular/material/core";
 import { PostLastCommentsComponent } from './timeline-post/post-last-comments/post-last-comments.component';
 import { LastCommentsItemComponent } from './timeline-post/post-last-comments/last-comments-item/last-comments-item.component';
+import {AvatarComponent} from "../shared/components/avatar/avatar.component";
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { LastCommentsItemComponent } from './timeline-post/post-last-comments/la
         ReactiveFormsModule,
         AlertsModule,
         PostFormModule,
-        MatRippleModule
+        MatRippleModule,
+        AvatarComponent
     ],
   exports:[ TimelineComponent]
 

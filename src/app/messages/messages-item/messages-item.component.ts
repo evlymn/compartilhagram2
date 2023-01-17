@@ -6,7 +6,7 @@ import {AuthenticationService} from "../../shared/services/firebase/authenticati
 import {equalTo, orderByChild} from "@angular/fire/database";
 
 @Component({
-  selector: 'app-messages-item',
+  selector: 'app-chat-item',
   templateUrl: './messages-item.component.html',
   styleUrls: ['./messages-item.component.scss']
 })

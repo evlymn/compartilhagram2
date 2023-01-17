@@ -4,7 +4,7 @@
 @import "styles/mat-form-fied";
 @import "styles/mat-sidenav";
 @import "styles/mat-button";
-
+@import "styles/avatar-component";
 
 :root {
   touch-action: pan-x pan-y;
@@ -166,3 +166,5 @@ mat-expansion-panel {
 }
 .mdc-form-field>label {
   color: whitesmoke!important;}
+
+

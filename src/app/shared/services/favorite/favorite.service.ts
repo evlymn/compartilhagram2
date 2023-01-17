@@ -38,9 +38,7 @@ export class FavoriteService {
     return total.size;
   }
 
-  getTotalFavoritesOnChanges(path: string) {
-    return this._realtimeService.onValueChanges(path);
+  getTotalFavoritesOnChanges(path: string,...queryConstraints: QueryConstraint[]) {
+    return this._realtimeService.onValueChanges(path,undefined, ...queryConstraints);
   }
-
-
 }

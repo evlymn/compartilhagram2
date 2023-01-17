@@ -5,7 +5,7 @@ import {GroupsService} from "../../groups.service";
 @Component({
   selector: 'app-room-form-bottom-sheet',
   templateUrl: './room-form-bottom-sheet.component.html',
-  styleUrls: ['./room-form-bottom-sheet.component.scss']
+  styleUrls: ['./room-form-bottom-sheet.component.scss'],
 })
 export class RoomFormBottomSheetComponent implements OnInit {
   postText = '';

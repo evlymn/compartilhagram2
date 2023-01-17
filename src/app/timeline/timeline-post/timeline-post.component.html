@@ -19,27 +19,6 @@
                  [index]="index"
                  [loggedUId]="loggedUId"></app-post-body>
 
-
-<!--  <div *ngIf="post?.repost" class="repost">-->
-<!--    <ng-container *ngIf="!post.repostDeleted">-->
-<!--      <app-timeline-post-->
-<!--        [isRepost]="true"-->
-<!--        [index]="index"-->
-<!--        [post]="post.repost">-->
-<!--      </app-timeline-post>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container *ngIf="post.repostDeleted">-->
-<!--      <div>-->
-<!--        <h2>-->
-<!--          {{timelineService.languageService.getText('postagemdeletada')}}</h2>-->
-<!--      </div>-->
-<!--    </ng-container>-->
-
-
-
-
-
   <app-post-footer *ngIf="!isRepost"
                    [totalComments]="totalComments"
                    [userCommented]="userCommented"

@@ -13,11 +13,13 @@ import {GroupsListComponent} from './groups-list/groups-list.component';
 import {RouterLink} from "@angular/router";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {GroupRoomComponent} from './group-room/group-room.component';
-import {GroupRoomItemComponent} from './group-room/group-room-item/group-room-item.component';
+import {RoomItemComponent} from './group-room/room-item/room-item.component';
 import {RoomFormBottomSheetComponent} from './group-room/room-form-bottom-sheet/room-form-bottom-sheet.component';
 import {GroupsRoutingModule} from "./groups-routing.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatRippleModule} from "@angular/material/core";
+import {AlertsModule} from "../alerts/alerts.module";
 
 
 @NgModule({
@@ -25,7 +27,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     GroupsComponent,
     GroupsListComponent,
     GroupRoomComponent,
-    GroupRoomItemComponent,
+    RoomItemComponent,
     RoomFormBottomSheetComponent
   ],
   imports: [
@@ -43,7 +45,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatIconModule,
     RouterLink,
     MatSnackBarModule,
-    GroupsRoutingModule
+    GroupsRoutingModule,
+    MatRippleModule,
+    AlertsModule
   ],
   providers: [
     MatSnackBarModule,

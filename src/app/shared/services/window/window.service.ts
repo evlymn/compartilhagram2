@@ -14,8 +14,6 @@ export class WindowService {
   constructor() {
     if (!this.resizeSubscription)
       this.observeResize();
-
-
   }
 
   get getSizes() {

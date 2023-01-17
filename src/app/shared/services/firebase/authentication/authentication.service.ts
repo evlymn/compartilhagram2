@@ -6,26 +6,30 @@ import {
 } from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {onIdTokenChanged} from '@firebase/auth';
-import { RealtimeService} from "../database/realtime.service";
+import {RealtimeService} from "../database/realtime.service";
 import {BehaviorSubject} from "rxjs";
+import {AppUpdateService} from "../../app/app-update.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private _route = '';
-  user!: User | null;
-  userCredentials!: UserCredential;
+
+  private _route = '/';
+  private userCredentials!: UserCredential;
   public logoutMessage = new BehaviorSubject<{ from: string }>({from: ''});
 
-  constructor(private auth: Auth, private router: Router,
-              private ngZone: NgZone,
-              private _realtime: RealtimeService,
 
+  constructor(
+    private appUpdateService: AppUpdateService,
+    private auth: Auth,
+    private router: Router,
+    private ngZone: NgZone,
+    private _realtime: RealtimeService,
   ) {
-
     this.setActiveRoute(this.router.url);
     this.onAuthStateChanged();
+    this.onIdTokenChanged();
   }
 
   getAdditionalUserInfo(userCredential: UserCredential) {
@@ -40,43 +44,37 @@ export class AuthenticationService {
     return authState(this.auth);
   }
 
-  public get userAsync() {
+  public getUser() {
     return user(this.auth);
   }
 
-  set uid(val: string) {
-    localStorage.setItem('uid', val);
+  set user(val: User | null) {
+    localStorage.setItem('AOkPPWQ9Z2m2W94aRDNOw2', JSON.stringify(val));
   }
 
-  get uid() {
-    if (localStorage.getItem('uid')) {
-      return localStorage.getItem('uid') as string;
+  get user(): User | null {
+    if (localStorage.getItem('AOkPPWQ9Z2m2W94aRDNOw2')) {
+      return JSON.parse(localStorage.getItem('AOkPPWQ9Z2m2W94aRDNOw2')!) as User;
     } else {
-      return '';
+      return null;
     }
   }
 
-  onIdTokenChanged() {
+  private onIdTokenChanged() {
     onIdTokenChanged(this.auth, async usr => {
       if (usr) {
-        const tokenResult = await usr?.getIdTokenResult();
-        //  console.log('IdToken', tokenResult?.authTime);
-      } else {
-        //  console.log('else')
-        //this.signOut();
+        this.user = usr
       }
-
     })
   }
 
   private onAuthStateChanged() {
     onAuthStateChanged(this.auth, usr => {
-      this.user = usr;
       if (usr) {
-        this.uid = usr.uid;
+        this.user = usr;
         this.onDeleteLogout(usr.uid!);
         this.ngZone.run(() => {
-          this._route = this._route == '/' ? '/home' : this._route;
+          this._route = this._route == ('/' || '') ? '/home' : this._route;
           this.router.navigate([this._route]).catch(reason => console.log(reason));
         });
       } else {
@@ -106,8 +104,8 @@ export class AuthenticationService {
     return this.userCredentials;
   }
 
-  updateProfile(data: any) {
-    return updateProfile(this.auth.currentUser as User, data)
+  updateProfile(data: { displayName?: string, photoURL?: string }) {
+    return updateProfile(this.auth.currentUser as User, data);
   }
 
   sendEmailVerification(actionCodeSettings?: ActionCodeSettings) {

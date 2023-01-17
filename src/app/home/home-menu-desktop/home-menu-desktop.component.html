@@ -61,12 +61,12 @@
           </mat-icon>
 
         </li>
+          <li >
+<!--            [routeURL]="'profile/' +  user?.uid"-->
+          <app-avatar [src]="user?.photoURL"
+                      (click)="avatarClick('/home/profile/' +  user?.uid)"
+                      [avatarClass]="'menu-avatar-image'"></app-avatar>
 
-        <li [routerLink]="['profile', user?.uid]">
-
-          <img class="menu-avatar-image" *ngIf="user?.photoURL"
-               [src]="user?.photoURL"
-               alt="image profile">
         </li>
 
       </ul>

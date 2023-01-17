@@ -18,15 +18,18 @@ export class TimelineComponent implements OnInit, OnDestroy {
   post: any;
   searchText: string | null = '';
   postItems: PostData[] = [];
-  newPostItems: any[] = [];
+  newPostItems : any[] = [];
+
   isFollowing = false;
   isSaved = false;
-  isProfile =false;
+  isProfile = false;
   authStateSubscription: Subscription;
   windowServiceSubscription: Subscription;
   messagesSearchSubscription!: Subscription;
   messagesSavedSubscription!: Subscription;
   messagesFollowingSubscription!: Subscription;
+
+  searching = false;
 
   constructor(public windowService: WindowService,
               private _route: ActivatedRoute,
@@ -37,7 +40,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
     this.isFollowing = this._router.url.includes('following');
     this.isSaved = this._router.url.includes('saved');
-    this.isProfile =  this._router.url.includes('profile');
+    this.isProfile = this._router.url.includes('profile');
     this.searchText = this._route.snapshot.paramMap.get('search');
 
 
@@ -65,31 +68,38 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   async getPosts(search?: string | null) {
+    this.searching = true;
     this.isSearchUser = !!search;
     if (!search && !this.isFollowing && !this.isSaved) {
       const snapshot = await this.timelineService.getMessages(limitToLast(100));
       snapshot.forEach(p => {
         this.postItems.push(p.val());
       })
+      this.searching = false;
     }
+
     if (search) {
       this.messagesSearchSubscription = this.timelineService.getMessagesSearch(search.trim()).subscribe((s: PostData[]) => {
         this.postItems = s.filter(d => d.displayNameSearch.includes(search.trim().toLowerCase()));
+        this.searching = false;
       })
     } else if (this.isFollowing) {
       this.messagesFollowingSubscription = this.timelineService.getFollowingMessages().subscribe(s => {
         this.postItems = s;
+        this.searching = false;
       })
     } else if (this.isSaved) {
       this.messagesSavedSubscription = this.timelineService.getMessagesSavedAsync().subscribe(s => {
         this.postItems = s;
+        this.searching = false;
       })
     } else if (this.isProfile) {
       const id = this._route.snapshot.paramMap.get('userId') as string;
       this.messagesSavedSubscription = this.timelineService.getMessagesByUser(id).subscribe(s => {
         this.postItems = s;
+        this.searching = false;
       })
-    }else {
+    } else {
       this.timelineService.getMessagesOnChildAdded(snapshot => {
         if (!this.postItems.some(p => p.id == snapshot.val().id)) {
           this.newPostItems.push(snapshot.val());
@@ -112,6 +122,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
         }
       })
     }
+
+    console.log(this.postItems.length)
   }
 
   ngOnInit(): void {

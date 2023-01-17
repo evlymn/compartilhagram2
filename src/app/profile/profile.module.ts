@@ -13,23 +13,25 @@ import {TimelineModule} from "../timeline/timeline.module";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {FormsModule} from "@angular/forms";
+import {AvatarComponent} from "../shared/components/avatar/avatar.component";
 
 @NgModule({
   declarations: [
     ProfileComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatButtonModule,
-    ProfileRoutingModule,
-    TimelineModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatButtonModule,
+        ProfileRoutingModule,
+        TimelineModule,
+        MatSlideToggleModule,
+        MatExpansionModule,
+        FormsModule,
+        AvatarComponent
+    ],
   providers: [
     MatSnackBarModule,
     MatBottomSheetModule,

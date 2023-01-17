@@ -5,8 +5,7 @@ import {MessagesRoomsComponent} from './messages-rooms/messages-rooms.component'
 import {MatListModule} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {MessagesFormBottomSheetComponent} from './messages-form-bottom-sheet/messages-form-bottom-sheet.component';
-import {TextFieldModule} from "@angular/cdk/text-field";
+ import {TextFieldModule} from "@angular/cdk/text-field";
 import {FormsModule} from "@angular/forms";
 import {MessagesItemComponent} from './messages-item/messages-item.component';
 import {RouterLink} from "@angular/router";
@@ -24,8 +23,7 @@ import {MatRippleModule} from "@angular/material/core";
   declarations: [
     MessagesComponent,
     MessagesRoomsComponent,
-    MessagesFormBottomSheetComponent,
-    MessagesItemComponent
+     MessagesItemComponent
   ],
   imports: [
     CommonModule,

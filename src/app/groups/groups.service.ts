@@ -10,40 +10,50 @@ import {LanguageService} from "../shared/services/language/language.service";
 })
 export class GroupsService {
 
-  constructor(private _realtime: RealtimeService,
+  constructor(public realtimeService: RealtimeService,
               public languageService: LanguageService,
               public auth: AuthenticationService) {
   }
 
   createGroup(group: any) {
-    const groupId = this._realtime.createId();
+    const groupId = this.realtimeService.createId();
     group.id = groupId;
     group.uid = this.auth.user?.uid;
     group.dateTime = new Date().getTime();
     group.displayName = this.auth.user?.displayName;
     group.photoURL = this.auth.user?.photoURL;
-    return this._realtime.set(`groups/list/${groupId}`, group);
+    return this.realtimeService.set(`groups/list/${groupId}`, group);
   }
 
   getGroupMessages(groupId: string) {
-    return this._realtime.onValueChanges('groups/messages/' + groupId, 'id');
+    return this.realtimeService.onValueChanges('groups/messages/' + groupId, 'id');
   }
 
   createGroupMessage(groupId: string, data: any) {
     data.dateTime = new Date().getTime();
-    return this._realtime.add(`groups/messages/${groupId}`, data);
+    return this.realtimeService.set(`groups/messages/${groupId}/${data.id}`, data);
   }
 
   getGroupInfo(groupId: string) {
-    return this._realtime.get('groups/list/' + groupId);
+    return this.realtimeService.get('groups/list/' + groupId);
+  }
+
+  async updateMessage(groupId: string, messageId: string, data: any) {
+    return this.realtimeService.update(`groups/messages/${groupId}/${messageId}`, data)
   }
 
 
   getGroupsByUser(userId: string) {
-    return this._realtime.onValueChanges('groups/list/', 'id', orderByChild('uid'), equalTo(userId));
+    return this.realtimeService.onValueChanges('groups/list/', 'id', orderByChild('uid'), equalTo(userId));
   }
 
   getPublicGroups() {
-    return this._realtime.onValueChanges('groups/list/', 'id', orderByChild('public'), equalTo(true));
+    return this.realtimeService.onValueChanges('groups/list/', 'id', orderByChild('public'), equalTo(true));
+  }
+
+  deleteMessage(groupId: string, id: string) {
+
+    return this.realtimeService.delete(`groups/messages/${groupId}/${id}`)
+
   }
 }

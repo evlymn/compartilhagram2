@@ -31,15 +31,10 @@ export class AppUpdateService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         this.doAppUpdate();
       }
-      // console.log('The dialog was closed');
     });
-
-    // Use MatDialog or ionicframework's AlertController or similar
-    // presentAlert(header, message, action, caller);
   }
 
   doAppUpdate() {

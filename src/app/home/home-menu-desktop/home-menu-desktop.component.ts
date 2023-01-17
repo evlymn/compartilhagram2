@@ -48,10 +48,15 @@ export class HomeMenuDesktopComponent {
 
 
   routeToHome() {
-
     this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this._router.navigate(['/home']).catch();
     });
 
+  }
+
+  avatarClick(url:string) {
+    this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this._router.navigate([url]).catch();
+    });
   }
 }

@@ -64,4 +64,12 @@ export class PostHeaderComponent implements OnInit {
   showFeed() {
     this._notificationService.next('showFeed', null).catch();
   }
+
+  showProfile(uid: string) {
+    document.location = '/home/profile/' + uid;
+    // this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+    //   this._router.navigate(['/home/profile/' + uid]).catch();
+    // });
+
+  }
 }

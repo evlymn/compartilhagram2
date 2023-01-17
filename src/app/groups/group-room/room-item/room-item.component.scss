@@ -1,0 +1,290 @@
+//.post-comments {
+//  margin-top: 5px;
+//
+//  padding: 4px;
+//  border-radius: 7px;
+//  display: flex;
+//  flex-direction: row;
+//
+//
+//}
+//
+//
+//.comments-section {
+//  padding-bottom: 100px;
+//  display: flex;
+//  flex-direction: column-reverse;
+//}
+//
+//.user-avatar {
+//  width: 35px;
+//}
+//
+//.post-avatar-image {
+//  height: 35px;
+//  border-radius: 17px;
+//}
+//
+//.comment-header {
+//  width: 100%;
+//  display: flex;
+//  justify-content: space-between;
+//  color: whitesmoke;
+//  align-content: center;
+//}
+//
+//.comment-header-user {
+//  width: 100%;
+//  display: flex;
+//  justify-content: flex-end;
+//  color: whitesmoke;
+//}
+//
+//.user-name {
+//
+//  color: #d5d5d5;
+//  display: flex;
+//  align-items: center;
+//  margin: 10px;
+//}
+//
+//.comment-body {
+//  padding: 10px 15px;
+//  font-size: 15px;
+//  color: #b9b9b9;
+//  border-radius: 10px;
+//
+//}
+//
+//.background-color_alternate {
+//  background-color: #908bc2;
+//  color: black;
+//}
+//
+//.background-color {
+//  background-color: #f6b268;
+//  color: #5e3248;
+//}
+//
+//.body-margin-right {
+//  margin-right: 10px;
+//}
+//
+//.body-margin-left {
+//  margin-left: 10px;
+//}
+//
+//.text-align-right {
+//  text-align: right;
+//  font-size: 15px;
+//}
+//
+//.comment-favorite {
+//  display: flex;
+//  justify-content: center;
+//  width: 30px;
+//  flex-direction: column;
+//
+//}
+//
+//.comment-user-info {
+//  display: flex;
+//}
+//
+//.comment-action-icon {
+//  transform: scale(0.8);
+//}
+//
+//.comment-items {
+//  width: 100%;
+//}
+//
+//.icon-delete {
+//  color: #a41a1a;
+//}
+//
+//.favorite-item {
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//}
+//
+//.favorite-item > small {
+//  height: 20px;
+//  min-height: 20px;
+//}
+//
+//mat-expansion-panel {
+//  background-color: #723753;
+//}
+//
+//button {
+//  color: #cccccc;
+//}
+
+
+.post-comments {
+  margin-top: 5px;
+  padding: 4px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.comments-section {
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.user-avatar {
+  width: 35px;
+}
+
+.post-avatar-image {
+  height: 35px;
+  border-radius: 17px;
+}
+
+.comment-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: whitesmoke;
+  align-content: center;
+}
+
+.comment-header-user {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  color: whitesmoke;
+}
+
+.user-name {
+
+  color: #d5d5d5;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.comment-body {
+  padding: 10px 10px 2px;
+  font-size: 15px;
+  color: #b9b9b9;
+  border-radius: 10px;
+
+}
+
+.background-color_alternate {
+  background-color: #908bc2;
+  color: black;
+}
+
+.background-color {
+  background-color: #f6b268;
+  color: #5e3248;
+}
+
+.body-margin-right {
+  margin-right: 10px;
+}
+
+.body-margin-left {
+  margin-left: 10px;
+}
+
+.text-align-right {
+  text-align: right;
+  font-size: 15px;
+}
+
+.comment-favorite {
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  flex-direction: column;
+
+}
+
+.comment-user-info {
+  display: flex;
+}
+
+.comment-action-icon {
+  transform: scale(0.8);
+}
+
+.comment-items {
+  width: 100%;
+}
+
+.icon-delete {
+  color: #a41a1a;
+}
+
+.favorite-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favorite-item > small {
+  height: 20px;
+  min-height: 20px;
+}
+
+mat-expansion-panel {
+  background-color: #723753;
+}
+
+button {
+  color: #cccccc;
+}
+.message-image {
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+
+.timeago {
+  width: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  color: #ababab;
+  font-size: 10px;
+}
+.timeago-right {
+  text-align: right;
+}
+.timeago-left {
+  text-align: left;
+}
+.actions {
+  //display: flex;
+  //align-items: center;
+  //justify-content: space-between;
+}
+i {
+  color: #5d5d5d;
+  font-size: 12px;
+}
+.delete {
+  font-size: 13px!important;
+}
+
+
+.delete-item {
+  //background-color: #9a2929!important;
+  //color: white;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  //border-radius: 8px;
+  //padding: 5px;
+  margin-right: 5px;
+}
