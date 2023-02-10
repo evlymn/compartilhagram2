@@ -95,7 +95,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
               this.images[i].progress = s.progress;
               if (s.progress == 100) {
-                console.log('fim do upload ' + i.toString());
+                // console.log('fim do upload ' + i.toString());
                 sub?.unsubscribe();
                 total += s.progress;
                 if (total == this.images.length * 100) {

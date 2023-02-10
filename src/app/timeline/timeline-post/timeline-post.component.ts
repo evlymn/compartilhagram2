@@ -12,6 +12,7 @@ import {TimelineService} from "../timeline.service";
 })
 export class TimelinePostComponent implements OnInit, AfterViewInit {
   @Input() post: any;
+  @Input() isComment: boolean = false;
   @Input() index!: any;
   @Input() isDetail = false;
   @Input() isRepost = false;
@@ -32,6 +33,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
     private _dialog: MatDialog,
     private _router: Router
   ) {
+
     this.postId = this._route.snapshot.paramMap.get('id') as string;
     this.index = this._route.snapshot.paramMap.get('index');
     this.loggedUId = this.timelineService.auth.user?.uid as string;
@@ -44,7 +46,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
 
   async getPost() {
     if (!this.isRepost) {
-      if (this.postId) {
+      if (this.postId && !this.post?.isComment ) {
         this.post = await this.timelineService.getPost(this.postId);
         this.postText = this.post.postText;
       }
@@ -63,11 +65,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    // const urlFragment = this._route.snapshot.fragment;
-    // if (urlFragment?.includes(this.index.toString())) {
-    //   this._router.navigate(['/principal'], {fragment: urlFragment}).then(() => {
-    //   })
-    // }
+
   }
 
   commentChanged(event: any) {

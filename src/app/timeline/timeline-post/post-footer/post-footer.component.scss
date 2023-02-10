@@ -75,23 +75,23 @@ textarea {
 }
 
 
-
-.button-action >i {
+.button-action > i {
   color: #8f5d78;
   font-size: 19px;
 }
-.button-action> small{
-  color:  #8f5d78;
+
+.button-action > small {
+  color: #8f5d78;
 }
 
 .detail {
-  color:#f6b268!important;
-  font-size: 26px!important;
+  color: #f6b268 !important;
+  font-size: 26px !important;
 
 }
 
-.mat-mdc-icon-button  {
-  height: 30px!important;
+.mat-mdc-icon-button {
+  height: 30px !important;
 }
 
 .button-action-disabled {
@@ -103,10 +103,6 @@ mat-icon {
   color: #8f5d78;
   transform: scale(.75);
 }
-
-
-
-
 
 
 .mat-icon-disabled {
@@ -130,18 +126,36 @@ mat-expansion-panel {
   color: #cccccc;
 }
 
-.expansion-comment {
-  margin-bottom: 3px;
-  padding-top: 3.5px;
-}
 
 .form-button {
   background-color: #622947;
   color: whitesmoke;
-  margin-right: 5px;
+  //margin-bottom: 3px;
   width: 100%;
+}
+
+.form-button-image {
+  width: 19%;
+  margin-right: 4px;
+
 }
 
 small {
   font-size: 12px;
 }
+
+.comment-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+i {
+
+  font-size: 23px;
+}
+
+
+
+

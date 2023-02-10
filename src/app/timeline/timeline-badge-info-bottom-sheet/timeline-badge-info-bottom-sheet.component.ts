@@ -8,8 +8,9 @@ import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom
 })
 export class TimelineBadgeInfoBottomSheetComponent implements OnInit {
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<TimelineBadgeInfoBottomSheetComponent>,
-              @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<TimelineBadgeInfoBottomSheetComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
   }
 
   openLink(event: MouseEvent): void {

@@ -1,7 +1,13 @@
 <div class="post-body" *ngIf="post" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
-  <div class="post-text-edit"  *ngIf="post?.postText">
+  <div class="post-text-edit" *ngIf="post?.text">
     <div class="post-text" [routerLink]="['/home/post', post?.id, index]">
-      {{post?.postText}}
+      {{post?.text}}
+      <div class="loading-image">
+        <i *ngIf=" post?.hasImages &&  !post?.images"
+           class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
+
+      </div>
+
     </div>
   </div>
 
@@ -56,6 +62,7 @@
 
 
 <div [style]="isDetail? 'margin-top:5px': ''"></div>
+
 <app-post-images-grid *ngIf="!isDetail" [post]="post" [postId]="post?.id" [postIndex]="index"
 
                       [images]="post?.images"></app-post-images-grid>
@@ -65,10 +72,6 @@
        [src]="img?.imageURL"
        class="d-block w-100" alt="...">
 </div>
-
-
-
-
 
 
 <!--<ng-container  *ngIf="post?.albumName || !isRepost">-->

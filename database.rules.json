@@ -2,7 +2,7 @@
   "rules": {
     "translate": {
       ".read": "true",
-      ".write": "auth!=null",
+      ".write": "auth!=null"
     },
     ".read": "auth!=null",
     ".write": "auth!=null",
@@ -18,20 +18,30 @@
     },
     "timeline": {
       "messages": {
-        ".indexOn": "displayNameSearch",
+        ".indexOn": [
+          "displayNameSearch",
+          "repostId"
+        ],
         "$key": {
-
           ".validate": "newData.child('uid').val() == auth.uid"
-        },
+        }
+      },
+      "albums": {
+        "photos": {
+          "by-user": {
+            "$key": {
+              ".indexOn": "albumName"
+            }
+          }
+        }
       },
       "follow": {
         "messages": {
           "$uid": {
-            ".indexOn": "uid",
+            ".indexOn": "uid"
           }
         }
       }
-
     },
     "groups": {
       "list": {

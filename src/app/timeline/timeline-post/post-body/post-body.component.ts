@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineService} from "../../timeline.service";
 import {NotificationService} from "../../../shared/services/notification/notification.service";
-import {ImageViewComponent} from "../../../image-view/image-view.component";
 
 @Component({
   selector: 'app-post-body',
@@ -12,6 +10,7 @@ import {ImageViewComponent} from "../../../image-view/image-view.component";
 })
 export class PostBodyComponent implements OnInit {
   @Input() post: any;
+  @Input() isComment = false;
   @Input() isDetail = false;
   @Input() index = 0;
   @Input() loggedUId = '';
@@ -21,10 +20,11 @@ export class PostBodyComponent implements OnInit {
   postPanelOpened = false;
   deletePanelOpened = false
 
-  constructor(public timelineService: TimelineService,
-              private _router: Router,
-              // private _dialog: MatDialog,
-              private _notificationService: NotificationService) {
+  constructor(
+    public timelineService: TimelineService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _notificationService: NotificationService) {
     this.isExchangeagram = window.location.host == 'exchangeagram.app';
     this._notificationService.observable().subscribe(s => {
       if (s.key == 'togglePostPanel' && s.value == this.post.id) {
@@ -37,7 +37,7 @@ export class PostBodyComponent implements OnInit {
       }
     })
     this.timelineService.auth.authState.subscribe(() => {
-      this.postText = this.post?.postText;
+      this.postText = this.post?.text;
     })
   }
 
@@ -74,9 +74,12 @@ export class PostBodyComponent implements OnInit {
   }
 
   async editPost() {
+
     this.postPanelOpened = !this.postPanelOpened;
     const newPostText = this.postText;
-    this.timelineService.editPost(this.post.id, {postText: newPostText}).then(() => {
+    const parentId = this._route.snapshot.paramMap.get('id') as string;
+    console.log(this.post.id, parentId)
+    this.timelineService.editPost(this.post.id, {text: newPostText}, parentId, this.isComment).then(() => {
       this._notificationService.next('postEdited', {
         text: newPostText.trim(),
         id: this.post.id

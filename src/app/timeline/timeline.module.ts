@@ -37,6 +37,10 @@ import {MatRippleModule} from "@angular/material/core";
 import { PostLastCommentsComponent } from './timeline-post/post-last-comments/post-last-comments.component';
 import { LastCommentsItemComponent } from './timeline-post/post-last-comments/last-comments-item/last-comments-item.component';
 import {AvatarComponent} from "../shared/components/avatar/avatar.component";
+import {
+    TextImageFormBottomSheetModule
+} from "../shared/components/text-image-form-bottom-sheet/text-image-form-bottom-sheet.module";
+import {ImageUploadItemModule} from "../shared/components/image-upload-item/image-upload-item.module";
 
 
 @NgModule({
@@ -79,7 +83,9 @@ import {AvatarComponent} from "../shared/components/avatar/avatar.component";
         AlertsModule,
         PostFormModule,
         MatRippleModule,
-        AvatarComponent
+        AvatarComponent,
+        TextImageFormBottomSheetModule,
+        ImageUploadItemModule
     ],
   exports:[ TimelineComponent]
 

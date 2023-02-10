@@ -48,7 +48,6 @@ export class RoomItemComponent implements OnInit {
   }
 
   delete(item: any) {
-    console.log(item)
     this.groupsService.deleteMessage(item.groupId, item.id).catch();
   }
 

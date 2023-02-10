@@ -1,6 +1,19 @@
 <a id="post"></a>
 <div class="post-detail">
+<!--  <app-timeline></app-timeline>-->
 <app-timeline-post [isDetail]="true"></app-timeline-post>
+
+  <div class="comments">
+
+
+<!--    <app-timeline-post [isComment]="true" [isDetail]="true"></app-timeline-post>-->
+
+    <app-post-comments
+      (commentChanged)="commentChanged($event)"
+      [isDetail]="true"
+    ></app-post-comments>
+
+  </div>
+
 </div>
-<!--<button #toTopButton [routerLink]="['/details']" fragment="post"></button>-->
-<app-timeline-floating-menu></app-timeline-floating-menu>
+ <app-timeline-floating-menu></app-timeline-floating-menu>

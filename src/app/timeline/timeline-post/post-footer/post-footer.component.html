@@ -2,21 +2,25 @@
 
 
   <div class="post-actions" *ngIf="post">
-<!--    [routerLink]="['/home']"-->
-    <div class="user-interaction" (click)="goBack()  "  *ngIf="isDetail" matRipple>
-      <div class="button-action">
-        <i class='bx bxs-chevron-left detail'></i>
-      </div>
-    </div>
+    <!--    [routerLink]="['/home']"-->
 
-
-    <div class="user-interaction" matRipple>
-      <div class="button-action" (click)="toggleCommentPanel()">
-        <i class='bx bx-message-alt'
-           [ngClass]=" commentPanelOpened || userCommented? 'bxs-message-alt' : ' bx-message-alt'  "></i>
-        <small class="icon-count">{{totalComments > 0 ? totalComments : ''}}</small>
+    <ng-container *ngIf="!isComment">
+      <div class="user-interaction" (click)="goBack()  " *ngIf="isDetail" matRipple>
+        <div class="button-action">
+          <i class='bx bxs-chevron-left detail'></i>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isComment">
+      <div class="user-interaction" matRipple>
+        <div class="button-action" (click)="toggleCommentPanel()">
+          <i class='bx bx-message-alt'
+             [ngClass]=" commentPanelOpened || userCommented? 'bxs-message-alt' : ' bx-message-alt'  "></i>
+          <small class="icon-count">{{totalComments > 0 ? totalComments : ''}}</small>
+        </div>
+      </div>
+    </ng-container>
 
     <div class="user-interaction" matRipple>
       <div class="button-action" (click)="setFavorite(post)">
@@ -25,13 +29,13 @@
       </div>
     </div>
 
+
     <div class="user-interaction" matRipple *ngIf=" !post?.repost">
       <div class="button-action " (click)=" repostPanelOpened = !repostPanelOpened">
         <i class='bx bx-repost'></i>
         <small *ngIf="totalRepost>0" class="icon-count">{{totalRepost}}</small>
       </div>
     </div>
-
 
     <div class="user-interaction" matRipple>
       <div class="button-action " (click)="createSaved(post)">
@@ -44,24 +48,46 @@
         <i class='bx bx-envelope'></i>
       </div>
     </div>
-    <div class="user-interaction" matRipple *ngIf="!isDetail">
-      <div class="button-action " [routerLink]="['/home/post', post?.id, index]">
-        <i class='bx bxs-chevron-right detail'></i>
+
+    <ng-container *ngIf="!isComment">
+      <div class="user-interaction" matRipple *ngIf="!isDetail">
+        <div class="button-action " [routerLink]="['/home/post', post?.id, index]">
+          <i class='bx bxs-chevron-right detail'></i>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
   </div>
 
+
   <div class="expansion-comment">
-    <mat-expansion-panel hideToggle [expanded]="commentPanelOpened" (afterExpand)="onExpansionCommentOpen()"
-                         (afterCollapse)="onExpansionClose()">
-       <textarea cdkTextareaAutosize [(ngModel)]="commentText" placeholder="Deixe seu recado!"
-                 maxlength="300"></textarea>
-      <button (click)="createComment()" mat-flat-button class="form-button form-button-post">
-        comentar
-      </button>
-    </mat-expansion-panel>
 
+    <ng-container *ngIf="!isComment">
+      <mat-expansion-panel hideToggle [expanded]="commentPanelOpened" (afterExpand)="onExpansionCommentOpen()"
+                           (afterCollapse)="onExpansionClose()">
 
+      <textarea cdkTextareaAutosize [(ngModel)]="commentText"   placeholder="Deixe seu recado!"
+                maxlength="300"></textarea>
+
+        <div class="comment-actions">
+
+          <button (click)="file.click()" mat-flat-button class="form-button form-button-image">
+            <i class='bx bx-image-alt'></i>
+          </button>
+          <button (click)="createComment()" mat-flat-button class="form-button form-button-post">
+            comentar
+          </button>
+        </div>
+
+        <app-image-upload-item [isMobile]="isMobile"
+                               (onRemove)="onRemoveImage($event)"
+                               [image]="image.image64"
+                               [id]="2222"
+                               [sending]="sendingPost"></app-image-upload-item>
+
+      </mat-expansion-panel>
+
+    </ng-container>
     <mat-expansion-panel hideToggle [expanded]="repostPanelOpened" (afterExpand)="onExpansionRepostOpen()"
                          (afterCollapse)="onExpansionRepostClose()">
        <textarea cdkTextareaAutosize [(ngModel)]="repostText" placeholder="Comentar o reposte?"
@@ -70,5 +96,14 @@
         comentar
       </button>
     </mat-expansion-panel>
+
   </div>
+
+
 </div>
+
+
+<input type="file" style="display: none;"
+       (change)="fileChangeEvent($event)"
+       accept="image/x-png,image/gif,image/jpeg"
+       #file/>

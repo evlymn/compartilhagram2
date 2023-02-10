@@ -8,6 +8,7 @@ import {AlertsService} from "../alerts/alerts.service";
 import {LanguageService} from "../shared/services/language/language.service";
 import {ImageViewService} from "../image-view/image-view.service";
 import {FavoriteService} from "../shared/services/favorite/favorite.service";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Injectable({
@@ -22,7 +23,8 @@ export class TimelineService {
               private _alertsService: AlertsService,
               public languageService: LanguageService,
               private _imageView: ImageViewService,
-              private _favoriteService: FavoriteService
+              private _favoriteService: FavoriteService,
+              private _route: ActivatedRoute,
   ) {
   }
 
@@ -32,7 +34,7 @@ export class TimelineService {
   }
 
   updateReposts(post: any) {
-    const postId = post.id, repostId = post.repostId, postText = post.postText
+    const postId = post.id, repostId = post.repostId, postText = post.text
     this._realtime.get('timeline/repost-by-post/' + postId).then(snapshot => {
       snapshot.forEach(p => {
         this._realtime.update('timeline/messages/' + p.val().id + '/repost/', {
@@ -176,9 +178,13 @@ export class TimelineService {
     return this._realtime.onValueChanges(`timeline/repost-by-post/${postId}/`);
   }
 
-  async editPost(postId: string, data: any) {
+  async editPost(postId: string, data: any, parentId: string, isComment: boolean) {
     data.bad_word = false;
-    return this._realtime.update('timeline/messages/' + postId, data);
+    let path = 'timeline/messages/' + postId;
+    if (isComment) {
+      path = `timeline/comments/${parentId}/${postId}`
+    }
+    return this._realtime.update(path, data);
   }
 
   getLast3Comments(postId: string) {
@@ -186,8 +192,8 @@ export class TimelineService {
       const comments: any[] = [];
       snapshot.forEach(comment => {
         comments.push({
-            text: comment.val().commentText,
-            time: comment.val().time,
+            text: comment.val().text,
+            time: comment.val().dateTime,
             displayName: comment.val().displayName,
             photoURL: comment.val().photoURL,
           }
@@ -199,22 +205,32 @@ export class TimelineService {
     })
   }
 
-  async createComment(postId: string, commentText: string) {
+  async createComment(postId: string, commentText: string, hasImages: boolean = false) {
+    const refId = this._route.snapshot.paramMap.get('id') as string;
     const commentId = this._realtime.createId();
     const path = `timeline/comments/${postId}/${commentId}`;
     return this._realtime.set(path, {
-      commentText,
-      time: new Date().valueOf(),
+      text: commentText,
+      refId,
+      hasImages,
+      dateTime: new Date().valueOf(),
       displayName: this.auth.user?.displayName,
       id: commentId,
       uid: this.auth.user?.uid,
       photoURL: this.auth.user?.photoURL,
       bad_word: false,
+      isComment: true,
       postId
     }).then(() => {
-      this.getLast3Comments(postId)
+      if (refId == postId)
+        this.getLast3Comments(postId)
       return commentId
     })
+  }
+
+  async updateComment(postId: string, commentId: string, data: any) {
+    const path = `timeline/comments/${postId}/${commentId}`;
+    return this._realtime.update(path, data);
   }
 
   repostToFollowers(postId: string) {
@@ -333,7 +349,7 @@ export class TimelineService {
       displayName,
       displayNameSearch: displayName?.toLowerCase(),
       photoURL: this.auth.user?.photoURL,
-      postText: repostText,
+      text: repostText,
       dateTime: new Date().getTime(),
       repost: repost,
       repostId: repost.id,

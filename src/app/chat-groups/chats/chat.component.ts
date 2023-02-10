@@ -66,7 +66,6 @@ export class ChatComponent implements OnInit {
             customMetadata: {}
           }).then(async () => {
             const downloadURL = await this._storageService.getDownloadURL(path);
-            console.log(downloadURL)
             this._messagesService.updateMessage(this.room, id as string, {
               imageURL: downloadURL,
             }).catch()

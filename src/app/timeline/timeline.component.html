@@ -24,7 +24,7 @@
     {{ timelineService.languageService.getText('seguindoninguem') }}
   </h3>
 </div>
-<!--<div>postItems.length : {{postItems.length}}</div>-->
+
 <div #posts class="posts"
      [ngClass]="isSearchUser ? 'post-colum' : 'post-colum-reverse'"
      *ngIf="postItems.length > 0">

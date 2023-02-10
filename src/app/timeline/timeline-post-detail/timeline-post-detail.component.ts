@@ -36,4 +36,8 @@ export class TimelinePostDetailComponent implements OnInit, AfterViewInit {
       })
     })
   }
+
+  commentChanged($event: any) {
+
+  }
 }

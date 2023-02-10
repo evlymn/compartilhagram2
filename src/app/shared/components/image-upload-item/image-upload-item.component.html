@@ -1,0 +1,8 @@
+<div class="images-upload-grid"  *ngIf="image">
+  <div (mouseover)="showRemoveIcon =true" (mouseleave)="showRemoveIcon =false"
+       [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
+       class="image-grid-item"
+       [style]="'background-image:url(' + image + ')'">
+    <img *ngIf="showRemoveIcon" (click)="deleteImg()" class="remove" src="./assets/images/remove-icon.svg" alt="">
+  </div>
+</div>

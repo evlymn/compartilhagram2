@@ -1,10 +1,13 @@
+<div *ngIf="isDetail" style="margin-top: 50px"></div>
 
-<div  *ngIf="isDetail" style="margin-top: 50px"></div>
 
-
-<div class="timeline-post  " [style]="isDetail? 'margin-bottom: 220px' : '' "
+<div class="timeline-post"
+     [style.margin]="isComment? '10px 0 0': '' "
+     [style]="isDetail? 'margin-bottom: 220px' : '' "
      *ngIf="post"
-     [ngClass]="isRepost && !post?.deleted ? 'timeline-post-background-repost' : post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
+     [ngClass]="isRepost && !post?.deleted ? 'timeline-post-background-repost' :
+      post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post':
+      isComment? 'timeline-post-background-comment' : 'timeline-post-background' ">
 
   <small class="post-deleted" *ngIf="post?.deleted">
     {{timelineService.languageService.getText('postagemdeletada')}}
@@ -14,28 +17,36 @@
                    [isRepost]="isRepost"
                    [post]="post"
                    [index]="index"></app-post-header>
-  <app-post-body [isDetail]="isDetail" [post]="post"
+
+  <app-post-body [isDetail]="isDetail"
+                 [post]="post"
+                 [isComment]="isComment"
                  [isRepost]="isRepost"
                  [index]="index"
                  [loggedUId]="loggedUId"></app-post-body>
 
-  <app-post-footer *ngIf="!isRepost"
-                   [totalComments]="totalComments"
-                   [userCommented]="userCommented"
-                   [loggedUId]="loggedUId"
-                   [isDetail]="isDetail"
-                   [post]="post"></app-post-footer>
 
-  <app-post-last-comments *ngIf="post?.comments"
-                          [isDetail]="isDetail" [postId]="post.id"
-                          [comments]="post?.comments"></app-post-last-comments>
+  <ng-container *ngIf="!isRepost">
+    <app-post-footer
+      [isComment]="isComment"
+      [totalComments]="totalComments"
+      [userCommented]="userCommented"
+      [loggedUId]="loggedUId"
+      [isDetail]="isDetail"
+      [post]="post"></app-post-footer>
+  </ng-container>
 
 
-  <app-post-comments
-    (commentChanged)="commentChanged($event)"
-    [loggedUId]="loggedUId"
-    [isDetail]="isDetail"
-    [postId]="post?.id"
-    [comments]="comments"></app-post-comments>
+  <ng-container *ngIf="!isComment">
+    <app-post-last-comments *ngIf="post?.comments "
+                            [isDetail]="isDetail"
+                            [postId]="post.id"
+                            [comments]="post?.comments"></app-post-last-comments>
+  </ng-container>
+
+  <!--  <app-post-comments-->
+  <!--    (commentChanged)="commentChanged($event)"-->
+  <!--    [isDetail]="true"-->
+  <!--  ></app-post-comments>-->
 
 </div>

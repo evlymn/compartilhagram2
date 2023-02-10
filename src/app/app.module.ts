@@ -24,6 +24,7 @@ import {ChatGroupsModule} from "./chat-groups/chat-groups.module";
 import {
   TextImageFormBottomSheetModule
 } from "./shared/components/text-image-form-bottom-sheet/text-image-form-bottom-sheet.module";
+import {ImageUploadItemModule} from "./shared/components/image-upload-item/image-upload-item.module";
 
 
 
@@ -45,6 +46,7 @@ import {
     GroupsModule,
     ProfileModule,
     ChatGroupsModule,
+    ImageUploadItemModule,
     TextImageFormBottomSheetModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {

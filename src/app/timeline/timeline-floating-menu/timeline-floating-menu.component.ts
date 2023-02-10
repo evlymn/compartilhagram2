@@ -17,11 +17,12 @@ export class TimelineFloatingMenuComponent implements OnInit, AfterViewInit {
   urlFragment;
   actionsOpened = false;
 
-  constructor(public windowService: WindowService,
-              private _bottomSheet: MatBottomSheet,
-              private _route: ActivatedRoute,
-              private _router: Router,
-              private _postFormService: PostFormService) {
+  constructor(
+    public windowService: WindowService,
+    private _bottomSheet: MatBottomSheet,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _postFormService: PostFormService) {
     this.urlFragment = this._route.snapshot.fragment;
   }
 

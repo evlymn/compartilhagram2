@@ -18,7 +18,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   post: any;
   searchText: string | null = '';
   postItems: PostData[] = [];
-  newPostItems : any[] = [];
+  newPostItems: any[] = [];
 
   isFollowing = false;
   isSaved = false;
@@ -31,11 +31,12 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   searching = false;
 
-  constructor(public windowService: WindowService,
-              private _route: ActivatedRoute,
-              private _router: Router,
-              public timelineService: TimelineService,
-              private _notificationService: NotificationService) {
+  constructor(
+    public windowService: WindowService,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    public timelineService: TimelineService,
+    private _notificationService: NotificationService) {
 
 
     this.isFollowing = this._router.url.includes('following');
@@ -67,63 +68,92 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.newPostItems = [];
   }
 
+
+  async getTimelineMessages() {
+    const snapshot = await this.timelineService.getMessages(limitToLast(100));
+    snapshot.forEach(p => {
+      this.postItems.push(p.val());
+    })
+    this.searching = false;
+  }
+
+  getSearchedMessages(search: string) {
+    this.messagesSearchSubscription = this.timelineService.getMessagesSearch(search.trim()).subscribe((s: PostData[]) => {
+      this.postItems = s.filter(d => d.displayNameSearch.includes(search.trim().toLowerCase()));
+      this.searching = false;
+    })
+  }
+
+  getMessagesFromWhoIFollow() {
+    this.messagesFollowingSubscription = this.timelineService.getFollowingMessages().subscribe(s => {
+      this.postItems = s;
+      this.searching = false;
+    })
+  }
+
+  getSavedMessages() {
+    this.messagesSavedSubscription = this.timelineService.getMessagesSavedAsync().subscribe(s => {
+      this.postItems = s;
+      this.searching = false;
+    })
+  }
+
+  getProfileMessages() {
+    const id = this._route.snapshot.paramMap.get('userId') as string;
+    this.messagesSavedSubscription = this.timelineService.getMessagesByUser(id).subscribe(s => {
+      this.postItems = s;
+      this.searching = false;
+    })
+  }
+
+  getMessagesOnChildAdded() {
+    this.timelineService.getMessagesOnChildAdded(snapshot => {
+      if (!this.postItems.some(p => p.id == snapshot.val().id)) {
+        this.newPostItems.push(snapshot.val());
+        if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
+          this.postItems.push(snapshot.val());
+          this.newPostItems = this.newPostItems.filter(p => p.id != snapshot.val().id);
+        }
+      }
+    }, limitToLast(100))
+  }
+
+  getMessageOnChanged() {
+    this.timelineService.getMessageOnChanged(snapshot => {
+      const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
+      this.postItems[index] = snapshot.val();
+    })
+  }
+
+  getMessageOnRemoved() {
+    this.timelineService.getMessageOnRemoved(snapshot => {
+      const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
+      if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
+        this.postItems.splice(index, 1);
+      }
+    })
+  }
+
   async getPosts(search?: string | null) {
     this.searching = true;
     this.isSearchUser = !!search;
     if (!search && !this.isFollowing && !this.isSaved) {
-      const snapshot = await this.timelineService.getMessages(limitToLast(100));
-      snapshot.forEach(p => {
-        this.postItems.push(p.val());
-      })
-      this.searching = false;
+      await this.getTimelineMessages();
     }
 
     if (search) {
-      this.messagesSearchSubscription = this.timelineService.getMessagesSearch(search.trim()).subscribe((s: PostData[]) => {
-        this.postItems = s.filter(d => d.displayNameSearch.includes(search.trim().toLowerCase()));
-        this.searching = false;
-      })
+      this.getSearchedMessages(search);
     } else if (this.isFollowing) {
-      this.messagesFollowingSubscription = this.timelineService.getFollowingMessages().subscribe(s => {
-        this.postItems = s;
-        this.searching = false;
-      })
+      this.getMessagesFromWhoIFollow();
     } else if (this.isSaved) {
-      this.messagesSavedSubscription = this.timelineService.getMessagesSavedAsync().subscribe(s => {
-        this.postItems = s;
-        this.searching = false;
-      })
+      this.getSavedMessages();
     } else if (this.isProfile) {
-      const id = this._route.snapshot.paramMap.get('userId') as string;
-      this.messagesSavedSubscription = this.timelineService.getMessagesByUser(id).subscribe(s => {
-        this.postItems = s;
-        this.searching = false;
-      })
+      this.getProfileMessages();
     } else {
-      this.timelineService.getMessagesOnChildAdded(snapshot => {
-        if (!this.postItems.some(p => p.id == snapshot.val().id)) {
-          this.newPostItems.push(snapshot.val());
-          if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
-            this.postItems.push(snapshot.val());
-            this.newPostItems = this.newPostItems.filter(p => p.id != snapshot.val().id);
-          }
-        }
-      }, limitToLast(100))
-
-      this.timelineService.getMessageOnChanged(snapshot => {
-        const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
-        this.postItems[index] = snapshot.val();
-      })
-
-      this.timelineService.getMessageOnRemoved(snapshot => {
-        const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
-        if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
-          this.postItems.splice(index, 1);
-        }
-      })
+      this.getMessagesOnChildAdded();
+      this.getMessageOnChanged();
+      this.getMessageOnRemoved();
     }
-
-    console.log(this.postItems.length)
   }
 
   ngOnInit(): void {

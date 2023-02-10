@@ -91,7 +91,7 @@ export class PostFormService {
       displayName: displayName!,
       displayNameSearch: displayName!.toLowerCase(),
       photoURL: this.auth.user?.photoURL,
-      postText: postText,
+      text: postText,
       dateTime: new Date().getTime(),
       albumName: album?.album ?? null,
       albumId: album?.id ?? null,

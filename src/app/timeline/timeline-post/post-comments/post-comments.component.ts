@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TimelineService} from "../../timeline.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-post-comments',
@@ -7,21 +8,23 @@ import {TimelineService} from "../../timeline.service";
   styleUrls: ['./post-comments.component.scss']
 })
 export class PostCommentsComponent implements OnInit {
-  @Input() comments: any;
-  @Input() isDetail = false
-  @Input() postId = '';
-  @Input() loggedUId = '';
   @Output() commentChanged = new EventEmitter();
-  @Input() item: any;
-
+  @Input() isDetail = false
+  postId = '';
+  loggedUId = '';
+  comments: any;
   totalComments = 0;
   userCommented = false;
 
 
-  constructor(private _timelineService: TimelineService) {
-
-    this._timelineService.auth.authState.subscribe(() => {
-      this.getComments();
+  constructor(
+    private _timelineService: TimelineService,
+    private _route: ActivatedRoute
+  ) {
+    this.postId = _route.snapshot.paramMap.get('id') as string;
+    this._timelineService.auth.authState.subscribe(user => {
+      this.loggedUId = user?.uid as string;
+     this.getComments();
     })
   }
 

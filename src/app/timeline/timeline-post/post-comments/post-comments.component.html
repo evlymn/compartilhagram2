@@ -1,56 +1,10 @@
-<div class="comments-section" *ngIf="isDetail"     >
+<div class="comments-section" *ngIf="isDetail">
+
   <div *ngFor="let item of comments">
 
-    <app-comments-item [item]="item"></app-comments-item>
+    <app-timeline-post [isComment]="true" [post]="item"></app-timeline-post>
+<!--        <app-comments-item [item]="item"></app-comments-item>-->
 
   </div>
-  <!--    <div *ngIf="unfold">-->
-  <!--      <div *ngFor="let i of [0,1,2,3,5,67,77,8,9,0.14]">-->
-  <!--        <app-post-comments></app-post-comments>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--    <div class="unfold-more" (click)="unfoldComments()">-->
-  <!--      <small> {{unfold ? 'fechar' : 'mais 4 comentários'}}  </small>-->
-  <!--      <mat-icon mat-list-icon>  {{unfold ? 'expand_less' : 'expand_more'}}-->
-  <!--      </mat-icon>-->
-  <!--    </div>-->
+
 </div>
-
-
-<!--<div class="post-comments">-->
-<!--  <div class="comment-items">-->
-<!--    <div class="comment-header">-->
-<!--      <div class="comment-user-info">-->
-
-<!--        <div class="user-avatar">-->
-<!--          <div class="comment-avatar">-->
-<!--            <img class="post-avatar-image" alt="image profile" [src]="comment?.photoURL">-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="user-name">-->
-<!--          {{comment?.displayName}}-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="comment-body">-->
-<!--      {{ comment?.commentText}}-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="comment-favorite">-->
-<!--    <div class="favorite-item">-->
-<!--      <mat-icon class="comment-action-icon">favorite_outlined</mat-icon>-->
-<!--      <small class="icon-count"></small>-->
-<!--    </div>-->
-<!--    <mat-icon class="comment-action-icon " (click)="openClosePanel()">disabled_by_default_outlined</mat-icon>-->
-<!--  </div>-->
-
-
-<!--</div>-->
-<!--<mat-expansion-panel hideToggle [expanded]="commentPanelOpened">-->
-<!--  <button (click)="openClosePanel()" mat-button>-->
-<!--    cancelar-->
-<!--  </button>-->
-<!--  <button (click)="deleteComment()" mat-button>-->
-<!--    deletar-->
-<!--  </button>-->
-<!--</mat-expansion-panel>-->

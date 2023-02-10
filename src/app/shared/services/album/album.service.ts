@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {RealtimeService} from "../firebase/database/realtime.service";
 import {AuthenticationService} from "../firebase/authentication/authentication.service";
+import {orderBy} from "@angular/fire/firestore";
+import {orderByChild} from "@angular/fire/database";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,6 @@ export class AlbumService {
   }
 
   async getPhotos() {
-    return this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`);
+    return this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`, orderByChild('albumName') );
   }
 }

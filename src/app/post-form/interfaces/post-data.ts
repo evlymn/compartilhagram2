@@ -4,7 +4,7 @@ export interface PostData {
   displayName: string,
   displayNameSearch: string,
   photoURL: string,
-  postText: string,
+  text: string,
   dateTime: number,
   albumName: string,
   albumId:string,

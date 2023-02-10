@@ -17,11 +17,14 @@ textarea {
 .timeline-post {
   display: flex;
   flex-direction: column;
-
-  //padding: 10px 10px 3px;
   margin: 10px;
   border-radius: 5px;
 }
+
+.timeline-post-comment {
+  margin: 10px 0 0;
+}
+
 
 .timeline-post-background {
   background-color: #622947;
@@ -145,6 +148,8 @@ mat-expansion-panel {
   flex-direction: column-reverse;
 }
 
+
+
 .button-expansion {
   color: #cccccc;
 }
@@ -266,4 +271,9 @@ h2{color: #cccccc}
   margin-top: 10px;
   text-align: center;
   color: white;
+}
+
+.timeline-post-background-comment {
+  //background-color: #7a3b56;
+  background-color: #491d35;
 }

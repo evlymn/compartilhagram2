@@ -1,13 +1,13 @@
+<div class="component" *ngIf="!isDetail" [routerLink]="['/home/post', postId,0]">
 
-<div class="component" *ngIf="!isDetail"  [routerLink]="['/home/post', postId,0]">
-
-  <div *ngFor="let comment of comments"   >
+  <hr>
+  <div *ngFor="let comment of comments">
 
     <app-last-comments-item [comment]="comment"></app-last-comments-item>
-<!--    <div *ngIf="comment" class="info">-->
-<!--      {{getSeconds(comment.time)}}-->
-<!--      <small>{{comment?.text?.length > subStringFactor ? comment.text.substring(0, subStringFactor) + '...' : comment.text }}</small>-->
-<!--      <small>{{comment?.time |timeAgo }} </small>-->
-<!--    </div>-->
+    <!--    <div *ngIf="comment" class="info">-->
+    <!--      {{getSeconds(comment.time)}}-->
+    <!--      <small>{{comment?.text?.length > subStringFactor ? comment.text.substring(0, subStringFactor) + '...' : comment.text }}</small>-->
+    <!--      <small>{{comment?.time |timeAgo }} </small>-->
+    <!--    </div>-->
   </div>
 </div>
