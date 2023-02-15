@@ -1,7 +1,6 @@
-<div class="" *ngIf="isMobile">
-  <!-- -->
+<ng-container *ngIf="isMobile">
   <div class="floating-toggle">
-    <mat-icon  (click)="toggleSideNav()">menu</mat-icon>
+    <mat-icon (click)="toggleSideNav()">menu</mat-icon>
   </div>
   <app-home-header-mobile *ngIf="isMobile"></app-home-header-mobile>
   <mat-sidenav-container class="sidenav-container">
@@ -13,31 +12,25 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-     <div   [@openCloseMargin]="   homeService.pinUpMenu ||
-             (homeService.sideNavOpened  && homeService.showUpMenu) ? 'open' : 'closed'"
-            >
-
-     </div>
-      <div class="home-content" >
+      <div [@openCloseMargin]="   homeService.pinUpMenu ||
+             (homeService.sideNavOpened  && homeService.showUpMenu) ? 'open' : 'closed'">
+      </div>
+      <div class="home-content">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-</div>
+</ng-container>
 
-<!--<div *ngIf="isMobile" class="no-mobile">-->
-<!--  <div>-->
-<!--      Por favor, use em seu smartphone.-->
-<!--  </div>-->
-<!--</div>-->
 
-<div class="desktop-content" *ngIf="!isMobile">
-
-  <div class='menu-desktop' [style.height]="windowHeight + 'px'">
-    <app-home-menu-desktop></app-home-menu-desktop>
+<ng-container *ngIf="!isMobile">
+  <div class="desktop-content">
+    <div class='menu-desktop' [style.height]="windowHeight + 'px'">
+      <app-home-menu-desktop></app-home-menu-desktop>
+    </div>
+    <div class='content-desktop'>
+      <router-outlet></router-outlet>
+    </div>
+    <div *ngIf="!isMiddleSize" class='content-right'></div>
   </div>
-  <div class='content-desktop'>
-    <router-outlet></router-outlet>
-  </div>
-  <div *ngIf="!isMiddleSize" class='content-right'></div>
-</div>
+</ng-container>

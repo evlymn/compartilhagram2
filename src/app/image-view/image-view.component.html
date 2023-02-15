@@ -1,16 +1,12 @@
 <mat-icon [mat-dialog-close]=""> disabled_by_default</mat-icon>
-
-
 <div class="component">
-
-
-
-
-    <pinch-zoom *ngIf="isMobile" backgroundColor="transparent" disableZoomControl="disable">
+  <ng-container *ngIf="isMobile">
+    <pinch-zoom backgroundColor="transparent" disableZoomControl="disable">
       <img alt="..." class="mat-tab-image" [src]="url">
     </pinch-zoom>
+  </ng-container>
 
-
-
-<img *ngIf="!isMobile" alt="..." class="mat-tab-image" [src]="url">
+  <ng-container *ngIf="!isMobile">
+    <img alt="..." class="mat-tab-image" [src]="url">
+  </ng-container>
 </div>

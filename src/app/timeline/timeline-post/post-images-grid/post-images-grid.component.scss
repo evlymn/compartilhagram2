@@ -13,15 +13,10 @@
   object-fit: cover;
   cursor: pointer;
   margin: 3.5px;
-  //filter: grayscale(80%);
-  //transition: .35s linear;
   border-radius: 6px;
 }
 
 .gallery img:hover {
-  //filter: grayscale(0);
-  //width: calc(40vh * var(--f) / var(--n));
-  // height: calc(40vw * var(--f) / var(--m));
 }
 
 .mat-tab-image {
@@ -41,21 +36,16 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  //border-radius: 4px;
-  //margin: 4px;
   overflow: hidden;
-
 }
+
+
 
 .mat-tab-div-mobile {
   height: 200px;
 }
 
-//.mat-tab-div-mobile:active {
-//  filter: grayscale(.5);
-//  transform: scale(.992);
-//  opacity: 0.9;
-//}
+
 
 .mat-tab-div-desktop {
   height: 350px;
@@ -64,19 +54,20 @@
 
 .one-image {
   width: 100%;
-
-  //border-radius: 5px;
 }
 
-//.one-image:active {
-//  filter: grayscale(.5);
-//  transform: scale(.992);
-//  opacity: 0.9;
-//}
+.one-image-comments {
+  width: 90%;
+}
 
 .one-image-album {
   position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
+
+
 .album-chip-mat-tab {
   position: absolute;
   top: calc(100% - 40px);
@@ -98,10 +89,3 @@ mat-chip {
   -moz-box-shadow: 10px 9px 5px -9px rgba(0,0,0,0.75);
   box-shadow: 10px 9px 5px -9px rgba(0,0,0,0.75);
 }
-//.mat-album-chip {
-//  .mat-mdc-chip-action-label {
-//    background-color: rgba(37, 27, 16, 0.49) !important;
-//    color: white !important;
-//    font-weight: bold !important;
-//  }
-//}

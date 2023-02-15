@@ -11,19 +11,22 @@
 
     </button>
 
-    <div class="images-upload-grid" *ngIf="image.image64">
-      <div
-        [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
-        class="image-grid-item"
-        [style]="'background-image:url(' + image.image64 + ')'">
-        <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="50" alt="">
-        <mat-icon *ngIf="!sendingPost" (click)="deleteImg()"
-                  [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
-                  class="image-grid-item-delete">disabled_by_default
-        </mat-icon>
+    <ng-container *ngIf="image.image64">
+      <div class="images-upload-grid">
+        <div
+          [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
+          class="image-grid-item"
+          [style]="'background-image:url(' + image.image64 + ')'">
+          <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="50" alt="">
+          <mat-icon *ngIf="!sendingPost" (click)="deleteImg()"
+                    [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
+                    class="image-grid-item-delete">disabled_by_default
+          </mat-icon>
 
+        </div>
       </div>
-    </div>
+    </ng-container>
+
     <button (click)="createMessage()" mat-flat-button class="form-button form-button-post">
       {{messageService.languageService.getText('postar')}}
     </button>

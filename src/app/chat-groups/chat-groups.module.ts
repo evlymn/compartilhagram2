@@ -19,6 +19,7 @@ import {GroupRoomComponent} from "./groups/group-room/group-room.component";
 import {RoomItemComponent} from "./groups/group-room/room-item/room-item.component";
 import {AlertsModule} from "../alerts/alerts.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -31,20 +32,21 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     GroupRoomComponent,
    RoomItemComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ChatGroupsRoutingModule,
-    MatSlideToggleModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatListModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatIconModule,
-    AlertsModule,
-    MatProgressSpinnerModule,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ChatGroupsRoutingModule,
+        MatSlideToggleModule,
+        MatButtonModule,
+        MatTabsModule,
+        MatListModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatIconModule,
+        AlertsModule,
+        MatProgressSpinnerModule,
+        MatRippleModule,
+    ]
 })
 export class ChatGroupsModule {
 }

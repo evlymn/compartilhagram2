@@ -14,8 +14,6 @@
        matTooltipPosition="right">
       <i class='bx bx-search'></i>
     </a>
-
-    <!--  [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"-->
     <a mat-list-item [routerLink]="['/home/following']"
        [ngClass]="homeService.checkRoute('following')? 'route' : 'no-route' "
        #tooltip="matTooltip"

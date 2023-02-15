@@ -1,35 +1,37 @@
-<div class="post-body" *ngIf="post" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
-  <div class="post-text-edit" *ngIf="post?.text">
-    <div class="post-text" [routerLink]="['/home/post', post?.id, index]">
-      {{post?.text}}
-      <div class="loading-image">
-        <i *ngIf=" post?.hasImages &&  !post?.images"
-           class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
-
+<ng-container *ngIf="post">
+  <div class="post-body" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
+    <ng-container *ngIf="post?.text">
+      <div class="post-text-edit">
+        <div class="post-text" [routerLink]="['/home/post', post?.id, index]">
+          {{post?.text}}
+        </div>
       </div>
+    </ng-container>
+    <ng-container *ngIf=" post?.hasImages &&  !post?.images">
+      <div class="loading-image">
+        <i class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
+      </div>
+    </ng-container>
 
-    </div>
-  </div>
-
-
-  <mat-expansion-panel
-    hideToggle [expanded]="postPanelOpened && !isRepost"
-    (afterExpand)="onExpansionPostOpen()"
-    (afterCollapse)="onExpansionPostClose()">
+    <mat-expansion-panel
+      hideToggle [expanded]="postPanelOpened && !isRepost"
+      (afterExpand)="onExpansionPostOpen()"
+      (afterCollapse)="onExpansionPostClose()">
        <textarea cdkTextareaAutosize [(ngModel)]="postText"
                  maxlength="300"></textarea>
-    <div class="panel-post-actions">
-      <button (click)="togglePostPanel()" mat-button class="form-button form-button-post">
-        cancelar
-      </button>
-      <div></div>
-      <button (click)="editPost()" mat-button class="form-button form-button-post">
-        editar
-      </button>
-    </div>
-  </mat-expansion-panel>
-</div>
+      <div class="panel-post-actions">
+        <button (click)="togglePostPanel()" mat-button class="form-button form-button-post">
+          cancelar
+        </button>
+        <div></div>
+        <button (click)="editPost()" mat-button class="form-button form-button-post">
+          editar
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </div>
 
+</ng-container>
 <mat-expansion-panel class="panel-delete" hideToggle [expanded]="deletePanelOpened  && !isRepost"
                      (afterExpand)="onExpansionDeleteOpen()">
 
@@ -42,52 +44,41 @@
 
 </mat-expansion-panel>
 
-<div *ngIf="post?.repost" class="repost">
-  <ng-container *ngIf="!post.repostDeleted">
-    <app-timeline-post
-      [isRepost]="true"
-      [index]="index"
-      [post]="post.repost">
-    </app-timeline-post>
-  </ng-container>
-
-  <ng-container *ngIf="post.repostDeleted">
-    <div>
-      <h2>
-        {{timelineService.languageService.getText('postagemdeletada')}}</h2>
-    </div>
-  </ng-container>
-
-</div>
+<ng-container *ngIf="post?.repost">
+  <div class="repost">
+    <ng-container *ngIf="!post.repostDeleted">
+      <app-timeline-post
+        [isRepost]="true"
+        [index]="index"
+        [post]="post.repost">
+      </app-timeline-post>
+    </ng-container>
+    <ng-container *ngIf="post.repostDeleted">
+      <div>
+        <h2>{{timelineService.languageService.getText('postagemdeletada')}}</h2>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
 
 
 <div [style]="isDetail? 'margin-top:5px': ''"></div>
 
-<app-post-images-grid *ngIf="!isDetail" [post]="post" [postId]="post?.id" [postIndex]="index"
 
-                      [images]="post?.images"></app-post-images-grid>
+<ng-container *ngIf="!isDetail">
+  <app-post-images-grid
+    [isComment]="isComment"
 
-<div class="image-details" *ngIf="isDetail">
-  <img (click)="showImageDialog(img?.imageURL)" *ngFor="let img of post?.images; let i=index"
-       [src]="img?.imageURL"
-       class="d-block w-100" alt="...">
-</div>
+    [post]="post"
+    [postId]="post?.id"
+    [postIndex]="index"
+    [images]="post?.images"></app-post-images-grid>
+</ng-container>
 
-
-<!--<ng-container  *ngIf="post?.albumName || !isRepost">-->
-<!--&lt;!&ndash;<div class="post-album-time">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;  <div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;    <span *ngIf="post?.albumName">álbum:</span>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;    <mat-chip *ngIf="post?.albumName" [routerLink]="['album', post?.albumId, post?.uid ]"> {{ post?.albumName }}</mat-chip>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;  </div>&ndash;&gt;&ndash;&gt;-->
-
-<!--&lt;!&ndash;&lt;!&ndash;  <div class="timeago" *ngIf="!isRepost">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;    <small *ngIf="!isExchangeagram">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;      há {{post.dateTime | timeAgo }}&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;    </small>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;    <small *ngIf="isExchangeagram">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;      {{post.dateTime | timeAgo }} ago&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;    </small>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;  </div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</ng-container>-->
+<ng-container *ngIf="isDetail">
+  <div class="image-details">
+    <img (click)="showImageDialog(img?.imageURL)" *ngFor="let img of post?.images; let i=index"
+         [src]="img?.imageURL"
+         class="d-block w-100" alt="...">
+  </div>
+</ng-container>
