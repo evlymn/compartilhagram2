@@ -68,6 +68,9 @@ export class TimelineService {
 
 
   async deletePost(post: any) {
+    if(post.isComment){
+       this.deleteComment(post.postId, post.id).catch();
+    }
     this._timelinePostDeleteService.deletePost(post.id).catch();
   }
 

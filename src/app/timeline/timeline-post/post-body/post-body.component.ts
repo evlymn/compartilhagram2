@@ -43,9 +43,11 @@ export class PostBodyComponent implements OnInit {
 
 
   async deletePost() {
+
     this.timelineService.deletePost(this.post).then(() => {
       this._notificationService.next('postDeleted', this.post.id);
-      this._router.navigate(['/home']).then(() => null);
+      if (!this.post.isComment)
+        this._router.navigate(['/home']).then(() => null);
     })
   }
 

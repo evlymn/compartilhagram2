@@ -94,6 +94,7 @@ export class PostFooterComponent implements OnInit {
 
   createComment() {
     const refId = this._route.snapshot.paramMap.get('id') as string;
+
     this._timelineService.createComment(this.post.id, this.commentText, !!this.image.image64, refId).then(commentId => {
       if (this.image.image64) {
         this.image.image64 = null;
