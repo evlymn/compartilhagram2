@@ -1,11 +1,24 @@
 import {Injectable, NgZone} from '@angular/core';
 import {
-  ActionCodeSettings, Auth, authState, createUserWithEmailAndPassword, getAdditionalUserInfo, onAuthStateChanged,
-  sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile, user, User,
+  ActionCodeSettings,
+  Auth,
+  authState,
+  createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
+  onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+  user,
+  User,
   UserCredential,
 } from '@angular/fire/auth';
+
 import {Router} from '@angular/router';
-import {onIdTokenChanged} from '@firebase/auth';
+import {GoogleAuthProvider,GithubAuthProvider, onIdTokenChanged} from '@firebase/auth';
 import {RealtimeService} from "../database/realtime.service";
 import {BehaviorSubject} from "rxjs";
 import {AppUpdateService} from "../../app/app-update.service";
@@ -48,6 +61,7 @@ export class AuthenticationService {
     return user(this.auth);
   }
 
+
   set user(val: User | null) {
     localStorage.setItem('AOkPPWQ9Z2m2W94aRDNOw2', JSON.stringify(val));
   }
@@ -71,16 +85,31 @@ export class AuthenticationService {
   private onAuthStateChanged() {
     onAuthStateChanged(this.auth, usr => {
       if (usr) {
+        this.logUser(usr).catch();
         this.user = usr;
         this.onDeleteLogout(usr.uid!);
-        this.ngZone.run(() => {
-          this._route = this._route == ('/' || '') ? '/home' : this._route;
-          this.router.navigate([this._route]).catch(reason => console.log(reason));
-        });
+        const whichRoute = (this._route == '/' || this._route == '' || this._route == '/login');
+        this._route = whichRoute ? '/home' : this._route;
+        this.router.navigateByUrl(this._route).catch(reason => console.log(reason));
       } else {
         this.router.navigateByUrl('/login').catch(reason => console.log(reason));
       }
     });
+  }
+
+  async logUser(user: User) {
+    const data = {
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      email: user.email,
+      dateTime: new Date().getTime(),
+      provider: user.providerId,
+      uid: user.uid,
+      phoneNumber: user.phoneNumber,
+      creationTime: user.metadata?.creationTime,
+      lastSignInTime: user.metadata?.lastSignInTime
+    }
+    this._realtime.set('users/' + user.uid, data).catch();
   }
 
   async signInWithEmailAndPassword(email: string, password: string) {
@@ -104,6 +133,17 @@ export class AuthenticationService {
     return this.userCredentials;
   }
 
+  async signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this.auth, provider)
+  }
+
+  async signInWithGithub() {
+    const provider =new GithubAuthProvider();
+    return signInWithPopup(this.auth, provider)
+  }
+
+
   updateProfile(data: { displayName?: string, photoURL?: string }) {
     return updateProfile(this.auth.currentUser as User, data);
   }
@@ -115,6 +155,7 @@ export class AuthenticationService {
   sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings) {
     return sendPasswordResetEmail(this.auth, email, actionCodeSettings);
   }
+
 
   signOut() {
     signOut(this.auth).catch();

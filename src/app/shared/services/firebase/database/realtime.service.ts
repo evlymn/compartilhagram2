@@ -1,9 +1,23 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
-  child, Database, DataSnapshot, get, onChildAdded, onChildChanged, onChildRemoved, onValue, push, query,
-  QueryConstraint, ref, remove, set, update
+  child,
+  Database,
+  DataSnapshot,
+  get, getDatabase,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  onValue,
+  push,
+  query,
+  QueryConstraint,
+  ref,
+  remove,
+  set,
+  update
 } from "@angular/fire/database";
-
+// import {initializeApp} from "firebase/app";
+// import {getDatabase} from "firebase/database";
 import {Observable} from 'rxjs';
 
 export enum DatabaseURL {
@@ -17,12 +31,11 @@ export enum DatabaseURL {
   providedIn: 'root',
 })
 export class RealtimeService {
-
+  // db2: Database
 
   constructor(private db: Database) {
 
 
-    //    this.db.app.options.databaseURL = base;
   }
 
   createId() {

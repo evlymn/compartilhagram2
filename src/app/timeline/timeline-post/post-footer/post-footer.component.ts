@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {TimelineService} from "../../timeline.service";
+import {TimelineService} from "../../services/timeline.service";
 import {AlertsService} from "../../../alerts/alerts.service";
 import {StorageService} from "../../../shared/services/firebase/storage/storage.service";
 import {WindowService} from "../../../shared/services/window/window.service";
@@ -65,7 +65,7 @@ export class PostFooterComponent implements OnInit {
 
   getTotalFavorites() {
     const id = this.post?.id;
-    this._timelineService.getTotalFavorites(id).subscribe(async t => {
+    this._timelineService.getTotalFavorites(this.post).subscribe(async t => {
       this.totalFavorites = t.length;
       this.userFavorited = t.some(s => s.uid == this.loggedUId)
     })
@@ -93,7 +93,8 @@ export class PostFooterComponent implements OnInit {
   }
 
   createComment() {
-    this._timelineService.createComment(this.post.id, this.commentText, !!this.image.image64).then(commentId => {
+    const refId = this._route.snapshot.paramMap.get('id') as string;
+    this._timelineService.createComment(this.post.id, this.commentText, !!this.image.image64, refId).then(commentId => {
       if (this.image.image64) {
         this.image.image64 = null;
         this._storageService.resizeImage({maxSize: 2500, file: this.image.file}).then(b => {
@@ -136,8 +137,7 @@ export class PostFooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commentText  = this.post.text;
-    console.log(this.commentText)
+    // this.commentText  = this.post.text;
 
   }
 

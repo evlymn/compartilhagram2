@@ -15,12 +15,12 @@
            type="text" required>
 
   </mat-form-field>
-      <mat-error *ngIf="formSubmitted && email?.value?.trim().length ==0">
-        {{_loginService.languageService.getText('qualseuemail')}}
-      </mat-error>
-      <mat-error *ngIf="formSubmitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
-        {{_loginService.languageService.getText('digitoualgoerrado')}}
-      </mat-error>
+  <mat-error *ngIf="formSubmitted && email?.value?.trim().length ==0">
+    {{_loginService.languageService.getText('qualseuemail')}}
+  </mat-error>
+  <mat-error *ngIf="formSubmitted &&  email?.value?.trim().length > 0 && email?.getError('email')">
+    {{_loginService.languageService.getText('digitoualgoerrado')}}
+  </mat-error>
 
   <mat-form-field class="custom-mat-form-field mat-form-field-W100"
                   appearance="fill"
@@ -38,7 +38,15 @@
 
   <button class="login-button" type="submit" matRipple>
     {{_loginService.languageService.getText('logar')}}
-
   </button>
 </form>
+<div class="social-button-div">
+  <button (click)="signInWithGoogle()" class="social-button" matRipple>
+    <i class='bx bxl-google'></i>
+  </button>
+  <button (click)="signInWithGithub()" class="social-button" matRipple>
+    <i class='bx bxl-github'></i>
+  </button>
+</div>
+
 

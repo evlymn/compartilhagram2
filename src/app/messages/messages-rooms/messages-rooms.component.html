@@ -1,4 +1,6 @@
-<h3>{{messagesService.languageService.getText('mensagens')}}</h3>
+<!--<h3>{{messagesService.languageService.getText('mensagens')}}</h3>-->
+
+<app-title marginTop="20" [title]="messagesService.languageService.getText('mensagens')"> </app-title>
 
 <ng-container *ngFor="let item of rooms|async ">
   <div class="rooms" *ngIf="item.active">

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@an
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {MatDialog} from "@angular/material/dialog";
-import {TimelineService} from "../timeline.service";
+import {TimelineService} from "../services/timeline.service";
 
 
 @Component({
@@ -48,7 +48,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
     if (!this.isRepost) {
       if (this.postId && !this.post?.isComment ) {
         this.post = await this.timelineService.getPost(this.postId);
-        this.postText = this.post.postText;
+        this.postText = this.post.text;
       }
     }
   }
@@ -56,7 +56,7 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if (this.post) {
       this.images = this.post.images;
-      this.postText = this.post.postText;
+      this.postText = this.post.text;
     }
     setTimeout(s => {
       this.img = true;

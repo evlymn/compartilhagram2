@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WindowService} from "../shared/services/window/window.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {TimelineService} from "./timeline.service";
+import {TimelineService} from "./services/timeline.service";
 import {NotificationService} from "../shared/services/notification/notification.service";
-import {limitToLast} from "@angular/fire/database";
+import {limitToLast, Unsubscribe} from "@angular/fire/database";
 import {PostData} from "../post-form/interfaces/post-data";
 import {Subscription} from "rxjs";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Component({
   selector: 'app-timeline',
@@ -19,7 +20,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
   searchText: string | null = '';
   postItems: PostData[] = [];
   newPostItems: any[] = [];
-
   isFollowing = false;
   isSaved = false;
   isProfile = false;
@@ -28,7 +28,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
   messagesSearchSubscription!: Subscription;
   messagesSavedSubscription!: Subscription;
   messagesFollowingSubscription!: Subscription;
-
+  getMessageOnRemovedUnsubscribe!: Unsubscribe;
+  getMessagesOnChildAddedUnsubscribe!: Unsubscribe;
+  getMessageOnChangedUnsubscribe!: Unsubscribe;
   searching = false;
 
   constructor(
@@ -36,14 +38,13 @@ export class TimelineComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _router: Router,
     public timelineService: TimelineService,
-    private _notificationService: NotificationService) {
-
+    private _notificationService: NotificationService,
+    public languageService: LanguageService) {
 
     this.isFollowing = this._router.url.includes('following');
     this.isSaved = this._router.url.includes('saved');
     this.isProfile = this._router.url.includes('profile');
     this.searchText = this._route.snapshot.paramMap.get('search');
-
 
     this.onMessageUpdate();
     this.authStateSubscription = this.timelineService.auth.authState.subscribe(() => {
@@ -55,7 +56,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   onMessageUpdate() {
-    this.timelineService.onMessageUpdate(snapshot => {
+    this.timelineService.dbTriggers.getMessageOnChildChanged(snapshot => {
       const message = snapshot.val()
       if (this.timelineService.auth.user?.uid == message.uid) {
         this.timelineService.updateReposts(message);
@@ -64,6 +65,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   showNewPost() {
+     console.log('dddddddd')
     this.postItems.push(...this.newPostItems);
     this.newPostItems = [];
   }
@@ -107,7 +109,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   getMessagesOnChildAdded() {
-    this.timelineService.getMessagesOnChildAdded(snapshot => {
+    this.getMessagesOnChildAddedUnsubscribe = this.timelineService.dbTriggers.getMessagesOnChildAdded(snapshot => {
       if (!this.postItems.some(p => p.id == snapshot.val().id)) {
         this.newPostItems.push(snapshot.val());
         if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
@@ -118,15 +120,16 @@ export class TimelineComponent implements OnInit, OnDestroy {
     }, limitToLast(100))
   }
 
+
   getMessageOnChanged() {
-    this.timelineService.getMessageOnChanged(snapshot => {
+    this.getMessageOnChangedUnsubscribe = this.timelineService.dbTriggers.getMessageOnChildChanged(snapshot => {
       const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
       this.postItems[index] = snapshot.val();
     })
   }
 
   getMessageOnRemoved() {
-    this.timelineService.getMessageOnRemoved(snapshot => {
+    this.getMessageOnRemovedUnsubscribe = this.timelineService.dbTriggers.getMessageChildOnRemoved(snapshot => {
       const index = this.postItems.findIndex(p => p.id == snapshot.val().id);
       if (snapshot.val().uid == this.timelineService.auth.user?.uid) {
         this.postItems.splice(index, 1);
@@ -169,5 +172,13 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.messagesSearchSubscription?.unsubscribe();
     this.messagesSavedSubscription?.unsubscribe();
     this.messagesFollowingSubscription?.unsubscribe();
+
+    if (this.getMessagesOnChildAddedUnsubscribe)
+      this.getMessagesOnChildAddedUnsubscribe();
+    if (this.getMessageOnChangedUnsubscribe)
+      this.getMessageOnChangedUnsubscribe();
+    if (this.getMessageOnRemovedUnsubscribe) {
+      this.getMessageOnRemovedUnsubscribe()
+    }
   }
 }

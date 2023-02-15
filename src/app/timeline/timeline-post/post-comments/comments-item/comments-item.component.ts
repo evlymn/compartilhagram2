@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TimelineService} from "../../../timeline.service";
+import {TimelineService} from "../../../services/timeline.service";
 
 
 @Component({

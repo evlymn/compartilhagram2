@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {WindowService} from "../../../shared/services/window/window.service";
 import {Sizes} from "../../../shared/services/window/sizes";
-import {TimelineService} from "../../timeline.service";
+import {TimelineService} from "../../services/timeline.service";
 
 @Component({
   selector: 'app-post-last-comments',

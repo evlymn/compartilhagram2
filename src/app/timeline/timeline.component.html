@@ -1,6 +1,9 @@
 <div [ngClass]="isMobile? 'panel-mobile': ''"></div>
 
-<app-post-form *ngIf="!isMobile"></app-post-form>
+<app-post-form *ngIf="!isMobile "></app-post-form>
+<app-title *ngIf="isSaved" marginTop="10" [title]="languageService.getText('itenssalvos')"></app-title>
+
+<app-title *ngIf="isFollowing" marginTop="10" [title]="languageService.getText('seguindo')"></app-title>
 <div *ngIf="newPostItems.length>0" class="show-new-post-section">
   <a class="show-post-button" mat-button
      (click)="showNewPost()"> {{ timelineService.languageService.getText('mostrarnovaspostagens')}}

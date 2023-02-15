@@ -13,6 +13,7 @@ export class GroupsService {
   constructor(public realtimeService: RealtimeService,
               public languageService: LanguageService,
               public auth: AuthenticationService) {
+
   }
 
   createGroup(group: any) {

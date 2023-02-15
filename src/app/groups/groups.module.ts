@@ -20,6 +20,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatRippleModule} from "@angular/material/core";
 import {AlertsModule} from "../alerts/alerts.module";
+import {TitleComponent} from "../shared/components/title/title.component";
 
 
 @NgModule({
@@ -30,25 +31,26 @@ import {AlertsModule} from "../alerts/alerts.module";
     RoomItemComponent,
     RoomFormBottomSheetComponent
   ],
-  imports: [
+    imports: [
 
-    BrowserModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-    MatListModule,
-    MatIconModule,
-    RouterLink,
-    MatSnackBarModule,
-    GroupsRoutingModule,
-    MatRippleModule,
-    AlertsModule
-  ],
+        BrowserModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        MatTabsModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        MatSlideToggleModule,
+        MatExpansionModule,
+        MatListModule,
+        MatIconModule,
+        RouterLink,
+        MatSnackBarModule,
+        GroupsRoutingModule,
+        MatRippleModule,
+        AlertsModule,
+        TitleComponent
+    ],
   providers: [
     MatSnackBarModule,
     // MatBottomSheetModule,

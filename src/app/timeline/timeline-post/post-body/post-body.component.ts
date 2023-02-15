@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {TimelineService} from "../../timeline.service";
+import {TimelineService} from "../../services/timeline.service";
 import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 @Component({

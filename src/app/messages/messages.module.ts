@@ -18,6 +18,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AlertsModule} from "../alerts/alerts.module";
 import {MatRippleModule} from "@angular/material/core";
+import {TitleComponent} from "../shared/components/title/title.component";
 
 @NgModule({
   declarations: [
@@ -25,23 +26,24 @@ import {MatRippleModule} from "@angular/material/core";
     MessagesRoomsComponent,
      MessagesItemComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatListModule,
-    MatButtonModule,
-    MatIconModule,
-    TextFieldModule,
-    FormsModule,
-    RouterLink,
-    MessagesRoutingModule,
-    MatBottomSheetModule,
-    MatDialogModule,
-    MatProgressSpinnerModule,
-    AlertsModule,
-    MatRippleModule
-  ], providers: [
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatListModule,
+        MatButtonModule,
+        MatIconModule,
+        TextFieldModule,
+        FormsModule,
+        RouterLink,
+        MessagesRoutingModule,
+        MatBottomSheetModule,
+        MatDialogModule,
+        MatProgressSpinnerModule,
+        AlertsModule,
+        MatRippleModule,
+        TitleComponent
+    ], providers: [
 
     MatBottomSheetModule,
 

@@ -41,6 +41,7 @@ import {
     TextImageFormBottomSheetModule
 } from "../shared/components/text-image-form-bottom-sheet/text-image-form-bottom-sheet.module";
 import {ImageUploadItemModule} from "../shared/components/image-upload-item/image-upload-item.module";
+import {TitleComponent} from "../shared/components/title/title.component";
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import {ImageUploadItemModule} from "../shared/components/image-upload-item/imag
         MatRippleModule,
         AvatarComponent,
         TextImageFormBottomSheetModule,
-        ImageUploadItemModule
+        ImageUploadItemModule,
+        TitleComponent
     ],
   exports:[ TimelineComponent]
 

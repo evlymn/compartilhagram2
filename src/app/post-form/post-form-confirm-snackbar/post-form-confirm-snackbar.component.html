@@ -1,0 +1,5 @@
+<div class="snack-bar">
+  <div>{{ languageService.getText('postenviado') }} </div>
+  <a mat-button [routerLink]="['home/post/' + data + '/0']">{{ languageService.getText('visualizar') }}</a>
+  <a (click)="closeSnackbar()">{{ languageService.getText('fechar') }}</a>
+</div>

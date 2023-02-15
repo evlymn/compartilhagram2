@@ -4,7 +4,7 @@ import {NotificationService} from "../../../shared/services/notification/notific
 import {
   TimelineBadgeInfoBottomSheetComponent
 } from "../../timeline-badge-info-bottom-sheet/timeline-badge-info-bottom-sheet.component";
-import {TimelineService} from "../../timeline.service";
+import {TimelineService} from "../../services/timeline.service";
 import {WindowService} from "../../../shared/services/window/window.service";
 
 

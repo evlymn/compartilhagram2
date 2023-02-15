@@ -11,6 +11,7 @@ import {TimeAgoPipe} from "../shared/pipes/time-ago/time-ago-pipe";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import {MatDialogModule} from "@angular/material/dialog";
+import {TitleComponent} from "../shared/components/title/title.component";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         BrowserModule,
         BrowserAnimationsModule,
         MatIconModule,
-        AlertsRoutingModule
+        AlertsRoutingModule,
+        TitleComponent
     ],
     exports: [
         TimeAgoPipe

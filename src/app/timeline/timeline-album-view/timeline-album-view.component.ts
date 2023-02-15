@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {TimelineService} from "../timeline.service";
+import {TimelineService} from "../services/timeline.service";
 import {ImageViewComponent} from "../../image-view/image-view.component";
 import {AlbumService} from "../../shared/services/album/album.service";
 
@@ -17,7 +17,7 @@ export class TimelineAlbumViewComponent implements OnInit {
   postUId = '';
   info: any;
 
-  constructor(private _timelineService: TimelineService,
+  constructor(public timelineService: TimelineService,
               private _dialog: MatDialog,
               private _route: ActivatedRoute,
               private _router: Router,
@@ -25,7 +25,7 @@ export class TimelineAlbumViewComponent implements OnInit {
   ) {
     this.albumId = this._route.snapshot.paramMap.get('albumId') as string;
     this.postUId = this._route.snapshot.paramMap.get('uid') as string;
-    this._timelineService.auth.authState.subscribe(user => {
+    this.timelineService.auth.authState.subscribe(user => {
       if (_router.url.includes('photos')) {
         this.info = {
           photoURL: user?.photoURL,

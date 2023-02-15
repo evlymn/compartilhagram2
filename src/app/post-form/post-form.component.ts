@@ -10,6 +10,7 @@ import {ImageSet} from "./interfaces/image-set";
 import {PostFormService} from "./post-form.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
+import {PostFormConfirmSnackbarComponent} from "./post-form-confirm-snackbar/post-form-confirm-snackbar.component";
 
 @Component({
   selector: 'app-post-form',
@@ -100,7 +101,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
                 total += s.progress;
                 if (total == this.images.length * 100) {
                   this.postFormService.repostToFollowers(postId);
-                  this.cleanForm();
+                  this.cleanForm(postId);
                   this._notificationService.next('postSaved', postId).catch();
                   this.openAlert({
                     text: this.postFormService.languageService.getText('postenviado'),
@@ -113,7 +114,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
         }
       } else {
         this.postFormService.repostToFollowers(postId);
-        this.cleanForm();
+        this.cleanForm(postId);
         this._notificationService.next('postSaved', postId).catch();
         this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
       }
@@ -148,21 +149,25 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openSnack() {
+  openSnack(postId: string) {
     // if (!this.isMobile)
-    this._snackBar.open('Post enviado', 'fechar', {
-      verticalPosition: 'top',
-      duration: 2000
-    });
+    this._snackBar.openFromComponent(PostFormConfirmSnackbarComponent, {
+      duration: 2000,
+      data: postId,
+      verticalPosition: 'top',});
+    // this._snackBar.open('Post enviado', 'fechar', {
+    //   verticalPosition: 'top',
+    //   duration: 2000
+    // });
   }
 
-  cleanForm() {
+  cleanForm(postId: string) {
 
     this.sendingPost = false;
     this.postText = '';
     this.images = [];
     this.close.emit();
-    this.openSnack();
+    this.openSnack(postId);
   }
 
   openAlert(data: any) {

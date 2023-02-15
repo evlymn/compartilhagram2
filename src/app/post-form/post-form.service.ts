@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ImageSet} from "./interfaces/image-set";
-import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {AlertsService} from "../alerts/alerts.service";
-import {TimelineService} from "../timeline/timeline.service";
+import {TimelineService} from "../timeline/services/timeline.service";
 import {AlbumService} from "../shared/services/album/album.service";
 import {LanguageService} from "../shared/services/language/language.service";
 import {PostData} from "./interfaces/post-data";
 import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {NovaService} from "../shared/services/firebase/database/nova.service";
+import {TimelineDatabaseService} from "../timeline/services/timeline-database.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +20,15 @@ export class PostFormService {
   panelPost = true;
   panelSearch = false;
 
-  constructor(private _realtime: RealtimeService,
-              private _storage: StorageService,
-              public auth: AuthenticationService,
-              private _alertsService: AlertsService,
-              private _timelineService: TimelineService,
-              private _albumService: AlbumService,
-              public languageService: LanguageService,
-              private _bottomSheet: MatBottomSheet,) {
+  constructor(
+    private _realtime: TimelineDatabaseService,
+    private _storage: StorageService,
+    public auth: AuthenticationService,
+    private _alertsService: AlertsService,
+    private _timelineService: TimelineService,
+    private _albumService: AlbumService,
+    public languageService: LanguageService,
+    private _bottomSheet: MatBottomSheet,) {
   }
 
   createId() {
@@ -38,11 +40,6 @@ export class PostFormService {
     this.panelPost = !this.panelPost;
   }
 
-  // openFormPanel() {
-  //   this._bottomSheet.open(PostFormBottomSheetComponent, {
-  //     panelClass: 'bottom-sheet-class', disableClose: true
-  //   });
-  // }
 
   selectPanel(event: any, search?: boolean) {
     event.preventDefault();
@@ -56,19 +53,6 @@ export class PostFormService {
     });
   }
 
-  // selectSearchPanel(event: any) {
-  //   this.panelSearch = true;
-  //   this.panelPost = false;
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   this._bottomSheet.open(PostFormBottomSheetComponent, {
-  //     panelClass: 'bottom-sheet-class', disableClose: true
-  //   });
-  // }
-
-  // async getAlbum(albumId: string, postUId: string) {
-  //   return this._albumService.getAlbum(albumId, postUId);
-  // }
 
   async getAlbums() {
     return this._albumService.getAlbums();

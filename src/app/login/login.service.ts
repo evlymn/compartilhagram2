@@ -4,23 +4,27 @@ import {StorageService} from "../shared/services/firebase/storage/storage.servic
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {Router} from "@angular/router";
 import {LanguageService} from "../shared/services/language/language.service";
+import {UserDatabaseService} from "./user-database.service";
+import {UserCredential} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(public auth: AuthenticationService,
-              private storage: StorageService,
-              private database: RealtimeService,
-              private router: Router,
-              public languageService: LanguageService) {
+  constructor(
+    public auth: AuthenticationService,
+    private storage: StorageService,
+    private database: UserDatabaseService,
+    private router: Router,
+    public languageService: LanguageService) {
   }
 
   async login(email: string, password: string) {
     this.auth.setActiveRoute('/home');
     return await this.auth.signInWithEmailAndPassword(email, password);
   }
+
 
 
   async signUp(email: string, password: string, displayName: string, image: string) {
@@ -45,18 +49,22 @@ export class LoginService {
         displayName,
         photoURL: url
       })
-      await this.logUser('users/' + credentials.user.uid, {
-        displayName,
-        photoURL: url,
-        email: credentials.user.email,
-        dateTime: new Date().getTime(),
-        provider: credentials.providerId,
-        uid: credentials.user.uid
-      });
+      // await this.logUserCredentials(credentials);
       this.router.navigate(['home']).then(() => null);
     });
 
     return this.storage.percentage(uploadTask)
+  }
+
+   async logUserCredentials(credentials: UserCredential) {
+    await this.logUser('users/' + credentials.user.uid, {
+      displayName: credentials.user.displayName,
+      photoURL: credentials.user.photoURL,
+      email: credentials.user.email,
+      dateTime: new Date().getTime(),
+      provider: credentials.providerId,
+      uid: credentials.user.uid
+    });
   }
 
   async logUser(path: string, data: any) {

@@ -13,6 +13,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { PostFormActionsComponent } from './post-form-actions/post-form-actions.component';
 import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
 import {MatRippleModule} from "@angular/material/core";
+import { PostFormConfirmSnackbarComponent } from './post-form-confirm-snackbar/post-form-confirm-snackbar.component';
+import {RouterLink} from "@angular/router";
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import {MatRippleModule} from "@angular/material/core";
     FormAlertDialogComponent,
     PostFormActionsComponent,
     PostFormBottomSheetComponent,
+    PostFormConfirmSnackbarComponent,
   ],
     imports: [
         CommonModule,
@@ -33,7 +36,8 @@ import {MatRippleModule} from "@angular/material/core";
         MatDialogModule,
         MatIconModule,
         MatExpansionModule,
-        MatRippleModule
+        MatRippleModule,
+        RouterLink
     ],
   exports: [PostFormComponent,
     FormAlertDialogComponent]

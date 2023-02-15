@@ -23,7 +23,7 @@
           "repostId"
         ],
         "$key": {
-          ".validate": "newData.child('uid').val() == auth.uid"
+          ".validate": "newData.hasChildren(['uid', 'dateTime', 'displayName', 'photoURL']) && newData.child('uid').val() == auth.uid "
         }
       },
       "albums": {
@@ -40,6 +40,13 @@
           "$uid": {
             ".indexOn": "uid"
           }
+        }
+      }
+    },
+    "chat": {
+      "rooms": {
+        "$key": {
+          ".indexOn": "dateTime"
         }
       }
     },

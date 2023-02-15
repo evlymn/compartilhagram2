@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WindowService} from "../../../shared/services/window/window.service";
-import {TimelineService} from "../../timeline.service";
+import {TimelineService} from "../../services/timeline.service";
 
 @Component({
   selector: 'app-post-images-grid',

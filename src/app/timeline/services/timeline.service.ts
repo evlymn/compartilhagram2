@@ -1,36 +1,33 @@
 import {Injectable} from '@angular/core';
-import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
-import {StorageService} from "../shared/services/firebase/storage/storage.service";
-import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
-import {DataSnapshot, equalTo, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
+import {AuthenticationService} from "../../shared/services/firebase/authentication/authentication.service";
+import {DataSnapshot, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
 import {Observable} from "rxjs";
-import {AlertsService} from "../alerts/alerts.service";
-import {LanguageService} from "../shared/services/language/language.service";
-import {ImageViewService} from "../image-view/image-view.service";
-import {FavoriteService} from "../shared/services/favorite/favorite.service";
+import {AlertsService} from "../../alerts/alerts.service";
+import {LanguageService} from "../../shared/services/language/language.service";
+import {ImageViewService} from "../../image-view/image-view.service";
+import {FavoriteService} from "../../shared/services/favorite/favorite.service";
 import {ActivatedRoute} from "@angular/router";
+import {TimelinePostDeleteService} from "./timeline-post-delete.service";
+import {TimelineDatabaseService} from "./timeline-database.service";
+import {TimelineDatabaseTriggersService} from "./timeline-database-triggers.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimelineService {
-
-
-  constructor(private _realtime: RealtimeService,
-              private _storage: StorageService,
-              public auth: AuthenticationService,
-              private _alertsService: AlertsService,
-              public languageService: LanguageService,
-              private _imageView: ImageViewService,
-              private _favoriteService: FavoriteService,
-              private _route: ActivatedRoute,
+  constructor(
+    private _realtime: TimelineDatabaseService,
+    public dbTriggers: TimelineDatabaseTriggersService,
+    public auth: AuthenticationService,
+    private _alertsService: AlertsService,
+    public languageService: LanguageService,
+    private _imageView: ImageViewService,
+    private _favoriteService: FavoriteService,
+    private _route: ActivatedRoute,
+    private _timelinePostDeleteService: TimelinePostDeleteService
   ) {
-  }
 
-
-  onMessageUpdate(callback: (snapshot: DataSnapshot) => unknown) {
-    this._realtime.onChildChanged('timeline/messages/', callback)
   }
 
   updateReposts(post: any) {
@@ -51,20 +48,8 @@ export class TimelineService {
     })
   }
 
-  getMessagesOnValue(callback: (snapshot: DataSnapshot) => unknown, ...queryConstraints: QueryConstraint[]) {
-    return this._realtime.onValue('timeline/messages/', callback, ...queryConstraints)
-  }
-
   getMessages(...queryConstraints: QueryConstraint[]) {
     return this._realtime.get('timeline/messages/', ...queryConstraints)
-  }
-
-  getMessageOnChanged(callback: (snapshot: DataSnapshot) => unknown,) {
-    return this._realtime.onChildChanged('timeline/messages/', callback,)
-  }
-
-  getMessageOnRemoved(callback: (snapshot: DataSnapshot) => unknown) {
-    return this._realtime.onChildRemoved('timeline/messages/', callback,)
   }
 
   createId() {
@@ -81,98 +66,11 @@ export class TimelineService {
       return snapshot.val();
   }
 
-  deleteFollowMessages(postId: string) {
-    this._realtime.get('timeline/follow/followers/' + this.auth.user?.uid).then(snapshot => {
-      snapshot.forEach(child => {
-        this._realtime.delete(`timeline/follow/messages/${child.val().uid}/${postId}`).catch();
-      })
-    })
+
+  async deletePost(post: any) {
+    this._timelinePostDeleteService.deletePost(post.id).catch();
   }
 
-  deleteFavorites(postId: string) {
-    this._realtime.delete(`timeline/favorites/comments/${postId}/`).catch();
-    this._realtime.delete(`timeline/favorites/messages/${postId}/`).catch();
-  }
-
-  deleteReposts(repostId: string, postId: string) {
-    this._realtime.get('timeline/messages/', orderByChild('repostId'), equalTo(postId)).then(snapshot => {
-      snapshot.forEach(child => {
-        this._realtime.update('timeline/messages/' + child.key, {
-          repostDeleted: true
-        }).catch();
-      })
-    })
-    this._realtime.delete(`timeline/repost-by-post/${repostId}/${postId}`).catch();
-    this._realtime.delete(`timeline/repost-by-user/${this.auth.user?.uid}/${repostId}`).catch();
-  }
-
-  deleteStorageImages(images: any[]) {
-    if (images) {
-      images.forEach(image => {
-        this._storage.delete(image.objectName).catch();
-      })
-    }
-  }
-
-  deleteAlbumPhotosByPost(albumId: string, postId: string) {
-    this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
-      snapshot.forEach(child => {
-        if (child.val().postId == postId) {
-          this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list/${child.val().photoId}`).catch();
-        }
-      })
-      this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
-        if (snapshot.size == 0) {
-          this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}`).catch();
-        }
-      })
-    })
-  }
-
-  deleteAlbumPhotosByUser(postId: string) {
-    this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`).then(snapshot => {
-      snapshot.forEach(child => {
-        if (child.val().postId == postId) {
-          this._realtime.delete(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${child.val().photoId}`).catch();
-        }
-      })
-    });
-  }
-
-  deleteMessagesByUser(postId: string) {
-    this._realtime.delete(`timeline/messages-by-user/${this.auth.user?.uid}/${postId}`).catch();
-  }
-
-  deleteSavedPosts(postId: string) {
-    this._realtime.get('timeline/saved').then(snapshot => {
-      snapshot.forEach(user => {
-        user.forEach(post => {
-          if (post.key == postId) {
-            this._realtime.delete(`timeline/saved/${user.key}/${post.key}`).catch();
-          }
-        })
-      })
-    }).catch()
-  }
-
-  deletePost(post: any) {
-    const postId = post.id, repostId = post?.repost, albumId = post?.albumId, images: any[] = post.images;
-
-    return this._realtime.update('timeline/messages/' + postId, {
-      deleted: true
-    }).then(() => {
-      this._realtime.delete('timeline/messages/' + postId).then(() => {
-        this.deleteFollowMessages(postId);
-        this.deleteFavorites(postId);
-        this.deleteReposts(repostId, postId);
-        this.deleteStorageImages(images);
-        this.deleteAlbumPhotosByPost(albumId, postId);
-        this.deleteAlbumPhotosByUser(postId);
-        this.deleteMessagesByUser(postId);
-        this.deleteSavedPosts(postId);
-      });
-    })
-  }
 
   getReposts(postId: string) {
     return this._realtime.onValueChanges(`timeline/repost-by-post/${postId}/`);
@@ -201,12 +99,11 @@ export class TimelineService {
       })
       this._realtime.update(`timeline/messages/${postId}`, {
         comments
-      }).catch();
+      }).catch(reason => console.log(reason));
     })
   }
 
-  async createComment(postId: string, commentText: string, hasImages: boolean = false) {
-    const refId = this._route.snapshot.paramMap.get('id') as string;
+  async createComment(postId: string, commentText: string, hasImages: boolean = false, refId: string) {
     const commentId = this._realtime.createId();
     const path = `timeline/comments/${postId}/${commentId}`;
     return this._realtime.set(path, {
@@ -222,7 +119,7 @@ export class TimelineService {
       isComment: true,
       postId
     }).then(() => {
-      if (refId == postId)
+      if (!refId || refId == postId)
         this.getLast3Comments(postId)
       return commentId
     })
@@ -230,7 +127,7 @@ export class TimelineService {
 
   async updateComment(postId: string, commentId: string, data: any) {
     const path = `timeline/comments/${postId}/${commentId}`;
-    return this._realtime.update(path, data);
+    return this._realtime.update(path, data).then(()=> this.getLast3Comments(postId));
   }
 
   repostToFollowers(postId: string) {
@@ -239,7 +136,6 @@ export class TimelineService {
         const postData = snapshot.val();
         this._realtime.get('timeline/follow/followers/' + this.auth.user?.uid).then(followers => {
           followers.forEach(f => {
-
             this._realtime.update(`timeline/follow/messages/${f.val().uid}/${postId}`, postData).catch();
           })
         })
@@ -259,16 +155,6 @@ export class TimelineService {
   deleteSavedPost(postId: string) {
     return this._realtime.delete(`timeline/saved/${this.auth.user?.uid}/${postId}`);
   }
-
-  getMessagesOnChildAdded(callback: (snapshot: DataSnapshot, previousChildName?: string | null) => unknown, ...queryConstraints: QueryConstraint[]) {
-    return this._realtime.onChildAdded('timeline/messages/', callback, ...queryConstraints,);
-  }
-
-
-  getMessagesOnAddAsync(): Observable<any[]> {
-    return this._realtime.onChildAddedChanges('timeline/messages/', 'id', limitToLast(100));
-  }
-
 
   getMessagesByUser(userId: string): Observable<any[]> {
     return this._realtime.onValueChanges('timeline/messages-by-user/' + userId, 'id', limitToLast(10));
@@ -313,7 +199,8 @@ export class TimelineService {
   }
 
   async setFavorite(post: any) {
-    this._favoriteService.setFavorite(`timeline/favorites/messages/${post.id}/${this.auth.user?.uid}`, {
+    const comm_mess = !!post.isComment ? 'comments/' + post.postId : 'messages';
+    this._favoriteService.setFavorite(`timeline/favorites/${comm_mess}/${post.id}/${this.auth.user?.uid}`, {
         uid: this.auth.user?.uid,
         displayName: this.auth.user?.displayName,
         time: new Date().valueOf()
@@ -333,8 +220,10 @@ export class TimelineService {
     })
   }
 
-  getTotalFavorites(postId: string) {
-    return this._favoriteService.getTotalFavoritesOnChanges(`timeline/favorites/messages/${postId}`);
+  getTotalFavorites(post: any) {
+    const comm_mess = !!post.isComment ? 'comments/' + post.postId : 'messages';
+    const postId = post.id
+    return this._favoriteService.getTotalFavoritesOnChanges(`timeline/favorites/${comm_mess}/${postId}`);
   }
 
 
@@ -400,4 +289,6 @@ export class TimelineService {
   async getTotalCommentFavoritesByUser(postId: string, commentId: string) {
     return await this._favoriteService.getTotalFavorites(`timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`);
   }
+
+
 }

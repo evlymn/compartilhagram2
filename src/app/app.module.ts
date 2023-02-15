@@ -27,8 +27,6 @@ import {
 import {ImageUploadItemModule} from "./shared/components/image-upload-item/image-upload-item.module";
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +55,7 @@ import {ImageUploadItemModule} from "./shared/components/image-upload-item/image
       return auth;
     }),
     provideDatabase(() => {
-      const data = getDatabase( );
+      const data = getDatabase();
       if (environment.emulators) {
         connectDatabaseEmulator(data, '127.0.0.1', 9002);
       }
@@ -82,8 +80,6 @@ import {ImageUploadItemModule} from "./shared/components/image-upload-item/image
     provideMessaging(() => getMessaging()),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
 

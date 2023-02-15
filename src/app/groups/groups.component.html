@@ -1,5 +1,8 @@
 <div class="groups-component">
 
+  <app-title   [title]="groupService.languageService.getText('grupos')"></app-title>
+
+
   <div class="groups-action-panel">
     <button mat-icon-button (click)=" this.createGroupPanelOpened = !this.createGroupPanelOpened"
             class="create-button">
