@@ -1,4 +1,4 @@
-<div class="post-header">
+ <div class="post-header">
 
   <div class="user-info" [ngClass]="post?.deleted && post.uid != timelineService.auth.user?.uid ? 'disabled-post': 'timeline-post-background' ">
     <div class="post-avatar" [routerLink]="['/home/profile', post?.uid]">

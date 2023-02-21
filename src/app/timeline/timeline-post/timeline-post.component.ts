@@ -72,4 +72,8 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
     this.totalComments = event.totalComments;
     this.userCommented = event.userCommented;
   }
+
+  goBack() {
+    history.back();
+  }
 }
