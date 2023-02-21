@@ -113,8 +113,7 @@ mat-expansion-panel {
   flex-wrap: nowrap;
 
   margin-top: 5px;
-  //margin-left: 5px;
-  padding-right: 10px;
+   padding-right: 10px;
   color: #b9b9b9;
 }
 .post-album-time>div:first-child {
@@ -137,12 +136,7 @@ mat-expansion-panel {
 .mat-mdc-chip-action-label {
   color: #b9b9b9!important;
 }
-//mat-chip {
-//  transform: scale(.8);
-//  background-color: #885b70 !important;
-//  color: #f6e1cd !important;
-//  font-weight: normal !important;
-//}
+
 
 mat-icon {
   color: #8f5d78;

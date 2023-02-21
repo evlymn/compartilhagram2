@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {WindowService} from "../../shared/services/window/window.service";
 
 @Component({
   selector: 'app-timeline-post-detail',
@@ -7,10 +8,17 @@ import {Router} from "@angular/router";
   styleUrls: ['./timeline-post-detail.component.scss']
 })
 export class TimelinePostDetailComponent implements OnInit, AfterViewInit {
-  // @ViewChild('toTopButton') toTopButton!: ElementRef;
   id = '';
+  isMobile = this._windowService.sizes.isMobile;
 
-  constructor(private _router: Router) {
+  constructor(
+    private _router: Router,
+    private _windowService: WindowService,
+
+  ) {
+    this._windowService.getSizes.subscribe(s=> {
+     this.isMobile = s.isMobile;
+    })
   }
 
   ngOnInit(): void {
@@ -26,8 +34,6 @@ export class TimelinePostDetailComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this._router.navigate(['details', this.id], {fragment: 'post'}).catch()
-
-    // this.toTopButton.nativeElement.click();
     window.addEventListener('load', d => {
       window.scroll({
         top: 0,
@@ -37,7 +43,5 @@ export class TimelinePostDetailComponent implements OnInit, AfterViewInit {
     })
   }
 
-  commentChanged($event: any) {
 
-  }
 }

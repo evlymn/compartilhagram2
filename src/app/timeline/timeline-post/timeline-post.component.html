@@ -1,7 +1,10 @@
 <!--<div *ngIf="isDetail" style="margin-top: 50px"></div>-->
 
 
-    <i class='bx bxs-chevron-left detail'  (click)="goBack()  " *ngIf="isDetail" ></i>
+<div class="goback"  *ngIf="isDetail"   (click)="goBack()  ">
+  <i class='bx bxs-chevron-left detail'  ></i>
+</div>
+
 
 <div class="timeline-post"
      [style.margin]="isComment? '10px 0 0': '' "
