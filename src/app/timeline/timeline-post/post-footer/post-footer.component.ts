@@ -42,9 +42,17 @@ export class PostFooterComponent implements OnInit {
     private _storageService: StorageService,
     private _alertsService: AlertsService,
     private _route: ActivatedRoute,
-    private windowService: WindowService) {
+    private windowService: WindowService,
+    // private notificationService: NotificationService,
+  ) {
 
 
+    // this.notificationService.observable().subscribe(n => {
+    //   console.log('ddd');
+    //   if (n.key == 'totalcomments' && n.value.postId == this.post.id) {
+    //     this.totalComments = n.value.totalComments;
+    //   }
+    // })
     this.windowService.getSizes.subscribe(sizes => {
       this.isMobile = sizes.isMobile;
     })
@@ -54,6 +62,14 @@ export class PostFooterComponent implements OnInit {
       this.getTotalFavorites();
       this.getReposts();
       this.existsSaved = await this._timelineService.existsSaved(this.post.id);
+    })
+  }
+
+
+  getTotalComments() {
+    this._timelineService.getComments(this.post.id).subscribe(p => {
+      this.totalComments = p.length;
+      this.userCommented = p.some(c => c.uid == this.loggedUId)
     })
   }
 
@@ -138,6 +154,8 @@ export class PostFooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getTotalComments();
+
     // this.commentText  = this.post.text;
 
   }

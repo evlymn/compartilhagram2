@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {TimelineService} from "../../services/timeline.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 @Component({
   selector: 'app-post-comments',
@@ -20,9 +21,12 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _timelineService: TimelineService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+  //  private notificationService: NotificationService,
   ) {
+
     this.postId = _route.snapshot.paramMap.get('id') as string;
+
     this._timelineService.auth.authState.subscribe(user => {
       this.loggedUId = user?.uid as string;
       this.getComments();
@@ -35,7 +39,10 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
       this.comments = c;
       this.totalComments = c.length;
       this.userCommented = c.some(d => d.uid == this.loggedUId)
-      this.commentChanged.emit({totalComments: this.totalComments, userCommented: this.userCommented})
+
+
+     // this.notificationService.next('totalcomments', {postId: this.postId, totalComments: this.totalComments})
+    //  this.commentChanged.emit({totalComments: this.totalComments, userCommented: this.userCommented})
     })
   }
 
