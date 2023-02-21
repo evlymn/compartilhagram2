@@ -79,16 +79,19 @@
           </button>
         </div>
 
-        <app-image-upload-item [isMobile]="isMobile"
-                               (onRemove)="onRemoveImage($event)"
-                               [image]="image.image64"
-                               [id]="2222"
-                               [sending]="sendingPost"></app-image-upload-item>
+        <app-image-upload-item
+          [isMobile]="isMobile"
+          (onRemove)="onRemoveImage($event)"
+          [image]="image.image64"
+          [id]="2222"
+          [sending]="sendingPost"></app-image-upload-item>
 
       </mat-expansion-panel>
 
     </ng-container>
-    <mat-expansion-panel hideToggle [expanded]="repostPanelOpened" (afterExpand)="onExpansionRepostOpen()"
+    <mat-expansion-panel hideToggle
+                         [expanded]="repostPanelOpened"
+                         (afterExpand)="onExpansionRepostOpen()"
                          (afterCollapse)="onExpansionRepostClose()">
        <textarea cdkTextareaAutosize [(ngModel)]="repostText" placeholder="Comentar o reposte?"
                  maxlength="300"></textarea>

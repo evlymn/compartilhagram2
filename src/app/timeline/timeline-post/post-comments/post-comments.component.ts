@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TimelineService} from "../../services/timeline.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
-import {NotificationService} from "../../../shared/services/notification/notification.service";
 
 @Component({
   selector: 'app-post-comments',
@@ -10,7 +9,6 @@ import {NotificationService} from "../../../shared/services/notification/notific
   styleUrls: ['./post-comments.component.scss']
 })
 export class PostCommentsComponent implements OnInit, OnDestroy {
-  @Output() commentChanged = new EventEmitter();
   @Input() isDetail = false
   postId = '';
   loggedUId = '';
@@ -22,7 +20,6 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
   constructor(
     private _timelineService: TimelineService,
     private _route: ActivatedRoute,
-  //  private notificationService: NotificationService,
   ) {
 
     this.postId = _route.snapshot.paramMap.get('id') as string;
@@ -33,16 +30,11 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
     })
   }
 
-
   getComments() {
     this.getCommentsSubscription = this._timelineService.getComments(this.postId).subscribe(c => {
       this.comments = c;
       this.totalComments = c.length;
       this.userCommented = c.some(d => d.uid == this.loggedUId)
-
-
-     // this.notificationService.next('totalcomments', {postId: this.postId, totalComments: this.totalComments})
-    //  this.commentChanged.emit({totalComments: this.totalComments, userCommented: this.userCommented})
     })
   }
 
@@ -55,6 +47,4 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
     if (this.getCommentsSubscription)
       this.getCommentsSubscription.unsubscribe();
   }
-
-
 }

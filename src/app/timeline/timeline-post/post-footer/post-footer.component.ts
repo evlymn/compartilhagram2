@@ -43,16 +43,8 @@ export class PostFooterComponent implements OnInit {
     private _alertsService: AlertsService,
     private _route: ActivatedRoute,
     private windowService: WindowService,
-    // private notificationService: NotificationService,
   ) {
 
-
-    // this.notificationService.observable().subscribe(n => {
-    //   console.log('ddd');
-    //   if (n.key == 'totalcomments' && n.value.postId == this.post.id) {
-    //     this.totalComments = n.value.totalComments;
-    //   }
-    // })
     this.windowService.getSizes.subscribe(sizes => {
       this.isMobile = sizes.isMobile;
     })
@@ -155,9 +147,6 @@ export class PostFooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTotalComments();
-
-    // this.commentText  = this.post.text;
-
   }
 
   onExpansionRepostClose() {
