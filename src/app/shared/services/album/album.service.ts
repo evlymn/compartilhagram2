@@ -17,7 +17,7 @@ export class AlbumService {
   }
 
   async getAlbum(albumId: string, postUId: string) {
-    return this._realtime.get(`timeline/albums/photos/by-post/${postUId}/${albumId}`);
+    return this._realtime.get(`timeline/albums/photos/by-posts/${postUId}/${albumId}`);
   }
 
   async getAlbums() {
@@ -34,6 +34,6 @@ export class AlbumService {
   }
 
   async getPhotos() {
-    return this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`, orderByChild('albumName') );
+    return this._realtime.get(`timeline/albums/photos/by-users/${this.auth.user?.uid}`, orderByChild('albumName') );
   }
 }

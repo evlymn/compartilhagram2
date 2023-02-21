@@ -28,8 +28,9 @@ import {TitleComponent} from "../shared/components/title/title.component";
         AlertsRoutingModule,
         TitleComponent
     ],
+
     exports: [
-        TimeAgoPipe
+        TimeAgoPipe, AlertsListComponent
     ],
     providers: [
         MatSnackBarModule,

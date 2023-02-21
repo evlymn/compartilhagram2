@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AlertsService} from "../alerts.service";
 
 @Component({
@@ -7,17 +7,18 @@ import {AlertsService} from "../alerts.service";
   styleUrls: ['./alerts-list.component.scss']
 })
 export class AlertsListComponent implements OnInit {
+  @Input() isHome = false;
   alerts: any;
 
   constructor(public alertsService: AlertsService) {
     this.alertsService.auth.authState.subscribe(() => {
-      this.getAlerts();
+      this.getAlerts(this.isHome ? 4 : 30);
     })
   }
 
 
-  getAlerts() {
-    this.alerts = this.alertsService.getAlerts();
+  getAlerts(limit: number) {
+    this.alerts = this.alertsService.getAlerts(limit);
   }
 
   ngOnInit(): void {

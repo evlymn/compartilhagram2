@@ -20,6 +20,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AvatarComponent} from "../shared/components/avatar/avatar.component";
+import {AlertsModule} from "../alerts/alerts.module";
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {AvatarComponent} from "../shared/components/avatar/avatar.component";
         MatInputModule,
         MatTooltipModule,
         AvatarComponent,
+        AlertsModule,
 
 
     ]

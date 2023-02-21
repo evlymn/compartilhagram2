@@ -20,7 +20,7 @@ import {MessagesModule} from "./messages/messages.module";
 import {GroupsModule} from "./groups/groups.module";
 import {ProfileModule} from "./profile/profile.module";
 import {ServiceWorkerModule} from '@angular/service-worker';
-import {ChatGroupsModule} from "./chat-groups/chat-groups.module";
+// import {ChatGroupsModule} from "./chat-groups/chat-groups.module";
 import {
   TextImageFormBottomSheetModule
 } from "./shared/components/text-image-form-bottom-sheet/text-image-form-bottom-sheet.module";
@@ -43,7 +43,7 @@ import {ImageUploadItemModule} from "./shared/components/image-upload-item/image
     MessagesModule,
     GroupsModule,
     ProfileModule,
-    ChatGroupsModule,
+    // ChatGroupsModule,
     ImageUploadItemModule,
     TextImageFormBottomSheetModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

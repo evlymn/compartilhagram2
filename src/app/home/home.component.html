@@ -31,6 +31,10 @@
     <div class='content-desktop'>
       <router-outlet></router-outlet>
     </div>
-    <div *ngIf="!isMiddleSize" class='content-right'></div>
+    <div *ngIf="!isMiddleSize" class='content-right'>
+
+      <app-alerts-list [isHome]="true"></app-alerts-list>
+
+    </div>
   </div>
 </ng-container>

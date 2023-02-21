@@ -30,7 +30,7 @@ export class ProfileService {
   }
 
   async getPhotosByUser(userId: string) {
-    return this._realtime.get(`timeline/albums/photos/by-user/${userId}`);
+    return this._realtime.get(`timeline/albums/photos/by-users/${userId}`);
   }
 
   async getRepostsByUser(userId: string) {

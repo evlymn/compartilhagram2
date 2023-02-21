@@ -56,8 +56,8 @@ export class AlertsService {
     })
   }
 
-  getAlerts() {
-    return this._realtimeService.onValueChanges(`alerts/${this.auth.user?.uid}/list/`, 'id', limitToLast(30));
+  getAlerts(limit: number) {
+    return this._realtimeService.onValueChanges(`alerts/${this.auth.user?.uid}/list/`, 'id', limitToLast(limit));
   }
 
 

@@ -71,25 +71,25 @@ export class TimelinePostDeleteService implements OnDestroy {
   }
 
   deleteAlbumPhotosByPost(albumId: string, postId: string) {
-    this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
+    this._realtime.get(`/timeline/albums/photos/by-posts/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
       snapshot.forEach(child => {
         if (child.val().postId == postId) {
-          this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list/${child.val().photoId}`).catch();
+          this._realtime.delete(`/timeline/albums/photos/by-posts/${this.auth.user?.uid}/${albumId}/list/${child.val().photoId}`).catch();
         }
       })
-      this._realtime.get(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
+      this._realtime.get(`/timeline/albums/photos/by-posts/${this.auth.user?.uid}/${albumId}/list`).then(snapshot => {
         if (snapshot.size == 0) {
-          this._realtime.delete(`/timeline/albums/photos/by-post/${this.auth.user?.uid}/${albumId}`).catch();
+          this._realtime.delete(`/timeline/albums/photos/by-posts/${this.auth.user?.uid}/${albumId}`).catch();
         }
       })
     })
   }
 
   deleteAlbumPhotosByUser(postId: string) {
-    this._realtime.get(`timeline/albums/photos/by-user/${this.auth.user?.uid}`).then(snapshot => {
+    this._realtime.get(`timeline/albums/photos/by-users/${this.auth.user?.uid}`).then(snapshot => {
       snapshot.forEach(child => {
         if (child.val().postId == postId) {
-          this._realtime.delete(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${child.val().photoId}`).catch();
+          this._realtime.delete(`timeline/albums/photos/by-users/${this.auth.user?.uid}/${child.val().photoId}`).catch();
         }
       })
     });

@@ -112,7 +112,7 @@ export class PostFormService {
       uploadTask.then(async (snapshot: { ref: { fullPath: string; }; }) => {
         const imageURL = await this._storage.getDownloadURL(snapshot.ref.fullPath);
         const photoId = this._realtime.createId();
-        this._realtime.set(`timeline/albums/photos/by-user/${this.auth.user?.uid}/${photoId}`, {
+        this._realtime.set(`timeline/albums/photos/by-users/${this.auth.user?.uid}/${photoId}`, {
           albumName: album?.album ?? 'timeline',
           albumId: album?.id ?? null,
           imageURL,
@@ -122,7 +122,7 @@ export class PostFormService {
         }).catch();
 
         if (album) {
-          this._realtime.update(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/info`, {
+          this._realtime.update(`timeline/albums/photos/by-posts/${this.auth.user?.uid}/${album.id}/info`, {
             albumName: album?.album,
             albumId: album?.id ?? null,
             uid: uid!,
@@ -131,7 +131,7 @@ export class PostFormService {
             photoId
           }).catch();
 
-          await this._realtime.set(`timeline/albums/photos/by-post/${this.auth.user?.uid}/${album.id}/list/${photoId}`, {
+          await this._realtime.set(`timeline/albums/photos/by-posts/${this.auth.user?.uid}/${album.id}/list/${photoId}`, {
             imageURL,
             albumName: album?.album ?? null,
             albumId: album?.id ?? null,

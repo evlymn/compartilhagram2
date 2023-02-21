@@ -7,7 +7,6 @@
        matTooltipPosition="right">
       <i class='bx bx-world'></i>
     </a>
-    <!--    [@openCloseMenuMobile]="!homeService.showUpMenu? 'open' : 'closed'"-->
     <a mat-list-item (click)="search($event)"
        #tooltip="matTooltip"
        [matTooltip]="homeService.languageService.getText('pesquisar')"
