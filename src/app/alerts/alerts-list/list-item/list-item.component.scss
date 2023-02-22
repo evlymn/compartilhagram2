@@ -4,7 +4,7 @@
   flex-direction: row;
   margin: 10px;
   align-items: center;
-  background-color: rgba(129, 129, 129, 0.24);
+  background-color: #421b31;
   border-radius: 5px;
   padding: 7px;
   color: #cccccc;
@@ -34,13 +34,12 @@ mat-icon {
 }
 
 .display-name {
-  //color: #f6b268;
   font-weight: bold;
   margin-bottom: 3px;
 }
 
 small {
-  color: #837eb4;
+  color: #818181;
 }
 
 .alert-image {

@@ -33,7 +33,11 @@
     </div>
     <div *ngIf="!isMiddleSize" class='content-right'>
 
-      <app-alerts-list [isHome]="true"></app-alerts-list>
+
+      <div class="last-alerts">
+        <app-alerts-list [isHome]="true"></app-alerts-list>
+
+      </div>
 
     </div>
   </div>
