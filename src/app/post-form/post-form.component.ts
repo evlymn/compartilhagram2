@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from "@angular/forms";
 
 import {map, Observable, startWith} from "rxjs";
@@ -18,11 +18,11 @@ import {PostFormConfirmSnackbarComponent} from "./post-form-confirm-snackbar/pos
   styleUrls: ['./post-form.component.scss']
 })
 export class PostFormComponent implements OnInit, AfterViewInit {
-  @ViewChild('postTextElement') postTextElement!: ElementRef;
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
   albumControl = new FormControl('');
   postText = '';
+  postTextChanged = '';
   album?: string = undefined;
   isMobile = false;
   images: ImageSet[] = [];
@@ -69,13 +69,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   async savePost() {
-
-
-    this.postText = this.postTextElement.nativeElement.innerHTML;
-
-
+    this.postText = this.postTextChanged;
     if (this.postText.trim().length > 0 || this.images.length > 0) {
-
       const postId = this.postFormService.createId() as string;
       this.sendingPost = true;
       let albumData: any;
@@ -101,7 +96,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
               this.images[i].progress = s.progress;
               if (s.progress == 100) {
-                // console.log('fim do upload ' + i.toString());
                 sub?.unsubscribe();
                 total += s.progress;
                 if (total == this.images.length * 100) {
@@ -163,10 +157,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       data: postId,
       verticalPosition: 'top',
     });
-    // this._snackBar.open('Post enviado', 'fechar', {
-    //   verticalPosition: 'top',
-    //   duration: 2000
-    // });
   }
 
   cleanForm(postId: string) {
@@ -230,25 +220,37 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
-      e.preventDefault();
-      const clipboardItems = e.clipboardData.items;
-      const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
-      if (images.length > 0) {
-        e.preventDefault();
-        const image = images[0] as any;
-        const file = image.getAsFile();
-        if (this.images.length > 5) return
-        const image64 = await this._storageService.fileToBase64(file) as string
-        this.images.push({image64, file});
-      } else {
-        const text = e.clipboardData.getData('text/plain');
-        const selection = window.getSelection()
-        if (selection?.rangeCount) {
-          selection.deleteFromDocument()
-          selection.getRangeAt(0).insertNode(document.createTextNode(text))
-        }
-      }
-    })
+    // this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
+    //   await this.getClipboardData(e);
+    // })
+  }
+
+  private async getClipboardData(e: any) {
+    // e.preventDefault();
+    // const clipboardItems = e.clipboardData.items;
+    // const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
+    // if (images.length > 0) {
+    //   const image = images[0] as any;
+    //   const file = image.getAsFile();
+    //   if (this.images.length > 5) return
+    //   const image64 = await this._storageService.fileToBase64(file) as string
+    //   this.images.push({image64, file});
+    // } else {
+    //   const plainText = e.clipboardData.getData('text/plain');
+    //   const selection = window.getSelection()
+    //   if (selection?.rangeCount) {
+    //     selection.deleteFromDocument()
+    //     selection.getRangeAt(0).insertNode(document.createTextNode(plainText))
+    //   }
+    // }
+  }
+
+  imagePasted(e: any) {
+    if (this.images.length > 5) return
+    this.images.push({image64: e.image64, file: e.file});
+  }
+
+  textChange(e: any) {
+    this.postTextChanged = e;
   }
 }

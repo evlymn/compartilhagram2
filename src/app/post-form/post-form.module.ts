@@ -15,6 +15,7 @@ import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-b
 import {MatRippleModule} from "@angular/material/core";
 import { PostFormConfirmSnackbarComponent } from './post-form-confirm-snackbar/post-form-confirm-snackbar.component';
 import {RouterLink} from "@angular/router";
+import {EditableTextAreaModule} from "../shared/components/editable-text-area/editable-text-area.module";
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {RouterLink} from "@angular/router";
         MatIconModule,
         MatExpansionModule,
         MatRippleModule,
-        RouterLink
+        RouterLink,
+        EditableTextAreaModule
     ],
   exports: [PostFormComponent,
     FormAlertDialogComponent]

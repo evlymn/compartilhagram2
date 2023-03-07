@@ -11,9 +11,15 @@
                [style]="sendingPost ? 'background-color:gray' : ''"
                class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</small>
       </div>
-<div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >
+<!--<div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >-->
 
-</div>
+<!--</div>-->
+
+      <app-editable-text-area
+        [postText]="postText"
+        (onImagePasted)="imagePasted($event)"
+        (onTextChanged)="textChange($event)">
+      </app-editable-text-area>
 <!--      <textarea *ngIf="false" cdkTextareaAutosize autofocus-->
 <!--                [disabled]="sendingPost"-->
 <!--                [(ngModel)]="postText"-->
