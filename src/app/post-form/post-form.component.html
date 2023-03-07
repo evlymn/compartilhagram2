@@ -11,13 +11,14 @@
                [style]="sendingPost ? 'background-color:gray' : ''"
                class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</small>
       </div>
+<div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >
 
-
-      <textarea cdkTextareaAutosize autofocus #postTextElement
-                [disabled]="sendingPost"
-                [(ngModel)]="postText"
-                [placeholder]="postFormService.languageService.getText('doceoutravessura')"
-                maxlength="300"></textarea>
+</div>
+<!--      <textarea *ngIf="false" cdkTextareaAutosize autofocus-->
+<!--                [disabled]="sendingPost"-->
+<!--                [(ngModel)]="postText"-->
+<!--                [placeholder]="postFormService.languageService.getText('doceoutravessura')"-->
+<!--                maxlength="300"></textarea>-->
 
       <div class="form-actions">
         <div>

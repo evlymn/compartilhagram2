@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineService} from "../../services/timeline.service";
 import {NotificationService} from "../../../shared/services/notification/notification.service";
@@ -9,6 +9,8 @@ import {NotificationService} from "../../../shared/services/notification/notific
   styleUrls: ['./post-body.component.scss']
 })
 export class PostBodyComponent implements OnInit {
+
+  @ViewChild('postTextElement') postTextElement!: ElementRef;
   @Input() post: any;
   @Input() isComment = false;
   @Input() isDetail = false;
@@ -30,8 +32,6 @@ export class PostBodyComponent implements OnInit {
       if (s.key == 'togglePostPanel' && s.value == this.post.id) {
         this.togglePostPanel();
       }
-
-
       if (s.key == 'toggleDeletePanel' && s.value == this.post.id) {
         this.toggleDeletePanel();
       }
@@ -41,13 +41,11 @@ export class PostBodyComponent implements OnInit {
     })
   }
 
-
   async deletePost() {
-
     this.timelineService.deletePost(this.post).then(() => {
-      this._notificationService.next('postDeleted', this.post.id);
+      // this._notificationService.next('postDeleted', this.post.id);
       if (!this.post.isComment)
-        this._router.navigate(['/home']).then(() => null);
+        this._router.navigate(['/home']).catch();
     })
   }
 
@@ -76,17 +74,15 @@ export class PostBodyComponent implements OnInit {
   }
 
   async editPost() {
-
+    this.postText = this.postTextElement.nativeElement.innerHTML;
     this.postPanelOpened = !this.postPanelOpened;
     const newPostText = this.postText;
     const parentId = this._route.snapshot.paramMap.get('id') as string;
-    console.log(this.post.id, parentId)
-    this.timelineService.editPost(this.post.id, {text: newPostText}, parentId, this.isComment).then(() => {
-      this._notificationService.next('postEdited', {
-        text: newPostText.trim(),
-        id: this.post.id
-
-      });
+    this.timelineService.updatePost(this.post.id, {text: newPostText}, parentId, this.isComment).then(() => {
+      // this._notificationService.next('postEdited', {
+      //   text: newPostText.trim(),
+      //   id: this.post.id
+      // });
       this.post.postText = newPostText.trim();
     }).catch();
   }
@@ -96,6 +92,22 @@ export class PostBodyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    // document.addEventListener('keydown', (e: any) => {
+    //   navigator.clipboard.addEventListener('clipboardchange', e=>{
+    //     console.log(e)
+    //   })
+    //   // navigator.clipboard.readText().then(d=> {
+    //   //   console.log(d)
+    //   // })
+    //   //
+    //   // navigator.clipboard.read().then(d=> {
+    //   //   console.log(d)
+    //   // })
+    //
+    // })
+
   }
 
 }

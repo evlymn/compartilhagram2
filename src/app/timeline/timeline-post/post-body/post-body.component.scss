@@ -1,4 +1,4 @@
-textarea {
+.textarea {
   width: 100%;
   min-height: 90px;
   padding: 12px 20px;
@@ -41,13 +41,18 @@ mat-expansion-panel {
   //padding-left: 5px;
 }
 
+.post-text > img {
+  width: 90% !important;
+}
 
 
 .post-text {
   //margin-top: 5px;
   margin-left: 3px;
   margin-bottom: 1px;
+  overflow-y: scroll;
 }
+
 
 .mat-item-div {
   display: flex;

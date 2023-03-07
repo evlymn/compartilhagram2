@@ -64,6 +64,7 @@ import {TitleComponent} from "../shared/components/title/title.component";
     LastCommentsItemComponent,
   ],
     imports: [
+
         CommonModule,
         TimelineRoutingModule,
         MatProgressSpinnerModule,

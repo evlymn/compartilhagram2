@@ -10,7 +10,6 @@ import {LanguageService} from "../shared/services/language/language.service";
 import {PostData} from "./interfaces/post-data";
 import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {NovaService} from "../shared/services/firebase/database/nova.service";
 import {TimelineDatabaseService} from "../timeline/services/timeline-database.service";
 
 @Injectable({
@@ -67,16 +66,26 @@ export class PostFormService {
   }
 
   async savePost(postId: string, images: ImageSet[], postText: string, album?: { id: string, album?: string }) {
+    const createdDate = new Date().getTime();
     const uid = this.auth.user?.uid;
     const displayName = this.auth.user?.displayName;
     const postData = {
       id: postId,
+      owner: {
+        uid,
+        displayName: displayName!,
+        displayNameSearch: displayName!.toLowerCase(),
+        photoURL: this.auth.user?.photoURL,
+      },
       uid,
       displayName: displayName!,
       displayNameSearch: displayName!.toLowerCase(),
       photoURL: this.auth.user?.photoURL,
+
       text: postText,
-      dateTime: new Date().getTime(),
+      dateTime: createdDate,
+      createdDate,
+      updateDate: createdDate,
       albumName: album?.album ?? null,
       albumId: album?.id ?? null,
       hasImages: images.length > 0

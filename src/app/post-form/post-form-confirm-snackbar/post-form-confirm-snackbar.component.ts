@@ -13,7 +13,6 @@ constructor(
   private _bottomSheetRef: MatSnackBarRef<PostFormConfirmSnackbarComponent>,
   @Inject(MAT_SNACK_BAR_DATA) public data: any,
   public languageService: LanguageService) {
-  console.log(data)
 }
 
 closeSnackbar() {

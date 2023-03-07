@@ -1,5 +1,13 @@
 export interface PostData {
   id: string,
+  owner: {
+    uid: string,
+    displayName: string,
+    displayNameSearch: string,
+    photoURL: string,
+  }
+  createdDate: number,
+  updateDate: number,
   uid: string,
   displayName: string,
   displayNameSearch: string,
@@ -7,7 +15,7 @@ export interface PostData {
   text: string,
   dateTime: number,
   albumName: string,
-  albumId:string,
+  albumId: string,
   hasImages: boolean,
   images: string[],
   comments: string[]

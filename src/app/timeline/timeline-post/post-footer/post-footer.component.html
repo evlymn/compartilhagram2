@@ -1,9 +1,6 @@
 <div class="post-footer">
 
-
   <div class="post-actions" *ngIf="post">
-    <!--    [routerLink]="['/home']"-->
-
     <ng-container *ngIf="!isComment">
       <div class="user-interaction" (click)="goBack()  " *ngIf="isDetail" matRipple>
         <div class="button-action">

@@ -18,8 +18,7 @@ import {PostFormConfirmSnackbarComponent} from "./post-form-confirm-snackbar/pos
   styleUrls: ['./post-form.component.scss']
 })
 export class PostFormComponent implements OnInit, AfterViewInit {
-
-
+  @ViewChild('postTextElement') postTextElement!: ElementRef;
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
   albumControl = new FormControl('');
@@ -70,7 +69,13 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   async savePost() {
+
+
+    this.postText = this.postTextElement.nativeElement.innerHTML;
+
+
     if (this.postText.trim().length > 0 || this.images.length > 0) {
+
       const postId = this.postFormService.createId() as string;
       this.sendingPost = true;
       let albumData: any;
@@ -134,6 +139,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
+
+
   }
 
   async fileChangeEvent(e: any) {
@@ -154,7 +161,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     this._snackBar.openFromComponent(PostFormConfirmSnackbarComponent, {
       duration: 2000,
       data: postId,
-      verticalPosition: 'top',});
+      verticalPosition: 'top',
+    });
     // this._snackBar.open('Post enviado', 'fechar', {
     //   verticalPosition: 'top',
     //   duration: 2000
@@ -212,7 +220,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     this.postFormService.panelPost = !this.postFormService.panelPost;
     this.postFormService.panelSearch = !this.postFormService.panelSearch;
     this.searchText = '';
-    if(this.isDialog) {
+    if (this.isDialog) {
       this.close.emit()
       return;
     }
@@ -222,6 +230,17 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
+    this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
+      const clipboardItems = e.clipboardData.items;
+      e.preventDefault();
+      const items = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
+      if (items.length > 0) {
+          const item = items[0] as any;
+          const file = item.getAsFile();
+          if (this.images.length > 5) return
+          const image = await this._storageService.fileToBase64(file) as string
+          this.images.push({image64: image, file: file});
+      }
+    })
   }
 }

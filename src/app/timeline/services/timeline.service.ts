@@ -79,8 +79,9 @@ export class TimelineService {
     return this._realtime.onValueChanges(`timeline/repost-by-post/${postId}/`);
   }
 
-  async editPost(postId: string, data: any, parentId: string, isComment: boolean) {
+  async updatePost(postId: string, data: any, parentId: string, isComment: boolean) {
     data.bad_word = false;
+    data.updateDate = new Date().getTime();
     let path = 'timeline/messages/' + postId;
     if (isComment) {
       path = `timeline/comments/${parentId}/${postId}`

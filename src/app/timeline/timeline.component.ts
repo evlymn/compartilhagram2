@@ -3,7 +3,7 @@ import {WindowService} from "../shared/services/window/window.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineService} from "./services/timeline.service";
 import {NotificationService} from "../shared/services/notification/notification.service";
-import {limitToLast, Unsubscribe} from "@angular/fire/database";
+import {limitToLast, orderByChild, Unsubscribe} from "@angular/fire/database";
 import {PostData} from "../post-form/interfaces/post-data";
 import {Subscription} from "rxjs";
 import {LanguageService} from "../shared/services/language/language.service";
@@ -65,14 +65,16 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   showNewPost() {
-     console.log('dddddddd')
+    console.log('dddddddd')
     this.postItems.push(...this.newPostItems);
     this.newPostItems = [];
   }
 
 
   async getTimelineMessages() {
-    const snapshot = await this.timelineService.getMessages(limitToLast(100));
+    const snapshot = await this.timelineService.getMessages(
+      orderByChild('updateDate'),
+      limitToLast(100));
     snapshot.forEach(p => {
       this.postItems.push(p.val());
     })

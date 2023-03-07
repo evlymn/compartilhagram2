@@ -20,10 +20,10 @@
       "messages": {
         ".indexOn": [
           "displayNameSearch",
-          "repostId"
+          "repostId",
+          "updateDate"
         ],
         "$key": {
-          ".validate": "newData.hasChildren(['uid', 'dateTime', 'displayName', 'photoURL']) && newData.child('uid').val() == auth.uid "
         }
       },
       "albums": {

@@ -2,23 +2,31 @@
   <div class="post-body" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
     <ng-container *ngIf="post?.text">
       <div class="post-text-edit">
-        <div class="post-text" [routerLink]="['/home/post', post?.id, index]">
-          {{post?.text}}
-        </div>
+        <div class="post-text" [innerHTML]="post.text" [routerLink]="['/home/post', post?.id, index]"></div>
       </div>
     </ng-container>
-    <ng-container *ngIf=" post?.hasImages &&  !post?.images">
+    <ng-container *ngIf="post?.hasImages &&  !post?.images">
       <div class="loading-image">
         <i class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
       </div>
     </ng-container>
 
     <mat-expansion-panel
-      hideToggle [expanded]="postPanelOpened && !isRepost"
+      hideToggle
+      [expanded]="postPanelOpened && !isRepost"
       (afterExpand)="onExpansionPostOpen()"
       (afterCollapse)="onExpansionPostClose()">
-       <textarea cdkTextareaAutosize [(ngModel)]="postText"
-                 maxlength="300"></textarea>
+
+
+      <div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >
+
+      </div>
+
+
+<!--       <textarea cdkTextareaAutosize [(ngModel)]="postText"-->
+<!--                 maxlength="300"></textarea>-->
+
+
       <div class="panel-post-actions">
         <button (click)="togglePostPanel()" mat-button class="form-button form-button-post">
           cancelar
@@ -32,7 +40,9 @@
   </div>
 
 </ng-container>
-<mat-expansion-panel class="panel-delete" hideToggle [expanded]="deletePanelOpened  && !isRepost"
+<mat-expansion-panel class="panel-delete"
+                     hideToggle
+                     [expanded]="deletePanelOpened  && !isRepost"
                      (afterExpand)="onExpansionDeleteOpen()">
 
   <button (click)="toggleDeletePanel()" class="button-expansion button-warning" mat-button>
@@ -68,7 +78,6 @@
 <ng-container *ngIf="!isDetail">
   <app-post-images-grid
     [isComment]="isComment"
-
     [post]="post"
     [postId]="post?.id"
     [postIndex]="index"
