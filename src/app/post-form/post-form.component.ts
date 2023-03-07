@@ -231,15 +231,23 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
-      const clipboardItems = e.clipboardData.items;
       e.preventDefault();
-      const items = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
-      if (items.length > 0) {
-          const item = items[0] as any;
-          const file = item.getAsFile();
-          if (this.images.length > 5) return
-          const image = await this._storageService.fileToBase64(file) as string
-          this.images.push({image64: image, file: file});
+      const clipboardItems = e.clipboardData.items;
+      const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
+      if (images.length > 0) {
+        e.preventDefault();
+        const image = images[0] as any;
+        const file = image.getAsFile();
+        if (this.images.length > 5) return
+        const image64 = await this._storageService.fileToBase64(file) as string
+        this.images.push({image64, file});
+      } else {
+        const text = e.clipboardData.getData('text/plain');
+        const selection = window.getSelection()
+        if (selection?.rangeCount) {
+          selection.deleteFromDocument()
+          selection.getRangeAt(0).insertNode(document.createTextNode(text))
+        }
       }
     })
   }
