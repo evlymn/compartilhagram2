@@ -20,10 +20,11 @@
       "messages": {
         ".indexOn": [
           "displayNameSearch",
-          "repostId",
-          "updateDate"
+          "repostId", "updateDate"
         ],
         "$key": {
+          //".validate": "newData.child('uid').val() == auth.uid ",
+
         }
       },
       "albums": {
@@ -38,16 +39,31 @@
       "follow": {
         "messages": {
           "$uid": {
-            ".indexOn": "uid"
+
+            ".indexOn": "uid",
+
           }
         }
       }
     },
     "chat": {
+      "messages": {
+        "favorites": {
+          "$key": {
+            "$key1": {
+
+              "uid": {
+                ".indexOn": ".value"
+              }
+            }
+          }
+        }
+      },
       "rooms": {
         "$key": {
           ".indexOn": "dateTime"
         }
+
       }
     },
     "groups": {
