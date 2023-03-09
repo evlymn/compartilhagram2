@@ -34,7 +34,7 @@ export class FavoriteService {
   }
 
   async getTotalFavorites(path: string,...queryConstraints: QueryConstraint[]) {
-    const total = await this._realtimeService.get(path,...queryConstraints);
+    const total = await this._realtimeService.get(path, ...queryConstraints);
     return total.size;
   }
 

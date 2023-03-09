@@ -3,7 +3,7 @@ import {ImageViewService} from "../../image-view/image-view.service";
 import {MessagesService} from "../messages.service";
 import {FavoriteService} from "../../shared/services/favorite/favorite.service";
 import {AuthenticationService} from "../../shared/services/firebase/authentication/authentication.service";
-import {equalTo, orderByChild} from "@angular/fire/database";
+import {equalTo, orderByValue} from "@angular/fire/database";
 
 @Component({
   selector: 'app-chat-item',
@@ -24,22 +24,29 @@ export class MessagesItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+     this.getTotalFavoritesByUser( `chat/messages/favorites/${this.item.roomId}/${this.item.id}/uid/`).catch();
   }
 
   openImage(imageURL: any) {
     this._imageView.openImageViewDialog(imageURL);
   }
 
-  setFavorite(post: any) {
-    const path = `chat/messages/favorites/${this.item.roomId}/${this.item.id}/`;
+  setFavorite() {
+    const path = `chat/messages/favorites/${this.item.roomId}/${this.item.id}/uid/`;
     const data = {
       uid: this._auth.user?.uid,
       displayName: this._auth.user?.displayName,
       time: new Date().valueOf()
     }
     this._favoriteService.setFavorite(path, data).then(async () => {
-      this.totalFavoritesByUser = await this._favoriteService.getTotalFavorites(path, orderByChild('uid'), equalTo(this._auth.user?.uid as string))
+      await this.getTotalFavoritesByUser(path);
     });
+  }
+
+  private async getTotalFavoritesByUser(path: string) {
+    this.totalFavoritesByUser = await this._favoriteService.getTotalFavorites(path,
+      orderByValue(),
+      equalTo(this._auth.user?.uid!));
   }
 
   toggleDelete(id: string) {
