@@ -111,7 +111,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
           iframe.src = url.href.replace('watch?v=', 'embed/');
           iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
           iframe.allowFullscreen = true;
-          iframe.setAttribute('style', 'max-width:420px; width:100%; max-height: 315px; height:315px ')
+          iframe.setAttribute('style', 'max-width:460px; width:100%; max-height: 315px; height:315px ')
           selection.getRangeAt(0).insertNode(iframe)
         } else {
           const a = document.createElement('a');
