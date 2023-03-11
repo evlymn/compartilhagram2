@@ -21,8 +21,15 @@
   padding: 5px;
   border-radius: 5px;
 }
+.trigger-button {
+  //padding: 5px;
 
-
+}
+i{
+  font-size: 20px;
+  color: #f6b268;
+margin-right: 7px;
+}
 .textarea {
   width: 100%;
   min-height: 27px;
@@ -318,4 +325,27 @@ mat-expansion-panel  {
 
   align-items: center;
   //margin: 5px;
+}
+mat-menu {
+  width: 100% !important;
+}
+.emojis {
+
+  top: -1000px;
+  left: -100px;
+  position: absolute;
+  z-index: 10000!important;
+  background-color: transparent!important;
+  //.mat-mdc-menu-panel.mat-mdc-menu-panel {
+  //  overflow: visible!important;
+  //}
+  //.mat-mdc-menu-panel {
+  //  background-color: transparent!important;
+  //}
+}
+.dropdown {
+  z-index: 1000!important;
+}
+.dropdown-menu {
+  z-index: 1000!important;
 }

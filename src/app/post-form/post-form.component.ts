@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
-
 import {map, Observable, startWith} from "rxjs";
 import {WindowService} from "../shared/services/window/window.service";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
@@ -11,6 +10,7 @@ import {PostFormService} from "./post-form.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {PostFormConfirmSnackbarComponent} from "./post-form-confirm-snackbar/post-form-confirm-snackbar.component";
+import {LanguageService} from "../shared/services/language/language.service";
 
 @Component({
   selector: 'app-post-form',
@@ -18,6 +18,8 @@ import {PostFormConfirmSnackbarComponent} from "./post-form-confirm-snackbar/pos
   styleUrls: ['./post-form.component.scss']
 })
 export class PostFormComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('emojisdiv') emojisdiv!: ElementRef;
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
   albumControl = new FormControl('');
@@ -31,6 +33,10 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   albumsFiltered!: Observable<string[]>;
   searchText = '';
   isProfile = false;
+  emoticon = '';
+  showEmoji = false;
+
+  i18n = {}
 
   constructor(
     public windowService: WindowService,
@@ -39,9 +45,10 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     public postFormService: PostFormService,
     private _notificationService: NotificationService,
     private _snackBar: MatSnackBar,
-    private _router: Router
+    private _router: Router,
+    private _languageService: LanguageService,
   ) {
-
+    this.emojiPickerTranslation();
     this.isProfile = window.location.pathname.includes('profile');
 
     this._notificationService.observable().subscribe(n => {
@@ -52,12 +59,43 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     })
     this.windowService.getSizes.subscribe(size => {
       this.isMobile = size.isMobile;
+      this.hideEmojis();
     });
 
     this.postFormService.auth.authState.subscribe(() => {
       this.getAlbums();
     })
+  }
 
+  private emojiPickerTranslation() {
+    this.i18n = {
+      search: this._languageService.getText('pesquisar'),
+      emojilist: 'List of emoji',
+      notfound: 'No Emoji Found',
+      clear: 'Clear',
+      categories:
+        {
+          search: this._languageService.getText('resultadopesquisa'),
+          recent: this._languageService.getText('recentes'),
+          people: 'Smileys & People',
+          nature: 'Animals & Nature',
+          foods: 'Food & Drink',
+          activity: 'Activity',
+          places: 'Travel & Places',
+          objects: 'Objects',
+          symbols: 'Symbols',
+          flags: 'Flags',
+          custom: 'Custom',
+        },
+      skintones: {
+        1: 'Default Skin Tone',
+        2: 'Light Skin Tone',
+        3: 'Medium-Light Skin Tone',
+        4: 'Medium Skin Tone',
+        5: 'Medium-Dark Skin Tone',
+        6: 'Dark Skin Tone',
+      },
+    };
   }
 
   getAlbums() {
@@ -70,6 +108,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
   async savePost() {
     this.postText = this.postTextChanged;
+    console.log(this.postText);
     if (this.postText.trim().length > 0 || this.images.length > 0) {
       const postId = this.postFormService.createId() as string;
       this.sendingPost = true;
@@ -83,7 +122,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
           }
         }
       }
-
 
       let total = 0;
       this.images = await this.postFormService.savePost(postId, this.images, this.postText, albumData);
@@ -102,10 +140,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
                   this.postFormService.repostToFollowers(postId);
                   this.cleanForm(postId);
                   this._notificationService.next('postSaved', postId).catch();
-                  this.openAlert({
-                    text: this.postFormService.languageService.getText('postenviado'),
-                    action: 'closeForm'
-                  });
                 }
               }
             }
@@ -115,7 +149,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
         this.postFormService.repostToFollowers(postId);
         this.cleanForm(postId);
         this._notificationService.next('postSaved', postId).catch();
-        this.openAlert({text: this.postFormService.languageService.getText('postenviado'), action: 'closeForm'});
       }
     }
   }
@@ -127,31 +160,27 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
     this.isMobile = this.windowService.sizes.isMobile;
     this.albumsFiltered = this.albumControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
-
-
   }
 
   async fileChangeEvent(e: any) {
-
     if (e.target.files.length + this.images.length > 6) {
-      this.openAlert({text: "Escolha no máximo 6 imagens."});
+      this.openAlert("Escolha no máximo 6 imagens.");
       return;
     }
+
     for (let i = 0; i < e.target.files.length; i++) {
-      if (this.images.length > 5) return
+      if (i > 4) return
       const image = await this._storageService.fileToBase64(e.target.files[i]) as string
       this.images.push({image64: image, file: e.target.files[i]});
     }
   }
 
   openSnack(postId: string) {
-    // if (!this.isMobile)
     this._snackBar.openFromComponent(PostFormConfirmSnackbarComponent, {
       duration: 2000,
       data: postId,
@@ -160,7 +189,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   cleanForm(postId: string) {
-
     this.sendingPost = false;
     this.postText = '';
     this.images = [];
@@ -168,23 +196,11 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     this.openSnack(postId);
   }
 
-  openAlert(data: any) {
-
-    // if (!this.isMobile)
-    //   return
-    // const dialogRef = this._dialog.open(FormAlertDialogComponent, {
-    //   width: '100%',
-    //   height: '100px',
-    //   panelClass: 'bg-color',
-    //   data: data
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result == 'closeForm') {
-    //     this.close.next('closeForm')
-    //   }
-    //   console.log('The dialog was closed');
-    // });
+  openAlert(text: string) {
+    this._snackBar.open(text, 'ok', {
+      duration: 2000,
+      verticalPosition: 'top',
+    })
   }
 
   deleteImg(i: number) {
@@ -220,29 +236,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
-    //   await this.getClipboardData(e);
-    // })
-  }
-
-  private async getClipboardData(e: any) {
-    // e.preventDefault();
-    // const clipboardItems = e.clipboardData.items;
-    // const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
-    // if (images.length > 0) {
-    //   const image = images[0] as any;
-    //   const file = image.getAsFile();
-    //   if (this.images.length > 5) return
-    //   const image64 = await this._storageService.fileToBase64(file) as string
-    //   this.images.push({image64, file});
-    // } else {
-    //   const plainText = e.clipboardData.getData('text/plain');
-    //   const selection = window.getSelection()
-    //   if (selection?.rangeCount) {
-    //     selection.deleteFromDocument()
-    //     selection.getRangeAt(0).insertNode(document.createTextNode(plainText))
-    //   }
-    // }
   }
 
   imagePasted(e: any) {
@@ -252,5 +245,20 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
   textChange(e: any) {
     this.postTextChanged = e;
+  }
+
+  addEmoji(e: any) {
+    this.showEmoji = false;
+    this.hideEmojis();
+    this.emoticon = e.emoji.native;
+  }
+
+  hideEmojis() {
+    this.emojisdiv.nativeElement.removeAttribute('style')
+  }
+
+  showEmojiEvt(e: MouseEvent) {
+    const position = 'top: ' + e.clientY.toString() + 'px; left:' + e.clientX.toString() + 'px';
+    this.emojisdiv.nativeElement.setAttribute('style', position)
   }
 }

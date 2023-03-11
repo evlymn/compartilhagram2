@@ -1,3 +1,15 @@
+
+<div  class="emojis" #emojisdiv    *ngIf="!isMobile"  >
+
+
+  <emoji-mart    (emojiClick)="addEmoji($event)"
+                 [i18n]="i18n"
+
+                 [style]="{ position: 'relative', bottom: '20px', right: '20px' }"
+  ></emoji-mart>
+</div>
+
+
 <ng-container *ngIf="!this.isProfile" >
 <div class="timeline-form-mobile">
 
@@ -16,9 +28,11 @@
 <!--</div>-->
 
       <app-editable-text-area
+        [emoticon]="emoticon"
         [postText]="postText"
         (onImagePasted)="imagePasted($event)"
         (onTextChanged)="textChange($event)">
+
       </app-editable-text-area>
 <!--      <textarea *ngIf="false" cdkTextareaAutosize autofocus-->
 <!--                [disabled]="sendingPost"-->
@@ -26,18 +40,35 @@
 <!--                [placeholder]="postFormService.languageService.getText('doceoutravessura')"-->
 <!--                maxlength="300"></textarea>-->
 
+
+
       <div class="form-actions">
         <div>
           <button [disabled]="images.length>5 || sendingPost" mat-icon-button
                   class="icon-button-mobile"
                   (click)="file.click()">
             <mat-icon [ngClass]="isMobile? '': 'smaller-icon' ">image</mat-icon>
+
           </button>
+          <i  (click)="showEmojiEvt($event)"  *ngIf="!isMobile"  class='bx bx-smile'></i>
+
+
+
+
+
+<!--            <emoji-mart [set]="emojione"></emoji-mart>-->
+<!--            <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart>-->
+<!--            <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart>-->
+<!--            <emoji-mart-->
+<!--              [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"-->
+<!--            ></emoji-mart>-->
+
+
+
           <small> {{ 6 - images.length}}</small>
 
           <span *ngIf="sendingPost" class="send-post">{{postFormService.languageService.getText('enviando')}}...</span>
         </div>
-
         <div class="div-spinner">
 
           <span> {{ 300 - postText.length}}</span>

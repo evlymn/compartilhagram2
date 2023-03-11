@@ -35,7 +35,8 @@
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
-              "./node_modules/boxicons/css/boxicons.min.css"
+              "./node_modules/boxicons/css/boxicons.min.css",
+              "./node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
             "scripts": [],
             "serviceWorker": true,
@@ -102,7 +103,8 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
             "scripts": []
           }

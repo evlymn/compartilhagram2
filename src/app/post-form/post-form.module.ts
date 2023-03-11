@@ -16,6 +16,8 @@ import {MatRippleModule} from "@angular/material/core";
 import { PostFormConfirmSnackbarComponent } from './post-form-confirm-snackbar/post-form-confirm-snackbar.component';
 import {RouterLink} from "@angular/router";
 import {EditableTextAreaModule} from "../shared/components/editable-text-area/editable-text-area.module";
+import {MatMenuModule} from "@angular/material/menu";
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
 
 
 @NgModule({
@@ -26,21 +28,23 @@ import {EditableTextAreaModule} from "../shared/components/editable-text-area/ed
     PostFormBottomSheetComponent,
     PostFormConfirmSnackbarComponent,
   ],
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        FormsModule,
-        MatDialogModule,
-        MatIconModule,
-        MatExpansionModule,
-        MatRippleModule,
-        RouterLink,
-        EditableTextAreaModule
-    ],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    FormsModule,
+    MatDialogModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatRippleModule,
+    RouterLink,
+    EditableTextAreaModule,
+    MatMenuModule,
+    PickerModule
+  ],
   exports: [PostFormComponent,
     FormAlertDialogComponent]
 

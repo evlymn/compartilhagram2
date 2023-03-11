@@ -16,7 +16,7 @@
             <i *ngIf="!item.imageURL" class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
           </div>
           <div class="actions" [ngClass]="item.uid == loggedUid? 'timeago-right': 'timeago-left' ">
-            <span matRipple *ngIf="item.uid != loggedUid" (click)="setFavorite(item.id)">
+            <span matRipple *ngIf="item.uid != loggedUid" (click)="setFavorite()">
               <i class='bx ' [ngClass]=" totalFavoritesByUser > 0 ? 'bxs-heart' : 'bx-heart'  "></i>
             </span>
 

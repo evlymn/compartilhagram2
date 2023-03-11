@@ -18,7 +18,7 @@ export class FirestoreService {
   }
 
   enableIndexedDbPersistence() {
-    enableIndexedDbPersistence(this.firestore)
+    enableIndexedDbPersistence(this.firestore).catch();
   }
 
   list<T>(path: string, ...q: QueryConstraint[]): Observable<T[]> {

@@ -162,3 +162,13 @@ mat-expansion-panel {
   color: whitesmoke!important;}
 
 
+.emojis {
+  background-color: transparent!important;
+  overflow: visible!important;
+  .mat-mdc-menu-panel.mat-mdc-menu-panel {
+    overflow: visible!important;
+  }
+  .mat-mdc-menu-panel {
+    background-color: transparent!important;
+  }
+}

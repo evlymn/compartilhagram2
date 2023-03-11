@@ -20,20 +20,20 @@ export const timeline = {
     }),
   onUpdate: functions.database.ref("timeline/{key}")
     .onUpdate((snapshot, context) => {
-      const afterKey = snapshot.after.key;
       const beforeKey = snapshot.before.key;
+      const afterKey = snapshot.after.key;
       const uid = context.auth?.uid;
       functions.logger.info("onUpdate", {afterKey, beforeKey, uid});
       return true;
     }),
 };
 
-
 // // Start writing functions
 
 // // https://firebase.google.com/docs/functions/typescript
 //
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+export const processaTiquete =
+  functions.https.onRequest((request, response) => {
+  functions.logger.info("Hello logs!", {structuredData: true});
+  response.send("Hello from Firebase!");
+});
