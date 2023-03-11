@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineService} from "../../services/timeline.service";
 import {NotificationService} from "../../../shared/services/notification/notification.service";
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-body',
@@ -10,6 +11,7 @@ import {NotificationService} from "../../../shared/services/notification/notific
 })
 export class PostBodyComponent implements OnInit {
 
+  html!: SafeHtml;
   @ViewChild('postTextElement') postTextElement!: ElementRef;
   @Input() post: any;
   @Input() isComment = false;
@@ -23,6 +25,7 @@ export class PostBodyComponent implements OnInit {
   deletePanelOpened = false
 
   constructor(
+    public sanitizer: DomSanitizer,
     public timelineService: TimelineService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -43,7 +46,6 @@ export class PostBodyComponent implements OnInit {
 
   async deletePost() {
     this.timelineService.deletePost(this.post).then(() => {
-      // this._notificationService.next('postDeleted', this.post.id);
       if (!this.post.isComment)
         this._router.navigate(['/home']).catch();
     })
@@ -79,10 +81,6 @@ export class PostBodyComponent implements OnInit {
     const newPostText = this.postText;
     const parentId = this._route.snapshot.paramMap.get('id') as string;
     this.timelineService.updatePost(this.post.id, {text: newPostText}, parentId, this.isComment).then(() => {
-      // this._notificationService.next('postEdited', {
-      //   text: newPostText.trim(),
-      //   id: this.post.id
-      // });
       this.post.postText = newPostText.trim();
     }).catch();
   }
@@ -92,21 +90,7 @@ export class PostBodyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
-    // document.addEventListener('keydown', (e: any) => {
-    //   navigator.clipboard.addEventListener('clipboardchange', e=>{
-    //     console.log(e)
-    //   })
-    //   // navigator.clipboard.readText().then(d=> {
-    //   //   console.log(d)
-    //   // })
-    //   //
-    //   // navigator.clipboard.read().then(d=> {
-    //   //   console.log(d)
-    //   // })
-    //
-    // })
+    this.html = this.sanitizer.bypassSecurityTrustHtml(this.post.text);
 
   }
 
