@@ -54,17 +54,22 @@
 
 .one-image {
   width: 100%;
+  height: 100%;
 }
 
 .one-image-comments {
   width: 90%;
+
 }
 
 .one-image-album {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
+  max-height: 350px;
+  overflow-x: hidden;
 }
 
 
