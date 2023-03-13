@@ -11,37 +11,11 @@
           [text]="postText"
           [showEmojis]="true"
           [images]="images"
-          (onImagePasted)="imagePasted($event)"
+          [totalCharacters]="totalCharacters"
           (onTextChanged)="textChange($event)"
-          (onFileChanged)="getFileOnChange($event)"
           (onImagesChanged)="imagesChanged($event)"
         >
         </app-editable-text-area>
-
-<!--        <app-post-form-images-grid-->
-<!--          [images]="images"-->
-<!--          [sendingPost]="sendingPost"-->
-<!--          [isMobile]="isMobile"></app-post-form-images-grid>-->
-
-<!--        <div class="images-upload-grid" *ngIf="images.length> 0">-->
-<!--          <div *ngFor="let img  of images; let i = index"-->
-<!--               [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"-->
-<!--               class="image-grid-item"-->
-<!--               [style]="'background-image:url(' + img.image64 + ')'">-->
-<!--            <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="100" alt="">-->
-<!--            <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)"-->
-<!--                      [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"-->
-<!--                      class="image-grid-item-delete">disabled_by_default-->
-<!--            </mat-icon>-->
-<!--            <mat-spinner class="image-grid-spinner" *ngIf="img.progress" color="accent" mode="determinate"-->
-<!--                         [value]="img.progress"></mat-spinner>-->
-<!--          </div>-->
-<!--        </div>-->
-
-
-
-
-
 
 
         <div *ngIf="images.length>0">
@@ -53,13 +27,15 @@
                 class="custom-mat-form-field mat-form-field-W100"
                 appearance="fill"
                 floatLabel="auto">
-                <input matInput [disabled]="sendingPost" type="text"
+                <input matInput
+                       [disabled]="sendingPost"
+                       type="text"
                        [placeholder]="postFormService.languageService.getText('albuns')"
                        [formControl]="albumControl"
                        [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" autoSelectActiveOption autoActiveFirstOption>
                   <mat-option *ngFor="let option of albumsFiltered | async" [value]="option">
-                    {{ option}}
+                    {{option}}
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
@@ -69,6 +45,7 @@
 
         <div class="post-form-actions">
           <app-post-form-actions (onCancel)="cancelSearch()"
+                                 [disableSabeButton]="disableSabeButton"
                                  (onSave)="savePost()"
                                  (onSearch)="searchUser()"
                                  [sendingPost]="sendingPost"
@@ -96,8 +73,6 @@
     </mat-accordion>
 
   </div>
-
-
 
 
 </ng-container>

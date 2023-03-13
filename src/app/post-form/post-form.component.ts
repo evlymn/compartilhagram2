@@ -33,6 +33,8 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   searchText = '';
   isProfile = false;
   emoticon = '';
+  disableSabeButton = false;
+  totalCharacters = 300;
 
   constructor(
     public windowService: WindowService,
@@ -59,7 +61,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       this.getAlbums();
     })
   }
-
 
   getAlbums() {
     this.postFormService.getAlbums().then(d => {
@@ -127,24 +128,23 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     );
   }
 
-  async fileChangeEvent(e: any) {
-    await this.getFileOnChange(e);
-  }
-
-  async getFileOnChange(e: any) {
-    if (e.target.files.length + this.images.length > 6) {
-      this.openAlert("Escolha no máximo 6 imagens.");
-      return;
-    }
-
-
-    for (let i = 0; i < e.target.files.length; i++) {
-      console.log(i < e.target.files.length)
-      const image = await this._storageService.fileToBase64(e.target.files[i]) as string;
-
-      this.images.push({image64: image, file: e.target.files[i]});
-    }
-  }
+  // async fileChangeEvent(e: any) {
+  //   await this.getFileOnChange(e);
+  // }
+  //
+  // async getFileOnChange(e: any) {
+  //   if (e.target.files.length + this.images.length > 6) {
+  //     this.openAlert("Escolha no máximo 6 imagens.");
+  //     return;
+  //   }
+  //
+  //
+  //   for (let i = 0; i < e.target.files.length; i++) {
+  //     console.log(i < e.target.files.length)
+  //     const image = await this._storageService.fileToBase64(e.target.files[i]) as string;
+  //     this.images.push({image64: image, file: e.target.files[i]});
+  //   }
+  // }
 
   openSnack(postId: string) {
     this._snackBar.openFromComponent(PostFormConfirmSnackbarComponent, {
@@ -167,10 +167,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       duration: 2000,
       verticalPosition: 'top',
     })
-  }
-
-  deleteAutocompleteText() {
-    this.albumControl.setValue('');
   }
 
   searchUser() {
@@ -200,19 +196,17 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  imagePasted(e: any) {
-    if (this.images.length > 5) return
-    this.images.push({image64: e.image64, file: e.file});
-  }
+
 
   textChange(e: any) {
     this.postTextChanged = e;
+   this.disableSabeButton = this.postTextChanged.length >  this.totalCharacters;
   }
 
-  imagesChanged(e: any) {
+  imagesChanged(e: ImageSet[]) {
     this.images = []
     this.images.push(...e);
-
+   // console.log(this.images)
   }
 }
 

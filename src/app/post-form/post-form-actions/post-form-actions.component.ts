@@ -14,6 +14,7 @@ export class PostFormActionsComponent {
   @Input() panelPost = false;
   @Input() sendingPost = false;
   @Input() panelSearch = false;
+  @Input() disableSabeButton = false;
 
   constructor(public postFormService: PostFormService,) {
   }
