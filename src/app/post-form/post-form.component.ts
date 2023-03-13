@@ -88,7 +88,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
 
       let total = 0;
       this.images = await this.postFormService.savePost(postId, this.images, this.postText, albumData);
-
       if (this.images.length > 0) {
         const postImages: string[] = [];
         for (let i = 0; i < this.images.length; i++) {

@@ -8,9 +8,10 @@
                  class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</small>
         </div>
         <app-editable-text-area
-          [emoticon]="emoticon"
+
           [text]="postText"
           [showEmojis]="true"
+          [images]="images"
           (onImagePasted)="imagePasted($event)"
           (onTextChanged)="textChange($event)"
           (onFileChanged)="getFileOnChange($event)"
@@ -46,7 +47,7 @@
 
         <div *ngIf="images.length>0">
           <div class="autocomplete-title"
-               [ngClass]="isMobile?'autocomplete-title-mobile': ''">{{postFormService.languageService.getText('criarouadicionaralbum')}} </div>
+               [ngClass]="isMobile?'autocomplete-title-mobile': ''">{{postFormService.languageService.getText('criarouadicionaralbum')}}</div>
           <div class="form-actions-dialog">
             <div *ngIf="images.length>0" class="input-flex-autocomplete">
               <mat-form-field
@@ -68,7 +69,9 @@
         </div>
 
         <div class="post-form-actions">
-          <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
+          <app-post-form-actions (onCancel)="cancelSearch()"
+                                 (onSave)="savePost()"
+                                 (onSearch)="searchUser()"
                                  [sendingPost]="sendingPost"
                                  [panelSearch]="postFormService.panelSearch"
                                  [panelPost]="postFormService.panelPost"></app-post-form-actions>
@@ -84,7 +87,9 @@
                [(ngModel)]="searchText" [placeholder]="postFormService.languageService.getText('pesquisarporusuario')">
 
         <div class="post-form-actions">
-          <app-post-form-actions (onCancel)="cancelSearch()" (onSave)="savePost()" (onSearch)="searchUser()"
+          <app-post-form-actions (onCancel)="cancelSearch()"
+                                 (onSave)="savePost()"
+                                 (onSearch)="searchUser()"
                                  [sendingPost]="sendingPost"
                                  [panelSearch]="postFormService.panelSearch"
                                  [panelPost]="postFormService.panelPost"></app-post-form-actions>

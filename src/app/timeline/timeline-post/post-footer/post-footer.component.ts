@@ -178,16 +178,6 @@ export class PostFooterComponent implements OnInit {
     history.back();
   }
 
-  // async fileChangeEvent(e: any) {
-  //   this.image.image64 = await this._storageService.fileToBase64(e.target.files[0]) as string
-  //   this.image.file = e.target.files[0];
-  //   this.file.nativeElement.value = null;
-  // }
-
-  // onRemoveImage(e: any) {
-  //   this.image.image64 = null;
-  // }
-
   commentTextChanged(e: any) {
     this.newCommentText = e;
   }
@@ -195,7 +185,6 @@ export class PostFooterComponent implements OnInit {
   commentImagesChanged(e: any) {
     this.images = [];
     this.images.push(...e);
-    console.log(this.images)
   }
 
   repostTextChanged(e: any) {

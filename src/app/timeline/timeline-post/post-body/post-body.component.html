@@ -1,10 +1,14 @@
 <ng-container *ngIf="post">
   <div class="post-body" [ngClass]="isRepost ? 'post-body-background-repost' : '' ">
-    <ng-container *ngIf="post?.text">
-      <div class="post-text-edit">
+
+
+    <ng-container *ngIf="post?.text && !postPanelOpened">
+      <div class="post-text-edit"  >
         <div class="post-text" [innerHTML]="this.html" ></div>
       </div>
     </ng-container>
+
+
     <ng-container *ngIf="post?.hasImages &&  !post?.images">
       <div class="loading-image">
         <i class='bx bx-loader-alt bx-flip-horizontal bx-spin'></i>
@@ -18,9 +22,21 @@
       (afterCollapse)="onExpansionPostClose()">
 
 
-      <div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >
+      <app-editable-text-area
+        [maxImages]="6"
+        [showEmojis]="true"
+        [text]="postText"
+        [images]="images"
+        (onTextChanged)="textChanged($event)"
+        (onImagesChanged)="imagesChanged($event)"
+        (onImageDeleted)="imageDeleted($event)"
+      ></app-editable-text-area>
 
-      </div>
+<!--      <div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >-->
+
+<!--      </div>-->
+
+
 
 
 <!--       <textarea cdkTextareaAutosize [(ngModel)]="postText"-->

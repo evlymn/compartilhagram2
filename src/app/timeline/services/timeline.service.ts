@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationService} from "../../shared/services/firebase/authentication/authentication.service";
-import {DataSnapshot, limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
+import {limitToLast, orderByChild, QueryConstraint, startAt,} from "@angular/fire/database";
 import {Observable} from "rxjs";
 import {AlertsService} from "../../alerts/alerts.service";
 import {LanguageService} from "../../shared/services/language/language.service";
@@ -68,8 +68,8 @@ export class TimelineService {
 
 
   async deletePost(post: any) {
-    if(post.isComment){
-       this.deleteComment(post.postId, post.id).catch();
+    if (post.isComment) {
+      this.deleteComment(post.postId, post.id).catch();
     }
     this._timelinePostDeleteService.deletePost(post.id).catch();
   }
@@ -131,7 +131,7 @@ export class TimelineService {
 
   async updateComment(postId: string, commentId: string, data: any) {
     const path = `timeline/comments/${postId}/${commentId}`;
-    return this._realtime.update(path, data).then(()=> this.getLast3Comments(postId));
+    return this._realtime.update(path, data).then(() => this.getLast3Comments(postId));
   }
 
   repostToFollowers(postId: string) {
@@ -294,5 +294,25 @@ export class TimelineService {
     return await this._favoriteService.getTotalFavorites(`timeline/favorites/comments/${postId}/${commentId}/${this.auth.user?.uid}`);
   }
 
+  deleteImagesByIndex(postId: string, images: any) {
+    this._realtime.get(`timeline/messages/${postId}/images/`).then(snapshot => {
+      let imagesArray: any[] = [];
+      if (snapshot.exists())
+        snapshot.val().forEach((d: any) => {
+          imagesArray.push(d)
+        })
+
+      images.forEach((i: any) => {
+        imagesArray = imagesArray.filter((img: any) => img.imageURL != i.imageURL)
+      })
+      this._realtime.update(`timeline/messages/${postId}/`, {
+        images: imagesArray
+      }).catch();
+
+    })
+    // this._realtime.set(`timeline/messages/${postId}/images/${index}`,{
+    //   null
+    // })
+  }
 
 }

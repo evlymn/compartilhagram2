@@ -17,8 +17,10 @@ export class ImagesGridComponent {
     private _storageService: StorageService
   ) {
   }
+
   deleteImg(i: number) {
+    const image = this.images[i]
     this.images.splice(i, 1);
-    this.onImageDeleted.emit(i);
+    this.onImageDeleted.emit({index: i, imageURL: image.imageURL});
   }
 }

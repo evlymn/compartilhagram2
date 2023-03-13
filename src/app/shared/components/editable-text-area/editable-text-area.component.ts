@@ -29,6 +29,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Output() onTextChanged = new EventEmitter();
   @Output() onFileChanged = new EventEmitter();
   @Output() onImagesChanged = new EventEmitter();
+  @Output() onImageDeleted= new EventEmitter();
   @Input() acceptPasteImages = true
   @Input() images: ImageSet[] = [];
   @Input() maxImages = 6;
@@ -36,10 +37,15 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Input() multipleImages = true;
   @Input() showImages = true;
   @Input() showEmojis = false
-  @Input() text = ''
-  @Input() emoticon = ''
+
+  @Input() set text(value: string ){
+    this._text = value;
+    this.onTextChanged.emit(value);
+  }
+
   @Input() totalCharacters = 300;
   @Input() isMobile = false;
+  _text = ''
   range: any;
   i18n = {};
   total = 0;
@@ -59,12 +65,14 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['emoticon']) {
-      this.getText(this.emoticon);
-    }
+    // if (changes['emoticon']) {
+    //   this.getText(this.emoticon);
+    // }
   }
 
   ngAfterViewInit(): void {
+
+    this.onTextChanged.emit(this.text);
     this.postTextElement.nativeElement.addEventListener('drop', async (e: any) => {
       e.preventDefault();
     })
@@ -214,7 +222,8 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   }
 
   imageDeleted(e: any) {
-    this.images.slice(e);
+    this.images.slice(e.index);
     this.onImagesChanged.emit(this.images);
+    this.onImageDeleted.emit(e);
   }
 }

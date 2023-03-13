@@ -92,8 +92,14 @@ export class PostFormService {
     } as PostData
     await this._realtime.set('timeline/messages/' + postId, postData);
     this._realtime.set(`timeline/messages-by-user/${uid}/${postId}`, postData).catch();
+    return await this.uploadImages(images, postId, uid, displayName, album);
+  }
 
+  async uploadImages(images: ImageSet[], postId: string, uid: string | undefined, displayName: string | null | undefined, album: { id: string; album?: string } | undefined) {
     for (let i = 0; i < images.length; i++) {
+      if (images[i].imageURL)  {
+       continue
+      }
       images[i].postId = postId as string;
       const local = `timeline/messages/${postId}/images/${i}`;
       const objectName = `${local}/${images[i].file.name}`;

@@ -40,13 +40,16 @@ export class TimelinePostComponent implements OnInit, AfterViewInit {
 
     this.timelineService.auth.authState.subscribe(() => {
       this.getPost().catch();
+      if (this.post?.hasImages)
+        if (this.post.images)
+          this.post.images = this.post.images?.filter((e: any) => e?.imageURL)
     })
   }
 
 
   async getPost() {
     if (!this.isRepost) {
-      if (this.postId && !this.post?.isComment ) {
+      if (this.postId && !this.post?.isComment) {
         this.post = await this.timelineService.getPost(this.postId);
         this.postText = this.post.text;
       }

@@ -3,7 +3,7 @@
     <div class="textarea" id="editarea"
          #postTextElement
          [contentEditable]="true"
-         [innerHTML]="text">
+         [innerHTML]="_text">
     </div>
     <div class="actions">
       <i class='bx bxs-image-alt' *ngIf="showImages" (click)="fileUp.click()"></i>
