@@ -1,7 +1,28 @@
+<div class="component">
+  <div>
+    <div class="textarea" id="editarea"
+         #postTextElement
+         [contentEditable]="true"
+         [innerHTML]="text">
+    </div>
+    <div class="actions">
+      <i class='bx bxs-image-alt' *ngIf="showImages" (click)="fileUp.click()"></i>
+      <ng-container *ngIf="!isMobile">
+        <i (click)="showEmojiEvt($event)" *ngIf="showEmojis" class='bx bx-smile'></i>
+      </ng-container>
+      <span class="total-text"
+            [ngClass]="totalCharacters - total < 0 ? 'total-text-red': '' "> {{ totalCharacters - total}}</span>
+    </div>
+  </div>
 
+  <app-post-form-images-grid
+    (onImageDeleted)="imageDeleted($event)"
+    [images]="images"
+    [sendingPost]="sendingPost"
+    [isMobile]="isMobile"></app-post-form-images-grid>
 
-<div class="textarea" draggable="true" id="editarea"
-     #postTextElement
-     [contentEditable]="true"
-     [innerHTML]="postText">
 </div>
+<input type="file" style="display: none;"
+       (change)="fileChangeEvent($event)" [multiple]="multipleImages"
+       accept="image/x-png,image/gif,image/jpeg"
+       #fileUp/>

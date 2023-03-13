@@ -63,14 +63,23 @@
       <mat-expansion-panel hideToggle [expanded]="commentPanelOpened" (afterExpand)="onExpansionCommentOpen()"
                            (afterCollapse)="onExpansionClose()">
 
-      <textarea cdkTextareaAutosize [(ngModel)]="commentText"   placeholder="Deixe seu recado!"
-                maxlength="300"></textarea>
+<!--        <app-editable-text-area-->
+
+<!--          [maxImages]="1"-->
+<!--          [showEmojis]="true"-->
+<!--          [text]="commentText"-->
+<!--          (onTextChanged)="commentTextChanged($event)"-->
+
+<!--        ></app-editable-text-area>-->
+
+              <textarea cdkTextareaAutosize [(ngModel)]="commentText"   placeholder="Deixe seu recado!"
+                        maxlength="300"></textarea>
 
         <div class="comment-actions">
 
-          <button (click)="file.click()" mat-flat-button class="form-button form-button-image">
-            <i class='bx bx-image-alt'></i>
-          </button>
+          <!--          <button (click)="file.click()" mat-flat-button class="form-button form-button-image">-->
+          <!--            <i class='bx bx-image-alt'></i>-->
+          <!--          </button>-->
           <button (click)="createComment()" mat-flat-button class="form-button form-button-post">
             comentar
           </button>

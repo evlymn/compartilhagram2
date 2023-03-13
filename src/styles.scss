@@ -110,11 +110,15 @@ mat-tab-group {
   background-color: #481a34!important;
 }
 
+.bg-color-transparent   {
+  background-color: transparent!important;
+}
 
 
-.no-padding .mat-dialog-container {
+.no-padding   {
   padding: 0 !important;
 }
+
 .mat-mdc-tab-label-container {
   display: none!important;
 }

@@ -18,6 +18,7 @@ import {RouterLink} from "@angular/router";
 import {EditableTextAreaModule} from "../shared/components/editable-text-area/editable-text-area.module";
 import {MatMenuModule} from "@angular/material/menu";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import { PostFormImagesGridComponent } from './post-form-images-grid/post-form-images-grid.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     PostFormActionsComponent,
     PostFormBottomSheetComponent,
     PostFormConfirmSnackbarComponent,
+    PostFormImagesGridComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     PickerModule
   ],
   exports: [PostFormComponent,
-    FormAlertDialogComponent]
+    FormAlertDialogComponent,
+    PostFormImagesGridComponent]
 
 })
 export class PostFormModule {

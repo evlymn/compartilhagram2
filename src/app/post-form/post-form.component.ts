@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {map, Observable, startWith} from "rxjs";
 import {WindowService} from "../shared/services/window/window.service";
@@ -19,7 +19,6 @@ import {LanguageService} from "../shared/services/language/language.service";
 })
 export class PostFormComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('emojisdiv') emojisdiv!: ElementRef;
   @Output() close = new EventEmitter();
   @Input() isDialog = false;
   albumControl = new FormControl('');
@@ -34,10 +33,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   searchText = '';
   isProfile = false;
   emoticon = '';
-  showEmoji = false;
-
-  i18n = {}
-
   constructor(
     public windowService: WindowService,
     private _storageService: StorageService,
@@ -48,9 +43,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _languageService: LanguageService,
   ) {
-    this.emojiPickerTranslation();
     this.isProfile = window.location.pathname.includes('profile');
-
     this._notificationService.observable().subscribe(n => {
       if (n.key == 'showSearchPanel') {
         this.postFormService.panelPost = !this.postFormService.panelPost;
@@ -59,7 +52,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     })
     this.windowService.getSizes.subscribe(size => {
       this.isMobile = size.isMobile;
-      this.hideEmojis();
     });
 
     this.postFormService.auth.authState.subscribe(() => {
@@ -67,36 +59,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     })
   }
 
-  private emojiPickerTranslation() {
-    this.i18n = {
-      search: this._languageService.getText('pesquisar'),
-      emojilist: 'List of emoji',
-      notfound: 'No Emoji Found',
-      clear: 'Clear',
-      categories:
-        {
-          search: this._languageService.getText('resultadopesquisa'),
-          recent: this._languageService.getText('recentes'),
-          people: 'Smileys & People',
-          nature: 'Animals & Nature',
-          foods: 'Food & Drink',
-          activity: 'Activity',
-          places: 'Travel & Places',
-          objects: 'Objects',
-          symbols: 'Symbols',
-          flags: 'Flags',
-          custom: 'Custom',
-        },
-      skintones: {
-        1: 'Default Skin Tone',
-        2: 'Light Skin Tone',
-        3: 'Medium-Light Skin Tone',
-        4: 'Medium Skin Tone',
-        5: 'Medium-Dark Skin Tone',
-        6: 'Dark Skin Tone',
-      },
-    };
-  }
+
 
   getAlbums() {
     this.postFormService.getAlbums().then(d => {
@@ -129,9 +92,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       if (this.images.length > 0) {
         const postImages: string[] = [];
         for (let i = 0; i < this.images.length; i++) {
-
           const sub = this.images[i].uploadTask?.subscribe(async s => {
-
               this.images[i].progress = s.progress;
               if (s.progress == 100) {
                 sub?.unsubscribe();
@@ -168,14 +129,20 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
   async fileChangeEvent(e: any) {
+    await this.getFileOnChange(e);
+  }
+
+  async getFileOnChange(e: any) {
     if (e.target.files.length + this.images.length > 6) {
       this.openAlert("Escolha no máximo 6 imagens.");
       return;
     }
 
+
     for (let i = 0; i < e.target.files.length; i++) {
-      if (i > 4) return
-      const image = await this._storageService.fileToBase64(e.target.files[i]) as string
+      console.log(i < e.target.files.length)
+      const image = await this._storageService.fileToBase64(e.target.files[i]) as string;
+
       this.images.push({image64: image, file: e.target.files[i]});
     }
   }
@@ -201,10 +168,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       duration: 2000,
       verticalPosition: 'top',
     })
-  }
-
-  deleteImg(i: number) {
-    this.images.splice(i, 1);
   }
 
   deleteAutocompleteText() {
@@ -247,18 +210,17 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     this.postTextChanged = e;
   }
 
-  addEmoji(e: any) {
-    this.showEmoji = false;
-    this.hideEmojis();
-    this.emoticon = e.emoji.native;
-  }
-
-  hideEmojis() {
-    this.emojisdiv.nativeElement.removeAttribute('style')
-  }
-
-  showEmojiEvt(e: MouseEvent) {
-    const position = 'top: ' + e.clientY.toString() + 'px; left:' + e.clientX.toString() + 'px';
-    this.emojisdiv.nativeElement.setAttribute('style', position)
+  imagesChanged(e:any) {
+    this.images = []
+    this.images.push(...e);
+    console.log( this.images)
   }
 }
+
+
+
+
+
+
+
+

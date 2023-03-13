@@ -1,0 +1,14 @@
+<div class="images-upload-grid" *ngIf="images.length> 0">
+  <div *ngFor="let img  of images; let i = index"
+       [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
+       class="image-grid-item"
+       [style]="'background-image:url(' + img.image64 + ')'">
+    <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="100" alt="">
+    <mat-icon *ngIf="!sendingPost" (click)="deleteImg(i)"
+              [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
+              class="image-grid-item-delete">disabled_by_default
+    </mat-icon>
+    <mat-spinner class="image-grid-spinner" *ngIf="img.progress" color="accent" mode="determinate"
+                 [value]="img.progress"></mat-spinner>
+  </div>
+</div>

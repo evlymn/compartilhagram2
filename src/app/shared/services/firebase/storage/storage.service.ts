@@ -59,7 +59,7 @@ export class StorageService {
     return deleteObject(storageRef);
   }
 
-  fileToBase64(file: any) {
+  fileToBase64(file: any): Promise<string | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -79,7 +79,7 @@ export class StorageService {
     return new File([blob], fileName, options);
   }
 
-  resizeImage(settings: IResizeImageOptions) : Promise<Blob> {
+  resizeImage(settings: IResizeImageOptions): Promise<Blob> {
     const file = settings.file;
     const maxSize = settings.maxSize;
     const reader = new FileReader();

@@ -2,7 +2,6 @@ import {UploadTaskSnapshot} from "@angular/fire/storage";
 import {Observable} from "rxjs";
 
 export interface ImageSet {
-
   imageURL?: string;
   file: File,
   image64?: string,

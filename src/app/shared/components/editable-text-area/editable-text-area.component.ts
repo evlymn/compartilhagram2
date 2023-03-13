@@ -10,6 +10,12 @@ import {
   ViewChild
 } from '@angular/core';
 import {StorageService} from "../../services/firebase/storage/storage.service";
+import {EditableTextAreaService} from "./editable-text-area.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {EmojiPickerDialogComponent} from "./emoji-picker-dialog/emoji-picker-dialog.component";
+import {WindowService} from "../../services/window/window.service";
+import {ImageSet} from "../../../post-form/interfaces/image-set";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-editable-text-area',
@@ -18,15 +24,38 @@ import {StorageService} from "../../services/firebase/storage/storage.service";
 })
 export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @ViewChild('postTextElement') postTextElement!: ElementRef;
+  @ViewChild('fileUp') fileUp!: ElementRef;
   @Output() onImagePasted = new EventEmitter();
   @Output() onTextChanged = new EventEmitter();
-  selection: any;
-  range: any;
-  @Input() postText = ''
+  @Output() onFileChanged = new EventEmitter();
+  @Output() onImagesChanged = new EventEmitter();
+  @Input() acceptPasteImages = true
+  @Input() images: ImageSet[] = [];
+  @Input() maxImages = 6;
+  @Input() sendingPost = false;
+  @Input() multipleImages = true;
+  @Input() showImages = true;
+  @Input() showEmojis = false
+  @Input() text = ''
   @Input() emoticon = ''
+  @Input() totalCharacters = 300;
+  @Input() isMobile = false;
+  range: any;
+  i18n = {};
+  total = 0;
+  dialogRef!: MatDialogRef<EmojiPickerDialogComponent, any>
 
   constructor(
-    private _storageService: StorageService,) {
+    private _storageService: StorageService,
+    private _service: EditableTextAreaService,
+    public dialog: MatDialog,
+    private _windowService: WindowService,
+    private _snackBar: MatSnackBar,
+  ) {
+    this.i18n = this._service.emojiPickerTranslation();
+    this._windowService.getSizes.subscribe(() => {
+      if (this.dialogRef) this.dialogRef.close();
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,21 +65,14 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-
-    //  this.postTextElement.nativeElement.addEventListener('dragenter', async (e: any) => {
-    //   e.preventDefault();
-    //    e.dropEffect = "move";
-    // console.log(e)
-    //  })
-    //  this.postTextElement.nativeElement.addEventListener('drop', async (e: any) => {
-    //   // console.log(e.dataTransfer)
-    // //   e.preventDefault();
-    //
-    //  }, false)
-
+    this.postTextElement.nativeElement.addEventListener('drop', async (e: any) => {
+      e.preventDefault();
+    })
 
     this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
       e.preventDefault();
+      if (!this.acceptPasteImages) return;
+
       const clipboardItems = e.clipboardData.items;
       const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
       if (images.length > 0) {
@@ -58,7 +80,8 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
         const file = image.getAsFile();
         if (file.type == 'image/svg+xml') return;
         const image64 = await this._storageService.fileToBase64(file) as string;
-        this.onImagePasted.emit({image64, file});
+        if (!this.verifyTotalImages()) return
+        this.addImage({image64, file})
       } else {
         let plainText = e.clipboardData.getData('text/plain');
         this.getText(plainText);
@@ -66,26 +89,25 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
     })
 
     this.postTextElement.nativeElement.addEventListener('keyup', (e: any) => {
+      this.total = this.postTextElement.nativeElement.innerText.trim().length;
       this.onTextChanged.emit(e.target.innerHTML);
       this.getRange();
     })
-    this.postTextElement.nativeElement.addEventListener('mousedown', (e: any) => {
+    this.postTextElement.nativeElement.addEventListener('mousedown', () => {
       this.getRange();
     })
 
-    this.postTextElement.nativeElement.addEventListener('mouseup', (e: any) => {
+    this.postTextElement.nativeElement.addEventListener('mouseup', () => {
       this.getRange();
     })
     this.postTextElement.nativeElement.addEventListener('focus', (e: any) => {
       this.onTextChanged.emit(e.target.innerHTML);
       this.getRange();
     })
-
     this.postTextElement.nativeElement.addEventListener('blur', (e: any) => {
       this.onTextChanged.emit(e.target.innerHTML);
       this.getRange();
     })
-
     this.postTextElement.nativeElement.focus();
   }
 
@@ -121,11 +143,10 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
           selection.getRangeAt(0).insertNode(a)
         }
       } else {
-
         selection.removeAllRanges();
         selection.addRange(this.range);
         selection.getRangeAt(0).insertNode(document.createTextNode(plainText))
-
+        this.total = this.postTextElement.nativeElement.innerText.trim().length;
       }
     }
   }
@@ -135,9 +156,65 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
     return res !== null;
   }
 
+  showEmojiEvt(e: MouseEvent) {
+    this.dialogRef = this.dialog.open(EmojiPickerDialogComponent, {
+        exitAnimationDuration: '0ms',
+        enterAnimationDuration: '0ms',
+        panelClass: ['no-padding', 'bg-color-transparent'],
+        backdropClass: 'emojis-dialog',
+        position: {
+          top: e.clientY.toString() + 'px',
+          left: e.clientX.toString() + 'px'
+        }
+      }
+    )
 
-  // dropcontent(e: DragEvent) {
-  //   e.preventDefault();
-  //   console.log(e)
-  // }
+    this.dialogRef.afterClosed().subscribe(value => {
+      if (value) this.getText(value);
+    })
+  }
+
+  fileChangeEvent(e: any) {
+    this.getFileOnChange(e).catch();
+    setTimeout(() => {
+      this.fileUp.nativeElement.value = '';
+    }, 1000)
+  }
+
+  verifyTotalImages() {
+    if (this.images.length > this.maxImages - 1) {
+      this.openAlert('Escolha no máximo ' + this.maxImages + ' imagem(s).');
+      return false
+    } else {
+      return true;
+    }
+  }
+
+  async getFileOnChange(e: any) {
+    for (let i = 0; i < e.target.files.length; i++) {
+      if (!this.verifyTotalImages()) {
+        i = this.images.length;
+        return;
+      }
+      const image = await this._storageService.fileToBase64(e.target.files[i]) as string;
+      this.addImage({image64: image, file: e.target.files[i]})
+    }
+  }
+
+  addImage(image: any) {
+    this.images.push(image);
+    this.onImagesChanged.emit(this.images);
+  }
+
+  openAlert(text: string) {
+    this._snackBar.open(text, 'ok', {
+      duration: 2000,
+      verticalPosition: 'top',
+    })
+  }
+
+  imageDeleted(e: any) {
+    this.images.slice(e);
+    this.onImagesChanged.emit(this.images);
+  }
 }

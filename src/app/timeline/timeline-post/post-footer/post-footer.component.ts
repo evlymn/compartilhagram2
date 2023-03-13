@@ -180,4 +180,8 @@ export class PostFooterComponent implements OnInit {
   onRemoveImage(e: any) {
     this.image.image64 = null;
   }
+
+  commentTextChanged($event: any) {
+
+  }
 }

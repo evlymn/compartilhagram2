@@ -42,6 +42,7 @@ import {
 } from "../shared/components/text-image-form-bottom-sheet/text-image-form-bottom-sheet.module";
 import {ImageUploadItemModule} from "../shared/components/image-upload-item/image-upload-item.module";
 import {TitleComponent} from "../shared/components/title/title.component";
+import {EditableTextAreaModule} from "../shared/components/editable-text-area/editable-text-area.module";
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import {TitleComponent} from "../shared/components/title/title.component";
         AvatarComponent,
         TextImageFormBottomSheetModule,
         ImageUploadItemModule,
-        TitleComponent
+        TitleComponent,
+        EditableTextAreaModule
     ],
   exports:[ TimelineComponent]
 
