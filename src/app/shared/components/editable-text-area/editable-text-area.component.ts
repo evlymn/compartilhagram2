@@ -30,7 +30,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Output() onTextChanged = new EventEmitter();
   @Output() onFileChanged = new EventEmitter();
   @Output() onImagesChanged = new EventEmitter();
-  @Output() onImageDeleted= new EventEmitter();
+  @Output() onImageDeleted = new EventEmitter();
   @Input() acceptPasteImages = true
   @Input() images: ImageSet[] = [];
   @Input() maxImages = 6;
@@ -38,19 +38,20 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Input() multipleImages = true;
   @Input() showImages = true;
   @Input() showEmojis = false
-
-  @Input() set text(value: string ){
+  @Input() set text(value: string) {
     this._text = value;
     this.onTextChanged.emit(value);
   }
 
   @Input() totalCharacters = 300;
-  @Input() isMobile = false;
+  isMobile = this._windowService.sizes.isMobile;
   _text = ''
   range: any;
   i18n = {};
   total = 0;
   dialogRef!: MatDialogRef<EmojiPickerDialogComponent, any>
+
+  private windowService = this._windowService;
 
   constructor(
     private _storageService: StorageService,
@@ -60,7 +61,8 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
     private _snackBar: MatSnackBar,
   ) {
     this.i18n = this._service.emojiPickerTranslation();
-    this._windowService.getSizes.subscribe(() => {
+    this.windowService.getSizes.subscribe(s => {
+      this.isMobile = s.isMobile;
       if (this.dialogRef) this.dialogRef.close();
     })
   }
@@ -73,7 +75,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
 
-    this.onTextChanged.emit(this.text);
+    this.onTextChanged.emit(this._text);
     this.postTextElement.nativeElement.addEventListener('drop', async (e: any) => {
       e.preventDefault();
     })
@@ -82,6 +84,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
       e.preventDefault();
       if (!this.acceptPasteImages) return;
 
+      this.onImagePasted.emit(e);
       const clipboardItems = e.clipboardData.items;
       const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
       if (images.length > 0) {
@@ -166,13 +169,24 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   }
 
   showEmojiEvt(e: MouseEvent) {
+    let finalY = e.clientY;
+    if (e.view?.outerHeight) {
+      finalY = e.view?.outerHeight - e.clientY;
+
+      if (finalY < 400) {
+        finalY = e.clientY - 500;
+      } else {
+        finalY = e.clientY;
+      }
+    }
+
     this.dialogRef = this.dialog.open(EmojiPickerDialogComponent, {
         exitAnimationDuration: '0ms',
         enterAnimationDuration: '0ms',
         panelClass: ['no-padding', 'bg-color-transparent'],
         backdropClass: 'emojis-dialog',
         position: {
-          top: e.clientY.toString() + 'px',
+          top: finalY.toString() + 'px',
           left: e.clientX.toString() + 'px'
         }
       }
@@ -184,6 +198,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   }
 
   fileChangeEvent(e: any) {
+    this.onFileChanged.emit(e);
     this.getFileOnChange(e).catch();
     setTimeout(() => {
       this.fileUp.nativeElement.value = '';

@@ -1,40 +1,21 @@
 <div class="component-bottom-sheet">
-<textarea cdkTextareaAutosize placeholder="?!?!"
-          maxlength="300" [(ngModel)]="postText"></textarea>
 
+
+  <app-editable-text-area class="editable-text-area"
+
+    (onImageDeleted)="deleteImg()"
+    [showEmojis]="true"
+    [images]="images"
+    [multipleImages]="false"
+    [maxImages]="1"
+    (onTextChanged)="textChange($event)"
+    (onImagesChanged)="getFileOnChange($event)"
+  >
+  </app-editable-text-area>
 
   <div class="actions ">
-    <button mat-icon-button
-            class="icon-button-mobile"
-            (click)="file.click()">
-      <mat-icon [ngClass]="isMobile? '': 'smaller-icon' ">image</mat-icon>
-
-    </button>
-
-    <ng-container *ngIf="image.image64">
-      <div class="images-upload-grid">
-        <div
-          [ngClass]="isMobile? 'image-grid-item-size-mobile': 'image-grid-item-size'"
-          class="image-grid-item"
-          [style]="'background-image:url(' + image.image64 + ')'">
-          <img *ngIf="sendingPost" src="./assets/images/background-images-grid.png" width="50" alt="">
-          <mat-icon *ngIf="!sendingPost" (click)="deleteImg()"
-                    [ngClass]="isMobile? 'image-grid-item-delete-mobile': 'image-grid-item-delete-desktop'"
-                    class="image-grid-item-delete">disabled_by_default
-          </mat-icon>
-
-        </div>
-      </div>
-    </ng-container>
-
     <button (click)="createMessage()" mat-flat-button class="form-button form-button-post">
       {{messageService.languageService.getText('postar')}}
     </button>
   </div>
-
-
 </div>
-<input type="file" style="display: none;"
-       (change)="fileChangeEvent($event)"
-       accept="image/x-png,image/gif,image/jpeg"
-       #file/>

@@ -6,19 +6,21 @@ import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {EditableTextAreaModule} from "../editable-text-area/editable-text-area.module";
 
 @NgModule({
   declarations: [
     TextImageFormBottomSheetComponent
   ],
-  imports: [
-    CommonModule,
-    TextFieldModule,
-    FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule
-  ],
+    imports: [
+        CommonModule,
+        TextFieldModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        EditableTextAreaModule
+    ],
   exports: [
     TextImageFormBottomSheetComponent
   ]

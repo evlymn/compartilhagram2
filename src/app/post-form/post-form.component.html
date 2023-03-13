@@ -8,7 +8,6 @@
                  class=" button-close-radius">{{postFormService.languageService.getText('fechar')}}</small>
         </div>
         <app-editable-text-area
-
           [text]="postText"
           [showEmojis]="true"
           [images]="images"
@@ -78,7 +77,6 @@
         </div>
 
 
-
       </mat-expansion-panel>
       <mat-expansion-panel class="" [expanded]="postFormService.panelSearch">
 
@@ -100,10 +98,6 @@
   </div>
 
 
-  <input type="file" style="display: none;"
-         (change)="fileChangeEvent($event)" multiple
-         accept="image/x-png,image/gif,image/jpeg"
-         #file/>
 
 
 </ng-container>

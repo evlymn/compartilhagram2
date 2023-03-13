@@ -17,6 +17,7 @@ export class TimelinePostDetailComponent implements OnInit, AfterViewInit {
 
   ) {
     this._windowService.getSizes.subscribe(s=> {
+
      this.isMobile = s.isMobile;
     })
   }

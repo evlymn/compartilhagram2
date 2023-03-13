@@ -21,27 +21,16 @@
       (afterExpand)="onExpansionPostOpen()"
       (afterCollapse)="onExpansionPostClose()">
 
-
       <app-editable-text-area
         [maxImages]="6"
         [showEmojis]="true"
         [text]="postText"
+
         [images]="images"
         (onTextChanged)="textChanged($event)"
         (onImagesChanged)="imagesChanged($event)"
         (onImageDeleted)="imageDeleted($event)"
       ></app-editable-text-area>
-
-<!--      <div class="textarea"  #postTextElement  [contentEditable]="true" [innerHTML]="postText"  >-->
-
-<!--      </div>-->
-
-
-
-
-<!--       <textarea cdkTextareaAutosize [(ngModel)]="postText"-->
-<!--                 maxlength="300"></textarea>-->
-
 
       <div class="panel-post-actions">
         <button (click)="togglePostPanel()" mat-button class="form-button form-button-post">

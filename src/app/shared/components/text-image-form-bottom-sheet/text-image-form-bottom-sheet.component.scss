@@ -22,8 +22,9 @@ textarea {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
+  padding: 10px;
   //height: 10px;
   margin-bottom: -10px;
   background-color: #723753;
@@ -104,4 +105,7 @@ textarea {
   flex-wrap: wrap;
   //background-color: #5e3248;
   //padding: 10px;
+}
+.editable-text-area {
+  width: 100%;
 }
