@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {ImageSet} from "./interfaces/image-set";
-import {StorageService} from "../shared/services/firebase/storage/storage.service";
+ import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {AlertsService} from "../alerts/alerts.service";
 import {TimelineService} from "../timeline/services/timeline.service";
@@ -11,6 +10,7 @@ import {PostData} from "./interfaces/post-data";
 import {PostFormBottomSheetComponent} from "./post-form-bottom-sheet/post-form-bottom-sheet.component";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {TimelineDatabaseService} from "../timeline/services/timeline-database.service";
+import {ImageSet} from "../shared/interfaces/image-set";
 
 @Injectable({
   providedIn: 'root'

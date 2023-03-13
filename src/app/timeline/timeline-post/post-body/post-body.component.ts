@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineService} from "../../services/timeline.service";
 import {NotificationService} from "../../../shared/services/notification/notification.service";
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {ImageSet} from "../../../shared/components/editable-text-area/images-grid/image-set";
-import {PostFormService} from "../../../post-form/post-form.service";
+ import {PostFormService} from "../../../post-form/post-form.service";
+import {ImageSet} from "../../../shared/interfaces/image-set";
 
 @Component({
   selector: 'app-post-body',

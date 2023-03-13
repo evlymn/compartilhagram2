@@ -14,8 +14,9 @@ import {EditableTextAreaService} from "./editable-text-area.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {EmojiPickerDialogComponent} from "./emoji-picker-dialog/emoji-picker-dialog.component";
 import {WindowService} from "../../services/window/window.service";
-import {ImageSet} from "../../../post-form/interfaces/image-set";
+
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ImageSet} from "../../interfaces/image-set";
 
 @Component({
   selector: 'app-editable-text-area',

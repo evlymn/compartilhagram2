@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ImageSet} from "./image-set";
-import {StorageService} from "../../../services/firebase/storage/storage.service";
+ import {StorageService} from "../../../services/firebase/storage/storage.service";
+import {ImageSet} from "../../../interfaces/image-set";
 
 @Component({
   selector: 'app-post-form-images-grid',

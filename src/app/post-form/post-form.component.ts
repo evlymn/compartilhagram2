@@ -5,12 +5,12 @@ import {WindowService} from "../shared/services/window/window.service";
 import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {MatDialog} from "@angular/material/dialog";
 import {NotificationService} from "../shared/services/notification/notification.service";
-import {ImageSet} from "./interfaces/image-set";
 import {PostFormService} from "./post-form.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {PostFormConfirmSnackbarComponent} from "./post-form-confirm-snackbar/post-form-confirm-snackbar.component";
 import {LanguageService} from "../shared/services/language/language.service";
+import {ImageSet} from "../shared/interfaces/image-set";
 
 @Component({
   selector: 'app-post-form',
@@ -33,6 +33,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   searchText = '';
   isProfile = false;
   emoticon = '';
+
   constructor(
     public windowService: WindowService,
     private _storageService: StorageService,
@@ -58,7 +59,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
       this.getAlbums();
     })
   }
-
 
 
   getAlbums() {
@@ -209,7 +209,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     this.postTextChanged = e;
   }
 
-  imagesChanged(e:any) {
+  imagesChanged(e: any) {
     this.images = []
     this.images.push(...e);
 

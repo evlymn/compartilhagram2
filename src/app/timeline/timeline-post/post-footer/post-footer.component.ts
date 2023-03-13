@@ -5,7 +5,7 @@ import {StorageService} from "../../../shared/services/firebase/storage/storage.
 import {WindowService} from "../../../shared/services/window/window.service";
 import {environment} from "../../../../environments/environment";
 import {ActivatedRoute} from "@angular/router";
-import {ImageSet} from "../../../shared/components/editable-text-area/images-grid/image-set";
+import {ImageSet} from "../../../shared/interfaces/image-set";
 
 
 @Component({
