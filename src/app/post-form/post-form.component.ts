@@ -213,7 +213,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   imagesChanged(e:any) {
     this.images = []
     this.images.push(...e);
-    console.log( this.images)
+
   }
 }
 

@@ -63,17 +63,17 @@
       <mat-expansion-panel hideToggle [expanded]="commentPanelOpened" (afterExpand)="onExpansionCommentOpen()"
                            (afterCollapse)="onExpansionClose()">
 
-<!--        <app-editable-text-area-->
+        <app-editable-text-area
+          [maxImages]="1"
+          [showEmojis]="true"
+          [text]="commentText"
+          [multipleImages]="false"
+          (onTextChanged)="commentTextChanged($event)"
+          (onImagesChanged)="commentImagesChanged($event)"
+        ></app-editable-text-area>
 
-<!--          [maxImages]="1"-->
-<!--          [showEmojis]="true"-->
-<!--          [text]="commentText"-->
-<!--          (onTextChanged)="commentTextChanged($event)"-->
-
-<!--        ></app-editable-text-area>-->
-
-              <textarea cdkTextareaAutosize [(ngModel)]="commentText"   placeholder="Deixe seu recado!"
-                        maxlength="300"></textarea>
+<!--              <textarea cdkTextareaAutosize [(ngModel)]="commentText"   placeholder="Deixe seu recado!"-->
+<!--                        maxlength="300"></textarea>-->
 
         <div class="comment-actions">
 
@@ -85,12 +85,12 @@
           </button>
         </div>
 
-        <app-image-upload-item
-          [isMobile]="isMobile"
-          (onRemove)="onRemoveImage($event)"
-          [image]="image.image64"
-          [id]="2222"
-          [sending]="sendingPost"></app-image-upload-item>
+<!--        <app-image-upload-item-->
+<!--          [isMobile]="isMobile"-->
+<!--          (onRemove)="onRemoveImage($event)"-->
+<!--          [image]="image.image64"-->
+<!--          [id]="2222"-->
+<!--          [sending]="sendingPost"></app-image-upload-item>-->
 
       </mat-expansion-panel>
 
@@ -99,8 +99,18 @@
                          [expanded]="repostPanelOpened"
                          (afterExpand)="onExpansionRepostOpen()"
                          (afterCollapse)="onExpansionRepostClose()">
-       <textarea cdkTextareaAutosize [(ngModel)]="repostText" placeholder="Comentar o reposte?"
-                 maxlength="300"></textarea>
+
+
+      <app-editable-text-area
+        [maxImages]="1"
+        [showImages]="false"
+        [showEmojis]="true"
+        [text]="repostText"
+        [multipleImages]="false"
+        (onTextChanged)="repostTextChanged($event)"
+      ></app-editable-text-area>
+
+
       <button (click)="repost(post?.id)" mat-flat-button class="form-button form-button-post">
         comentar
       </button>
@@ -112,7 +122,7 @@
 </div>
 
 
-<input type="file" style="display: none;"
-       (change)="fileChangeEvent($event)"
-       accept="image/x-png,image/gif,image/jpeg"
-       #file/>
+<!--<input type="file" style="display: none;"-->
+<!--       (change)="fileChangeEvent($event)"-->
+<!--       accept="image/x-png,image/gif,image/jpeg"-->
+<!--       #file/>-->

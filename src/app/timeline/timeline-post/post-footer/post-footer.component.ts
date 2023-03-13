@@ -5,6 +5,7 @@ import {StorageService} from "../../../shared/services/firebase/storage/storage.
 import {WindowService} from "../../../shared/services/window/window.service";
 import {environment} from "../../../../environments/environment";
 import {ActivatedRoute} from "@angular/router";
+import {ImageSet} from "../../../shared/components/editable-text-area/images-grid/image-set";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./post-footer.component.scss']
 })
 export class PostFooterComponent implements OnInit {
-  @ViewChild('file') file!: ElementRef;
+  // @ViewChild('file') file!: ElementRef;
   @Input() post: any;
   @Input() isComment: Boolean = false;
   @Input() isDetail = false;
@@ -22,14 +23,17 @@ export class PostFooterComponent implements OnInit {
   @Input() totalComments = 0;
   @Input() userCommented = false;
   @Input() isRepost = false;
+  images: ImageSet[] = [];
   image: any = {};
   commentPanelOpened = false
   repostText = '';
+  newRepostText = '';
   userFavorited = false;
   commentRepost = '';
   totalFavorites = 0;
   deletePanelOpened = false;
   commentText = '';
+  newCommentText = '';
   repostPanelOpened = false;
   totalRepost = 0;
   existsSaved = false;
@@ -87,12 +91,12 @@ export class PostFooterComponent implements OnInit {
   }
 
   repost(postId: string) {
-    const text = this.repostText
+    const text =  this.newRepostText;
     this._timelineService.repost(postId, text, this.post).catch();
   }
 
   onExpansionCommentOpen() {
-    this.deletePanelOpened = false;
+    this.repostPanelOpened = false;
   }
 
   onExpansionClose() {
@@ -101,6 +105,9 @@ export class PostFooterComponent implements OnInit {
 
   createComment() {
     const refId = this._route.snapshot.paramMap.get('id') as string;
+    this.image.image64 = this.images[0].image64;
+    this.image.file = this.images[0].file;
+    this.commentText = this.newCommentText;
     this._timelineService.createComment(this.post.id, this.commentText, !!this.image.image64, refId).then(commentId => {
       if (this.image.image64) {
         this.image.image64 = null;
@@ -152,7 +159,7 @@ export class PostFooterComponent implements OnInit {
   }
 
   onExpansionRepostOpen() {
-
+    this.commentPanelOpened =false;
   }
 
   async createSaved(post: any) {
@@ -171,17 +178,27 @@ export class PostFooterComponent implements OnInit {
     history.back();
   }
 
-  async fileChangeEvent(e: any) {
-    this.image.image64 = await this._storageService.fileToBase64(e.target.files[0]) as string
-    this.image.file = e.target.files[0];
-    this.file.nativeElement.value = null;
+  // async fileChangeEvent(e: any) {
+  //   this.image.image64 = await this._storageService.fileToBase64(e.target.files[0]) as string
+  //   this.image.file = e.target.files[0];
+  //   this.file.nativeElement.value = null;
+  // }
+
+  // onRemoveImage(e: any) {
+  //   this.image.image64 = null;
+  // }
+
+  commentTextChanged(e: any) {
+    this.newCommentText = e;
   }
 
-  onRemoveImage(e: any) {
-    this.image.image64 = null;
+  commentImagesChanged(e: any) {
+    this.images = [];
+    this.images.push(...e);
+    console.log(this.images)
   }
 
-  commentTextChanged($event: any) {
-
+  repostTextChanged(e: any) {
+    this.newRepostText = e;
   }
 }
