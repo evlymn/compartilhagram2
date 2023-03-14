@@ -24,15 +24,16 @@ import {ImageSet} from "../../interfaces/image-set";
   styleUrls: ['./editable-text-area.component.scss']
 })
 export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
-  @ViewChild('postTextElement') postTextElement!: ElementRef;
+  @ViewChild('htmlTextElement') htmlTextElement!: ElementRef;
   @ViewChild('fileUp') fileUp!: ElementRef;
-  @Output() onImagePasted = new EventEmitter();
+  @Output() onImagePastedOrDropped = new EventEmitter();
   @Output() onTextChanged = new EventEmitter();
   @Output() onFileChanged = new EventEmitter();
   @Output() onImagesChanged = new EventEmitter();
   @Output() onImageDeleted = new EventEmitter();
   @Output() onTextOverflow = new EventEmitter<boolean>();
-  @Input() acceptPasteImages = true
+  @Input() acceptPasteImages = true;
+  @Input() acceptDropImages = true;
   @Input() images: ImageSet[] = [];
   @Input() maxImages = 6;
   @Input() sendingPost = false;
@@ -77,53 +78,70 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
 
-    this.onTextChanged.emit(this._text);
-    this.postTextElement.nativeElement.addEventListener('drop', async (e: any) => {
+    this.htmlTextElement.nativeElement.addEventListener('drop', async (e: any) => {
       e.preventDefault();
+      if (!this.acceptDropImages) return
+
+      this.onImagePastedOrDropped.emit(e);
+      const droppedItems = e.dataTransfer.items
+      const images = [].slice.call(droppedItems).filter((item: any) => item.type.indexOf('image') !== -1);
+
+      await this.getImageWhenPastedOrdDropped(images, e);
     })
 
-    this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
+    this.htmlTextElement.nativeElement.addEventListener('paste', async (e: any) => {
       e.preventDefault();
       if (!this.acceptPasteImages) return;
 
-      this.onImagePasted.emit(e);
+      this.onImagePastedOrDropped.emit(e);
       const clipboardItems = e.clipboardData.items;
       const images = [].slice.call(clipboardItems).filter((item: any) => item.type.indexOf('image') !== -1);
-      if (images.length > 0) {
-        const image = images[0] as any;
-        const file = image.getAsFile();
-        if (file.type == 'image/svg+xml') return;
-        const image64 = await this._storageService.fileToBase64(file) as string;
-        if (!this.verifyTotalImages()) return
-        this.addImage({image64, file})
-      } else {
-        let plainText = e.clipboardData.getData('text/plain');
-        this.getText(plainText);
-      }
+      await this.getImageWhenPastedOrdDropped(images, e);
     })
 
-    this.postTextElement.nativeElement.addEventListener('keyup', (e: any) => {
-      this.total = this.postTextElement.nativeElement.innerText.trim().length;
+    this.htmlTextElement.nativeElement.addEventListener('keyup', (e: any) => {
+      this.total = this.htmlTextElement.nativeElement.innerText.trim().length;
       this.emitText(e);
       this.getRange();
     })
-    this.postTextElement.nativeElement.addEventListener('mousedown', () => {
+    this.htmlTextElement.nativeElement.addEventListener('mousedown', () => {
       this.getRange();
     })
 
-    this.postTextElement.nativeElement.addEventListener('mouseup', () => {
+    this.htmlTextElement.nativeElement.addEventListener('mouseup', () => {
       this.getRange();
     })
-    this.postTextElement.nativeElement.addEventListener('focus', (e: any) => {
+    this.htmlTextElement.nativeElement.addEventListener('focus', (e: any) => {
       this.emitText(e);
 
       this.getRange();
     })
-    this.postTextElement.nativeElement.addEventListener('blur', (e: any) => {
+    this.htmlTextElement.nativeElement.addEventListener('blur', (e: any) => {
       this.emitText(e);
       this.getRange();
     })
-    this.postTextElement.nativeElement.focus();
+    this.htmlTextElement.nativeElement.focus();
+  }
+
+  verifyFileType(file: any) {
+    if (file.type == 'image/svg+xml' || file.type == 'image/heic') {
+      return false
+    }
+    return true;
+  }
+
+  private async getImageWhenPastedOrdDropped(images: any, e: any) {
+    if (images.length > 0) {
+      const image = images[0] as any;
+      const file = image.getAsFile();
+      if (!this.verifyFileType(file)) return;
+      const image64 = await this._storageService.fileToBase64(file) as string;
+      if (!this.verifyTotalImages()) return
+      this.addImage({image64, file})
+    } else {
+      let plainText = e.clipboardData.getData('text/plain');
+      this.getText(plainText);
+    }
   }
 
   private emitText(e: any) {
@@ -166,7 +184,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
         selection.removeAllRanges();
         selection.addRange(this.range);
         selection.getRangeAt(0).insertNode(document.createTextNode(plainText))
-        this.total = this.postTextElement.nativeElement.innerText.trim().length;
+        this.total = this.htmlTextElement.nativeElement.innerText.trim().length;
       }
     }
   }
