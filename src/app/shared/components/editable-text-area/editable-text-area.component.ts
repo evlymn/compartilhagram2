@@ -82,12 +82,6 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
       e.preventDefault();
     })
 
-    this.postTextElement.nativeElement.addEventListener('change', async (e: any) => {
-
-      e.preventDefault();
-      console.log(e)
-    })
-
     this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
       e.preventDefault();
       if (!this.acceptPasteImages) return;
