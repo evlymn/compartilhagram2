@@ -21,11 +21,11 @@ export class ProfileComponent implements OnInit {
 
 
 
-
-  constructor(public auth: AuthenticationService,
-              private _profileService: ProfileService,
-              private _route: ActivatedRoute,
-              public homeService: HomeService) {
+  constructor(
+    public auth: AuthenticationService,
+    private _profileService: ProfileService,
+    private _route: ActivatedRoute,
+    public homeService: HomeService) {
     this.userId = this._route.snapshot.paramMap.get('userId') as string;
     this._profileService.auth.authState.subscribe(() => {
       this.getProfile().catch();

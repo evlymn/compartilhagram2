@@ -1,13 +1,14 @@
 <div class="profile-component">
   <div class="post-avatar">
-    <app-avatar [src]="profile?.photoURL" alt="image profile" title="image profile" avatarClass="post-avatar-image"></app-avatar>
+    <app-avatar [src]="profile?.photoURL" alt="image profile" title="image profile"
+                avatarClass="post-avatar-image"></app-avatar>
 
 
-<!--    <img class="post-avatar-image" alt="image profile" [src]="profile?.photoURL">-->
+    <!--    <img class="post-avatar-image" alt="image profile" [src]="profile?.photoURL">-->
     <h3>{{profile?.displayName}}</h3>
   </div>
   <h3>{{profile?.email}}</h3>
-  <div class="settings">
+  <div class="settings" *ngIf="profile?.uid != auth.user?.uid">
 
     <div>
       <i class='bx bx-cog'></i>
@@ -45,7 +46,8 @@
     </mat-icon>
     {{isFollowed ? 'Deixar de seguir' : 'seguir' }}
   </button>
-  <app-timeline></app-timeline>
+
+  <app-timeline class="app-timeline"></app-timeline>
 </div>
 
 
