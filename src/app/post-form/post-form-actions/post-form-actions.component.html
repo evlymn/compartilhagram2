@@ -6,7 +6,6 @@
   </button>
   <button mat-button (click)=" panelPost ? savePost() : searchUser()"
           [disabled]="sendingPost || disableSabeButton"
-
           [style]="sendingPost || disableSabeButton ? 'background-color:gray' : ''"
           class="form-button" [ngClass]="panelPost ? 'mat-form-field-W100' : 'mat-form-field-W49-5'">
     {{  panelPost ? postFormService.languageService.getText('postar') : postFormService.languageService.getText('pesquisar')}}

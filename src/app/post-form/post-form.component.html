@@ -13,6 +13,7 @@
           [images]="images"
           [totalCharacters]="totalCharacters"
           (onTextChanged)="textChange($event)"
+          (onTextOverflow)="textOverflow($event)"
           (onImagesChanged)="imagesChanged($event)"
         >
         </app-editable-text-area>
@@ -48,6 +49,7 @@
                                  [disableSabeButton]="disableSabeButton"
                                  (onSave)="savePost()"
                                  (onSearch)="searchUser()"
+
                                  [sendingPost]="sendingPost"
                                  [panelSearch]="postFormService.panelSearch"
                                  [panelPost]="postFormService.panelPost"></app-post-form-actions>

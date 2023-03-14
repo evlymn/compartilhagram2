@@ -197,16 +197,18 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   }
 
 
-
   textChange(e: any) {
     this.postTextChanged = e;
-   this.disableSabeButton = this.postTextChanged.length >  this.totalCharacters;
   }
 
   imagesChanged(e: ImageSet[]) {
     this.images = []
     this.images.push(...e);
-   // console.log(this.images)
+    // console.log(this.images)
+  }
+
+  textOverflow(e: boolean) {
+    this.disableSabeButton = e;
   }
 }
 

@@ -31,6 +31,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Output() onFileChanged = new EventEmitter();
   @Output() onImagesChanged = new EventEmitter();
   @Output() onImageDeleted = new EventEmitter();
+  @Output() onTextOverflow = new EventEmitter<boolean>();
   @Input() acceptPasteImages = true
   @Input() images: ImageSet[] = [];
   @Input() maxImages = 6;
@@ -38,6 +39,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Input() multipleImages = true;
   @Input() showImages = true;
   @Input() showEmojis = false
+
   @Input() set text(value: string) {
     this._text = value;
     this.onTextChanged.emit(value);
@@ -80,6 +82,12 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
       e.preventDefault();
     })
 
+    this.postTextElement.nativeElement.addEventListener('change', async (e: any) => {
+
+      e.preventDefault();
+      console.log(e)
+    })
+
     this.postTextElement.nativeElement.addEventListener('paste', async (e: any) => {
       e.preventDefault();
       if (!this.acceptPasteImages) return;
@@ -102,7 +110,7 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
 
     this.postTextElement.nativeElement.addEventListener('keyup', (e: any) => {
       this.total = this.postTextElement.nativeElement.innerText.trim().length;
-      this.onTextChanged.emit(e.target.innerHTML);
+      this.emitText(e);
       this.getRange();
     })
     this.postTextElement.nativeElement.addEventListener('mousedown', () => {
@@ -113,14 +121,20 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
       this.getRange();
     })
     this.postTextElement.nativeElement.addEventListener('focus', (e: any) => {
-      this.onTextChanged.emit(e.target.innerHTML);
+      this.emitText(e);
+
       this.getRange();
     })
     this.postTextElement.nativeElement.addEventListener('blur', (e: any) => {
-      this.onTextChanged.emit(e.target.innerHTML);
+      this.emitText(e);
       this.getRange();
     })
     this.postTextElement.nativeElement.focus();
+  }
+
+  private emitText(e: any) {
+    this.onTextChanged.emit(e.target.innerHTML);
+    this.onTextOverflow.emit(e.target.innerText.trim().length > this.totalCharacters);
   }
 
   getRange() {
