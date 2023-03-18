@@ -18,7 +18,7 @@ import {
 } from '@angular/fire/auth';
 
 import {Router} from '@angular/router';
-import {GoogleAuthProvider,GithubAuthProvider, onIdTokenChanged} from '@firebase/auth';
+import {GithubAuthProvider, GoogleAuthProvider, onIdTokenChanged} from '@firebase/auth';
 import {RealtimeService} from "../database/realtime.service";
 import {BehaviorSubject} from "rxjs";
 import {AppUpdateService} from "../../app/app-update.service";
@@ -139,12 +139,16 @@ export class AuthenticationService {
   }
 
   async signInWithGithub() {
-    const provider =new GithubAuthProvider();
+    const provider = new GithubAuthProvider();
     return signInWithPopup(this.auth, provider)
   }
 
 
-  updateProfile(data: { displayName?: string, photoURL?: string }) {
+  async updateProfile(data: { displayName?: string, photoURL?: string }) {
+    await this._realtime.update('users/' + this.auth.currentUser?.uid, {
+      displayName: data.displayName,
+      photoURL: data.photoURL
+    });
     return updateProfile(this.auth.currentUser as User, data);
   }
 

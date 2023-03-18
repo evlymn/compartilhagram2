@@ -64,6 +64,8 @@
           <li >
 <!--            [routeURL]="'profile/' +  user?.uid"-->
           <app-avatar [src]="user?.photoURL"
+                      [avatarStyle]="'height:40px; width: 40px;border-radius: 50%; overflow: hidden'"
+
                       (click)="avatarClick('/home/profile/' +  user?.uid)"
                       [avatarClass]="'menu-avatar-image'"></app-avatar>
 

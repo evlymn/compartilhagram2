@@ -1,13 +1,28 @@
 <div class="profile-component">
   <div class="post-avatar">
-    <app-avatar [src]="profile?.photoURL" alt="image profile" title="image profile"
-                avatarClass="post-avatar-image"></app-avatar>
+    <div class="avatar-change">
+      <app-avatar [src]="profile?.photoURL" alt="image profile"
+                  [avatarStyle]="'height:100px; width: 100px;border-radius: 50%; overflow: hidden'"
+                  title="image profile"
+      ></app-avatar>
+      <i (click)="fileUp.click()" class='bx bxs-message-square-edit avatar-edit'></i>
+    </div>
+
+    <br>
+
+    <h3  *ngIf="!isEditName" (click)="editName($event)">{{profile?.displayName}}  <i class='bx bxs-message-square-edit'></i></h3>
+    <input *ngIf="isEditName" matInput class="input-name" [(ngModel)]="profile.displayName">
+
+    <mat-progress-bar *ngIf="saving" mode="indeterminate"></mat-progress-bar>
+
+    <div *ngIf="isEditName || isEditAvatar">
+      <a (click)="cancelEdit()" *ngIf="profile?.uid == auth.user?.uid" mat-button color="accent">cancelar</a>
+      <a (click)="save()" *ngIf="profile?.uid == auth.user?.uid" mat-button color="accent">editar</a>
+    </div>
 
 
-    <!--    <img class="post-avatar-image" alt="image profile" [src]="profile?.photoURL">-->
-    <h3>{{profile?.displayName}}</h3>
   </div>
-  <h3>{{profile?.email}}</h3>
+  <h4>{{profile?.email}}</h4>
   <div class="settings" *ngIf="profile?.uid == auth.user?.uid">
 
     <div>
@@ -50,5 +65,10 @@
   <app-timeline class="app-timeline"></app-timeline>
 </div>
 
+
+<input type="file" style="display: none;"
+       (change)="fileChangeEvent($event)"
+       accept="image/x-png,image/gif,image/jpeg"
+       #fileUp/>
 
 

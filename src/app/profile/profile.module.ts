@@ -14,24 +14,28 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {FormsModule} from "@angular/forms";
 import {AvatarComponent} from "../shared/components/avatar/avatar.component";
+import {MatInputModule} from "@angular/material/input";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
     ProfileComponent
   ],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatButtonModule,
-        ProfileRoutingModule,
-        TimelineModule,
-        MatSlideToggleModule,
-        MatExpansionModule,
-        FormsModule,
-        AvatarComponent
-    ],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule,
+    ProfileRoutingModule,
+    TimelineModule,
+    MatSlideToggleModule,
+    MatExpansionModule,
+    FormsModule,
+    AvatarComponent,
+    MatInputModule,
+    MatProgressBarModule
+  ],
   providers: [
     MatSnackBarModule,
     MatBottomSheetModule,

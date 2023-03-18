@@ -16,7 +16,6 @@
 }
 
 
-
 .activities {
   display: flex;
   justify-content: space-evenly;
@@ -39,22 +38,83 @@ button {
   margin-bottom: 20px;
 
 }
+
 .slide-toggle {
   margin: 10px;
 }
-.mdc-form-field>label {
-  color: antiquewhite!important;}
 
-  .mat-mdc-slide-toggle {
-    .mdc-form-field>label {
-      color: antiquewhite!important;}
+.mdc-form-field > label {
+  color: antiquewhite !important;
+}
 
-
+.mat-mdc-slide-toggle {
+  .mdc-form-field > label {
+    color: antiquewhite !important;
   }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]) {
-  box-shadow: transparent!important;
+
 }
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: transparent !important;
+}
+
 .app-timeline {
   width: 100%;
+}
+
+.avatar-edit {
+  display: none;
+  position: absolute !important;
+  font-size: 30px;
+  color: #f6b268;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.avatar-change {
+  position: relative;
+  width: auto;
+}
+
+.avatar-change:hover > .avatar-edit {
+  display: block;
+  cursor: pointer;
+}
+
+h3 {
+  cursor: pointer;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+}
+
+h3 > i {
+  display: none;
+  margin-left: 3px;
+}
+
+h3:hover   {
+  color: #f6b268;
+  font-weight: bolder;
+}
+
+h3:hover > i {
+  display: block;
+}
+
+.input-name {
+  background-color: #9a6a84;
+  border-radius: 8px;
+  outline: none;
+  height: 25px;
+  padding: 5px;
+  border-width: 0;
+
+}
+
+mat-progress-bar {
+  width: 50%;
+  margin: 10px;
 }

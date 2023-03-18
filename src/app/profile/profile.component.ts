@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProfileService} from "./profile.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {HomeService} from "../home/home.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +11,7 @@ import {HomeService} from "../home/home.service";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('fileUp') fileUp!: ElementRef;
   totalPosts = 0;
   totalImages = 0;
   userId = '';
@@ -17,15 +19,20 @@ export class ProfileComponent implements OnInit {
   totalReposts = 0;
   isFollowed = false;
   buttonDisabled = false;
+  file!: File;
   panelOpenState = true;
+  isEditAvatar = false;
+  isEditName = false;
 
-
+  saving =false;
 
   constructor(
     public auth: AuthenticationService,
     private _profileService: ProfileService,
     private _route: ActivatedRoute,
-    public homeService: HomeService) {
+    public homeService: HomeService,
+    private _snackBar: MatSnackBar,
+  ) {
     this.userId = this._route.snapshot.paramMap.get('userId') as string;
     this._profileService.auth.authState.subscribe(() => {
       this.getProfile().catch();
@@ -75,5 +82,53 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  async save() {
+    this.saving=true;
+    let url = '';
+    if (this.file) {
+      await this._profileService.storage.uploadBytes('users/' + this.auth.user?.uid + '/avatar/' + this.file.name, this.file)
+      url = await this._profileService.storage.getDownloadURL('users/' + this.auth.user?.uid + '/avatar/' + this.file.name);
+    }
+
+    this.auth.updateProfile({
+      displayName: this.profile.displayName,
+      photoURL: url.length > 0 ? url : this.profile.photoURL
+    }).then(d => {
+
+      this.finish();
+      this._snackBar.open('Atualizado', 'ok', {
+        duration: 2000,
+        verticalPosition: 'top',
+      })
+    })
+
+  }
+
+  async fileChangeEvent(e: any) {
+    this.isEditAvatar = true;
+    this.profile.photoURL = await this._profileService.storage.fileToBase64(e.target.files[0]);
+    const blob = await this._profileService.storage.resizeImage({file: e.target.files[0], maxSize: 2000});
+    this.file = await this._profileService.storage.blobToFile(blob, e.target.files[0].name, {
+      type: e.target.files[0].type,
+      lastModified: e.target.files[0].lastModified
+    });
+
+  }
+
+  editName(e: any) {
+    this.isEditName = true;
+  }
+
+  cancelEdit() {
+    this.finish();
+  }
+
+  finish() {
+    this.saving =false;
+    this.isEditAvatar = false;
+    this.isEditName = false;
+    this.getProfile().catch();
+  }
 
 }

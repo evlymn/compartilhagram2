@@ -4,6 +4,7 @@ import {equalTo, limitToLast, orderByChild,} from "@angular/fire/database";
 import {AlertsService} from "../alerts/alerts.service";
 import {RealtimeService} from "../shared/services/firebase/database/realtime.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
+import {StorageService} from "../shared/services/firebase/storage/storage.service";
 
 
 @Injectable({
@@ -13,7 +14,9 @@ export class ProfileService {
 
   constructor(private _realtime: RealtimeService,
               public auth: AuthenticationService,
-              private _alertsService: AlertsService) {
+              private _alertsService: AlertsService,
+              public storage: StorageService
+              ) {
   }
 
   getProfile(userId: string) {
