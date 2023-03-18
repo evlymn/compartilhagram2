@@ -10,7 +10,8 @@
 
     <br>
 
-    <h3  *ngIf="!isEditName" (click)="editName($event)">{{profile?.displayName}}  <i class='bx bxs-message-square-edit'></i></h3>
+    <h3 *ngIf="!isEditName" (click)="editName($event)">{{profile?.displayName}}  <i
+      class='bx bxs-message-square-edit'></i></h3>
     <input *ngIf="isEditName" matInput class="input-name" [(ngModel)]="profile.displayName">
 
     <mat-progress-bar *ngIf="saving" mode="indeterminate"></mat-progress-bar>
@@ -23,8 +24,7 @@
 
   </div>
   <h4>{{profile?.email}}</h4>
-  <div class="settings" *ngIf="profile?.uid == auth.user?.uid">
-
+  <div class="settings" *ngIf="isMobile && profile?.uid == auth.user?.uid">
     <div>
       <i class='bx bx-cog'></i>
       {{homeService.languageService.getText('configuracoes')}}

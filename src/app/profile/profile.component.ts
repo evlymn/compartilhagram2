@@ -4,6 +4,7 @@ import {ProfileService} from "./profile.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {HomeService} from "../home/home.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {WindowService} from "../shared/services/window/window.service";
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,8 @@ export class ProfileComponent implements OnInit {
   isEditAvatar = false;
   isEditName = false;
 
-  saving =false;
+  saving = false;
+  isMobile = this._windowService.sizes.isMobile;
 
   constructor(
     public auth: AuthenticationService,
@@ -32,7 +34,11 @@ export class ProfileComponent implements OnInit {
     private _route: ActivatedRoute,
     public homeService: HomeService,
     private _snackBar: MatSnackBar,
+    private _windowService: WindowService
   ) {
+    this._windowService.getSizes.subscribe(s=>{
+      this.isMobile = s.isMobile;
+    })
     this.userId = this._route.snapshot.paramMap.get('userId') as string;
     this._profileService.auth.authState.subscribe(() => {
       this.getProfile().catch();
@@ -84,7 +90,7 @@ export class ProfileComponent implements OnInit {
 
 
   async save() {
-    this.saving=true;
+    this.saving = true;
     let url = '';
     if (this.file) {
       await this._profileService.storage.uploadBytes('users/' + this.auth.user?.uid + '/avatar/' + this.file.name, this.file)
@@ -125,7 +131,7 @@ export class ProfileComponent implements OnInit {
   }
 
   finish() {
-    this.saving =false;
+    this.saving = false;
     this.isEditAvatar = false;
     this.isEditName = false;
     this.getProfile().catch();
