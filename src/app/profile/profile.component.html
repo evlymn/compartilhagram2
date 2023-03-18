@@ -8,7 +8,7 @@
     <h3>{{profile?.displayName}}</h3>
   </div>
   <h3>{{profile?.email}}</h3>
-  <div class="settings" *ngIf="profile?.uid != auth.user?.uid">
+  <div class="settings" *ngIf="profile?.uid == auth.user?.uid">
 
     <div>
       <i class='bx bx-cog'></i>

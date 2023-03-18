@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, OnInit,
   Output,
   SimpleChanges,
   ViewChild
@@ -23,7 +23,7 @@ import {ImageSet} from "../../interfaces/image-set";
   templateUrl: './editable-text-area.component.html',
   styleUrls: ['./editable-text-area.component.scss']
 })
-export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
+export class EditableTextAreaComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('htmlTextElement') htmlTextElement!: ElementRef;
   @ViewChild('fileUp') fileUp!: ElementRef;
   @Output() onImagePastedOrDropped = new EventEmitter();
@@ -41,8 +41,13 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   @Input() showImages = true;
   @Input() showEmojis = false
 
+
   @Input() set text(value: string) {
-    this._text = value;
+    this._text = value?.trim() ?? '';
+    if(this._text.trim().length==0){
+      this.htmlTextElement?.nativeElement?.focus();
+    }
+    this.totalText();
     this.onTextChanged.emit(value);
   }
 
@@ -71,17 +76,40 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes['emoticon']) {
-    //   this.getText(this.emoticon);
-    // }
+
+  }
+  dragOverLeave(e: any) {
+    e.preventDefault();
+
+    if (e.type.toLowerCase() == 'dragover')
+     e.target.setAttribute('style', 'border: 1px solid #f6e1cd; border-radius:10px')
+    else if (e.type.toLowerCase() == 'dragleave')
+     e.target.setAttribute('style', 'border: 1px solid transparent')
   }
 
+  keyAndMouseEvents(e:any){
+    try {
+      this.totalText();
+      this.emitText(e);
+      this.getRange();
+    }catch {}
+
+  }
+
+  totalText(){
+    this.total = this.htmlTextElement?.nativeElement?.innerText.trim().length ?? 0;
+   }
+
   ngAfterViewInit(): void {
+
+    this.htmlTextElement.nativeElement.addEventListener('dragover', this.dragOverLeave)
+    this.htmlTextElement.nativeElement.addEventListener('dragleave', this.dragOverLeave)
 
     this.htmlTextElement.nativeElement.addEventListener('drop', async (e: any) => {
       e.preventDefault();
       if (!this.acceptDropImages) return
 
+      e.target.setAttribute('style', 'border: 1px solid transparent')
       this.onImagePastedOrDropped.emit(e);
       const droppedItems = e.dataTransfer.items
       const images = [].slice.call(droppedItems).filter((item: any) => item.type.indexOf('image') !== -1);
@@ -99,26 +127,35 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
       await this.getImageWhenPastedOrdDropped(images, e);
     })
 
-    this.htmlTextElement.nativeElement.addEventListener('keyup', (e: any) => {
-      this.total = this.htmlTextElement.nativeElement.innerText.trim().length;
-      this.emitText(e);
-      this.getRange();
-    })
-    this.htmlTextElement.nativeElement.addEventListener('mousedown', () => {
-      this.getRange();
-    })
+    window.addEventListener('onload',()=> {
+      console.log( document.getElementById('editarea'));
+      console.log( document.getElementById('#editarea'));
+      this.htmlTextElement.nativeElement.focus();
 
-    this.htmlTextElement.nativeElement.addEventListener('mouseup', () => {
-      this.getRange();
+    })
+    document.addEventListener('onload',()=> {
+      this.htmlTextElement.nativeElement.focus();
+    })
+    this.htmlTextElement.nativeElement.addEventListener('keyup', (e: any) => {
+      this.keyAndMouseEvents(e)
+    })
+    this.htmlTextElement.nativeElement.addEventListener('keydown', (e: any) => {
+      this.keyAndMouseEvents(e)
+    })
+    this.htmlTextElement.nativeElement.addEventListener('keypress', (e: any) => {
+      this.keyAndMouseEvents(e)
+    })
+    this.htmlTextElement.nativeElement.addEventListener('mousedown', (e: any) => {
+      this.keyAndMouseEvents(e)
+    })
+    this.htmlTextElement.nativeElement.addEventListener('mouseup',  (e: any) => {
+      this.keyAndMouseEvents(e)
     })
     this.htmlTextElement.nativeElement.addEventListener('focus', (e: any) => {
-      this.emitText(e);
-
-      this.getRange();
+      this.keyAndMouseEvents(e)
     })
     this.htmlTextElement.nativeElement.addEventListener('blur', (e: any) => {
-      this.emitText(e);
-      this.getRange();
+      this.keyAndMouseEvents(e)
     })
     this.htmlTextElement.nativeElement.focus();
   }
@@ -240,11 +277,23 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
     }
   }
 
+
+  verifyFileSize(file: File) {
+    if (file.size > 1000000 && file.type.includes('gif')) {
+      this.openAlert('gif muito grande');
+      return false;
+    }
+    return true
+  }
+
   async getFileOnChange(e: any) {
+    console.log(e.target.files[0])
     for (let i = 0; i < e.target.files.length; i++) {
       if (!this.verifyTotalImages()) {
-        i = this.images.length;
-        return;
+        continue;
+      }
+      if (!this.verifyFileSize(e.target.files[i])) {
+        continue;
       }
       const image = await this._storageService.fileToBase64(e.target.files[i]) as string;
       this.addImage({image64: image, file: e.target.files[i]})
@@ -267,5 +316,9 @@ export class EditableTextAreaComponent implements AfterViewInit, OnChanges {
     this.images.slice(e.index);
     this.onImagesChanged.emit(this.images);
     this.onImageDeleted.emit(e);
+  }
+
+  ngOnInit(): void {
+
   }
 }

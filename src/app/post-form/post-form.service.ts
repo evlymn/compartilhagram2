@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
- import {StorageService} from "../shared/services/firebase/storage/storage.service";
+import {StorageService} from "../shared/services/firebase/storage/storage.service";
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {AlertsService} from "../alerts/alerts.service";
 import {TimelineService} from "../timeline/services/timeline.service";
@@ -97,19 +97,26 @@ export class PostFormService {
 
   async uploadImages(images: ImageSet[], postId: string, uid: string | undefined, displayName: string | null | undefined, album: { id: string; album?: string } | undefined) {
     for (let i = 0; i < images.length; i++) {
-      if (images[i].imageURL)  {
-       continue
+      if (images[i].imageURL) {
+        continue
       }
       images[i].postId = postId as string;
       const local = `timeline/messages/${postId}/images/${i}`;
       const objectName = `${local}/${images[i].file.name}`;
       const objectId = `${environment.firebase.storageBucket}/${objectName}`
       const maxsize = 2500;
-      const blob = await this._storage.resizeImage({maxSize: maxsize, file: images[i].file}) as Blob;
-      const file = this._storage.blobToFile(blob, images[i].file.name, {
-        type: images[i].file.type,
-        lastModified: images[i].file.lastModified
-      });
+      let  file = images[i].file;
+      if (!images[i].file.type.includes('gif')) {
+        const blob = await this._storage.resizeImage({maxSize: maxsize, file: images[i].file}) as Blob;
+        file = this._storage.blobToFile(blob, images[i].file.name, {
+          type: images[i].file.type,
+          lastModified: images[i].file.lastModified
+        });
+      }
+      //  file = this._storage.blobToFile(blob, images[i].file.name, {
+      //   type: images[i].file.type,
+      //   lastModified: images[i].file.lastModified
+      // });
 
       const uploadTask = this._storage.uploadBytesResumable(objectName, file,
         {
