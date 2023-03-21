@@ -204,7 +204,6 @@ export class PostFormComponent implements OnInit, AfterViewInit {
   imagesChanged(e: ImageSet[]) {
     this.images = []
     this.images.push(...e);
-    // console.log(this.images)
   }
 
   textOverflow(e: boolean) {

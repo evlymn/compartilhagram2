@@ -21,7 +21,7 @@ import {Router} from '@angular/router';
 import {GithubAuthProvider, GoogleAuthProvider, onIdTokenChanged} from '@firebase/auth';
 import {RealtimeService} from "../database/realtime.service";
 import {BehaviorSubject} from "rxjs";
-import {AppUpdateService} from "../../app/app-update.service";
+// import {AppUpdateService} from "../../app/app-update.service";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class AuthenticationService {
 
 
   constructor(
-    private appUpdateService: AppUpdateService,
+    // private appUpdateService: AppUpdateService,
     private auth: Auth,
     private router: Router,
     private ngZone: NgZone,

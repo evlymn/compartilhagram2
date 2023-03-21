@@ -7,7 +7,8 @@ import {WorkerUpdateDialogComponent} from "../../../worker-update-dialog/worker-
   providedIn: 'root'
 })
 export class AppUpdateService {
-  constructor(private updates: SwUpdate, private _dialog: MatDialog,) {
+  constructor(
+    private updates: SwUpdate, private _dialog: MatDialog,) {
     this.updates.versionUpdates.subscribe(event => {
       if (this.updates.isEnabled)
         if (event.type == 'VERSION_READY')

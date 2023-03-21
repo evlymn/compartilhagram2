@@ -7,7 +7,7 @@
 
   <mat-tab-group class="mat-tab-header" [selectedIndex]="tabSelectedIndex">
     <mat-tab>
-      <div class="mat-tab-div r">
+      <div class="mat-tab-div">
         <button [ngClass]="homeService.checkRoute('home')? 'route' : 'no-route' " (click)="routeToHome()" mat-button
                 class="button-items-align-center">
           <i class='bx bx-world'></i> {{homeService.languageService.getText('feed')}}

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {AuthenticationService} from "../shared/services/firebase/authentication/authentication.service";
 import {WindowService} from "../shared/services/window/window.service";
 import {LanguageService} from "../shared/services/language/language.service";
-import {AppUpdateService} from "../shared/services/app/app-update.service";
 import {Router} from "@angular/router";
+import {ServiceWorkerService} from "../shared/services/service-worker/service-worker.service";
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,7 @@ export class HomeService {
               public auth: AuthenticationService,
               public windowService: WindowService,
               public languageService: LanguageService,
-              private appUpdateService: AppUpdateService,
+              private serviceWorker: ServiceWorkerService,
               private _router: Router
   ) {
 
