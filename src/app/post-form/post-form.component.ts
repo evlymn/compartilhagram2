@@ -47,7 +47,7 @@ export class PostFormComponent implements OnInit, AfterViewInit {
     private _languageService: LanguageService,
   ) {
     this.isProfile = window.location.pathname.includes('profile');
-    this._notificationService.observable().subscribe(n => {
+    this._notificationService.get().subscribe(n => {
       if (n.key == 'showSearchPanel') {
         this.postFormService.panelPost = !this.postFormService.panelPost;
         this.postFormService.panelSearch = !this.postFormService.panelSearch;

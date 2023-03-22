@@ -38,7 +38,7 @@ export class PostBodyComponent implements OnInit {
     private _postFormService: PostFormService
   ) {
     this.isExchangeagram = window.location.host == 'exchangeagram.app';
-    this._notificationService.observable().subscribe(s => {
+    this._notificationService.get().subscribe(s => {
       if (s.key == 'togglePostPanel' && s.value == this.post.id) {
         this.togglePostPanel();
       }
