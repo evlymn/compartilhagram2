@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TimelineService} from "../../services/timeline.service";
 import {AlertsService} from "../../../alerts/alerts.service";
 import {StorageService} from "../../../shared/services/firebase/storage/storage.service";
@@ -91,7 +91,7 @@ export class PostFooterComponent implements OnInit {
   }
 
   repost(postId: string) {
-    const text =  this.newRepostText;
+    const text = this.newRepostText;
     this._timelineService.repost(postId, text, this.post).catch();
   }
 
@@ -105,9 +105,13 @@ export class PostFooterComponent implements OnInit {
 
   createComment() {
     const refId = this._route.snapshot.paramMap.get('id') as string;
-    this.image.image64 = this.images[0].image64;
-    this.image.file = this.images[0].file;
+    if (this.images.length > 0) {
+      this.image.image64 = this.images[0].image64;
+      this.image.file = this.images[0].file;
+    }
+
     this.commentText = this.newCommentText;
+    console.log(this.commentText)
     this._timelineService.createComment(this.post.id, this.commentText, !!this.image.image64, refId).then(commentId => {
       if (this.image.image64) {
         this.image.image64 = null;
@@ -159,7 +163,7 @@ export class PostFooterComponent implements OnInit {
   }
 
   onExpansionRepostOpen() {
-    this.commentPanelOpened =false;
+    this.commentPanelOpened = false;
   }
 
   async createSaved(post: any) {
